@@ -69,26 +69,26 @@ Snapp также значительно эффективнее, чем Dapp на
 
   Итогами такой операции будут: обновление состояния обоих счетов согласно заданным параметрам, изменение баланса счета1 путем добавления параметра - account1_delta, и изменение остатка счета2 путем добавления параметра - account1_delta.
 
-O(1) Labs is currently developing tooling for app developers, which includes existing ones like [snarky](https://github.com/o1-labs/snarky), to easily develop Snapps, and with the click of a button compute required SNARK proofs. The tooling will be compatible with Mina out of the box, providing Snapps with an easy way to gain state and financial value.
+O(1) Labs в настоящее время разрабатывает инструментарий для разработчиков приложений, который включает в себя и уже существующие, такие как [snarky](https://github.com/o1-labs/snarky), что облегчает разработку Snapps, позволяя в один клик вычислить необходимые SNARK-доказательства. Инструментарий будет совместим с встроенным функционалом Mina, обеспечивая Snapps простыми способами получить состояние и увеличить финансовую ценность.
 
-Let’s dive into a couple examples that will showcase the true power of Snapps.
+Давайте рассмотрим пару примеров, которые продемонстрируют реальную силу Snapps.
 
-## Examples
+## Примеры
 
-### Example 1: Proof of Credit Score
+### Пример 1: Доказательство кредитного рейтинга
 
-**Value Proposition: **Providing borrowers with a way to prove their credit score is above a certain threshold, without disclosing the score itself, and thus be able to borrow funds without posting any collateral.
+**Деловое предложение: **Предоставление заемщикам возможности подтвердить, что их кредитная оценка выше определенного порога, не раскрывая саму оценку, и, таким образом, иметь возможность заимствовать средства без предоставления какого-либо обеспечения.
 
-**Example User Flow:**
+**Пример User Flow:**
 
-- User visits website of lender
-- Is asked to download cryptographically signed information from a credit score provider such as CreditKarma
-- Website locally checks if credit score is above threshold and computes SNARK proof returning the result
-- SNARK proof and result are attached to the Mina address of the user and is shared with the cloud system of the lender (could also be a smart contract)
-- Lender verifies the SNARK proof and passing of threshold
-- Loan is provided to the Mina address in stablecoins, if it meets criteria
+- Пользователь посещает веб-сайт кредитора
+- Его просят загрузить информацию с криптографической подписью от поставщика услуг по оценке кредитоспособности, такого как CreditKarma.
+- Сайт локально проверяет, превышает ли кредитная оценка пороговое значение, и вычисляет SNARK-доказательство, подтверждающее результат.
+- SNARK доказательства и результаты прикрепляются к Mina-адресу пользователя и передаются в облачную систему кредитора (также может быть смарт-контрактом).
+- Кредитор проверяет доказательство SNARK и соблюдение порога.
+- Займ предоставляется по адресу Мина в стейблкоинах, если он соответствует установленным критериям.
 
-**How Snapp Toolset Is Used: **Developer of Snapp uses the toolset to integrate a specific program that has the user download a signed credit score from provider, check locally on the user’s computer that the score meets criteria, and locally generate a proof for the check, which is subsequently shared back with the developer. The toolset also provides the user with a Mina address behind the scenes, which is used to provide a time stamp to the computation via the block number on the Mina blockchain. They also use the toolset to integrate a SNARK verifier into their own backend to confirm the validity of the local computation.
+**Как использовать набор инструментов Snapp: **Developer of Snapp uses the toolset to integrate a specific program that has the user download a signed credit score from provider, check locally on the user’s computer that the score meets criteria, and locally generate a proof for the check, which is subsequently shared back with the developer. The toolset also provides the user with a Mina address behind the scenes, which is used to provide a time stamp to the computation via the block number on the Mina blockchain. They also use the toolset to integrate a SNARK verifier into their own backend to confirm the validity of the local computation.
 
 ### Example 2: Proof of Authentic Identity Document
 
