@@ -102,20 +102,20 @@ O(1) Labs в настоящее время разрабатывает инстр
 - Приложение сопоставляет доказательство SNARK с адресом пользователя Mina, вместе с хэшем фотографии удостоверения личности
 - Пользователь посещает другой веб-сайт, который запрашивает идентификацию личности. Он может поделиться доказательством ID вместе с хэшем своего ID, чтобы доказать, что его адрес Мина претендует на подлинность ID.
 
-**How Snapp Toolset Is Used: **Snapp toolset provides the developer with an SDK to embed into their app the SNARK proof generator and hash generator, along with a Mina interface. Snapp toolset also provides any other developer that wants to be able to verify said ID authentications with a SNARK verifier.
+**Как использовать набор инструментов Snapp: **Набор инструментов Snapp предоставляет разработчику специальный SDK для встраивания в свое приложение генератора доказательств SNARK и генератора хэшей, наряду с интерфейсом Mina. Инструментарий Snapp также позволяет любому стороннему разработчику проверять данные аутентификации с помощью верификатора SNARK.
 
-### Example 3: Proof of Coinbase Balance
+### Пример 3: Доказательство баланса на Coinbase
 
-**Value Proposition: **Providing third parties with proof of funds meeting a certain criteria (e.g. >\$10,000) in a Coinbase account belonging to a specific email, without disclosing the actual deposit amount.
+**Деловое предложение: **Предоставление третьим лицам доказательств того, что средства на счете Coinbase, принадлежащем конкретному электронному адресу, соответствуют определенным критериям (например, >\$10,000), без раскрытия фактической суммы депозита.
 
-**Example User Flow:**
+**Пример User Flow:**
 
-- User visits a lending application. In order to borrow funds, they’re asked to have at least >\$10,000 of Bitcoin in their Coinbase account.
-- User OAuths into their Coinbase account
-- The website locally checks user’s balance and email, both signed by Coinbase’s keys
-- Website locally generates SNARK proof that user’s balance is >\$10,000
-- SNARK proof is attached to the Mina address of the user
-- User signs their ownership of the SNARK proof using their Mina address, and shares the email address of their Coinbase account with the backend of the lending application.
+- Пользователь заходит в приложение по кредитованию. Для того, чтобы занять средства, он должен иметь на своем счету в Coinbase не менее >\$10,000 Bitcoin.
+- Пользователь заходит на свой аккаунт в Coinbase через протокол OAuths.
+- Вебсайт локально проверяет баланс пользователя и электронную почту, оба эти элемента подписаны ключами Coinbase
+- Сайт локально генерирует SNARK-доказательство того, что баланс пользователя >\$10,000
+- Доказательство SNARK прилагается к адресу пользователя на Mina
+- Пользователь подписывает право собственности на доказательство SNARK с помощью своего адреса Mina, а также сообщает адрес электронной почты своей учетной записи Coinbase бэкэнду кредитного приложения.
 
 **How Snapp Toolset Is Used: **Developer of Snapp uses the toolset to integrate a specific program that has the user OAuth into their Coinbase account, query their account balance for a signed balance information, the account’s email address, and a time stamp. The toolset allows a SNARK proof to be generated locally, without sharing any information with the backend of the service provider, so all balance info stays private. The developer also uses the toolset to integrate a SNARK verifier into their own backend to confirm the validity of the local computation.
 
