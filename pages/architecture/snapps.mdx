@@ -88,19 +88,19 @@ O(1) Labs в настоящее время разрабатывает инстр
 - Кредитор проверяет доказательство SNARK и соблюдение порога.
 - Займ предоставляется по адресу Мина в стейблкоинах, если он соответствует установленным критериям.
 
-**Как использовать набор инструментов Snapp: **Developer of Snapp uses the toolset to integrate a specific program that has the user download a signed credit score from provider, check locally on the user’s computer that the score meets criteria, and locally generate a proof for the check, which is subsequently shared back with the developer. The toolset also provides the user with a Mina address behind the scenes, which is used to provide a time stamp to the computation via the block number on the Mina blockchain. They also use the toolset to integrate a SNARK verifier into their own backend to confirm the validity of the local computation.
+**Как использовать набор инструментов Snapp: **Разработчик Snapp использует набор инструментов для интеграции специальной программы, в которой пользователь загружает подписанную кредитную оценку от поставщика. Затем, локально на компьютере пользователя, проверяется соответствие оценки критериям, и локально генерируется доказательство для проверки, которое передается обратно разработчику. Кроме того, набор инструментов предоставляет пользователю скрытый Mina-адрес, который используется для создания временной метки для расчетов через номер блока на блокчейне Mina. Они также используют этот инструментарий для интеграции верификатора SNARK в свой собственный бэкэнд для подтверждения достоверности локальных вычислений.
 
-### Example 2: Proof of Authentic Identity Document
+### Пример 2: Доказательство подлинности документа, удостоверяющего личность
 
-**Value Proposition: **Proving that the owner of a Mina address has access to an authentic identity document (such as driver’s license), without disclosing the document itself, starting with a certain block height. The validity of the identity document would be checked by a standardized open source algorithm.
+**Деловое предложение **Доказательство того, что владелец адреса Mina имеет доступ к подлинному документу, удостоверяющему личность (например, водительскому удостоверению), без необходимости открытия самого документа, начиная с определенной высоты блока. Достоверность удостоверяющего личность документа будет проверяться по стандартизированному алгоритму с открытым исходным кодом.
 
-**Example User Flow:**
+**Пример User Flow:**
 
-- User visits website, downloads app to laptop or mobile phone
-- Uses app to scan ID, verify its authenticity
-- App also creates Mina wallet for user
-- App associates SNARK proof with Mina address of user, along with hash of the photo of the ID
-- User visits another website that asks for authentic identity. Is able to share the ID proof, along with a hash of their ID, to confirm their Mina address has claim over an authentic ID
+- Пользователь посещает сайт, и скачивает приложение на ноутбук или мобильный телефон
+- Использует приложение для сканирования ID, чтобы подтвердить его подлинность.
+- Приложение также создает кошелек Mina для пользователя
+- Приложение сопоставляет доказательство SNARK с адресом пользователя Mina, вместе с хэшем фотографии удостоверения личности
+- Пользователь посещает другой веб-сайт, который запрашивает идентификацию личности. Он может поделиться доказательством ID вместе с хэшем своего ID, чтобы доказать, что его адрес Мина претендует на подлинность ID.
 
 **How Snapp Toolset Is Used: **Snapp toolset provides the developer with an SDK to embed into their app the SNARK proof generator and hash generator, along with a Mina interface. Snapp toolset also provides any other developer that wants to be able to verify said ID authentications with a SNARK verifier.
 
