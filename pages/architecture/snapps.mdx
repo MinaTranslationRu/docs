@@ -121,16 +121,16 @@ O(1) Labs в настоящее время разрабатывает инстр
 
 ### Пример 4: Частное голосование
 
-**Деловое предложение** Allowing a set of eligible voters (e.g. any Twitter account with >100 followers) to vote privately, without disclosing who they are and what they voted for. Anyone would easily be able to verify the outcome of the entire vote once the voting period is over.
+**Деловое предложение** Возможность для группы избирателей, имеющих право голоса (например, любой аккаунт в Твиттере с более чем 100 последователями), голосовать в приватной обстановке, не раскрывая, кто они и за кого проголосовали. Любой желающий сможет легко проверить результаты голосования после завершения периода голосования.
 
-**Example User Flow:**
+**Пример User Flow:**
 
-- User can prove ownership of a given account by exhibiting the HTTPS transcript of them successfully logging into twitter.com. To authenticate and vote, they will prove (public input in orange), “I know an account A with password P and a valid login transcript for (A, P) and hash(A, P) = **N** and my vote is for option **V**”. **N** is called a “nullifier” and is unique to a given user/password combination and is used to prevent double voting.
-- In a fully decentralized mode, the user can then use this proof to update the state of the election app on the Mina chain.
-- In a higher throughput, partially decentralized mode, the user would send their zero knowledge proof to a proof-aggregator, who maintains the state of the election, and aggregates the user proofs together into one bundled together proof, which then gets posted to the Mina chain.
-- When viewing the results of the election, the user obtains the main Mina blockchain proof, which certifies the validity of the entire Mina merkle tree, including the leaf corresponding to the election state. They also obtain a merkle path into this leaf so that they can view the state.
+- Пользователь может доказать право собственности на данный аккаунт, предъявив HTTPS-транскрипт своего успешного входа в Twitter.com. Для аутентификации и голосования они подтвердят (публичный ввод оранжевого цвета): "Я знаю учетную запись A с паролем P и действительный транскрипт входа для (A, P) и хэш (A, P) = **N**, и я голосую за вариант **V**". **N** называется "nullifier" и служит уникальной для данного пользователя/пароля комбинацией для предотвращения двойного голосования.
+- В полностью децентрализованном режиме пользователь может использовать это доказательство, чтобы обновить состояние приложения для голосования в блокчейне Mina.
+- В более высокопроизводительном, частично децентрализованном режиме, пользователь посылает свои доказательства нулевого знания регистратору доказательств, который обеспечивает проверку состояния выборов, и объединяет пользовательские доказательства в единое доказательство, которое затем добавляется в блокчейн Mina.
+- При просмотре результатов выборов, пользователь получает главное доказательство блокчейна Mina, которое удостоверяет действительность всего дерева хэшей Mina, в том числе и листа, соответствующего состоянию выборов. Кроме того, пользователь получает путь к этому листу, чтобы он мог просмотреть его состояние.
 
-### Other Ideas
+### Другие идеи
 
 The design space for Snapps is huge, and will consist of many other innovative ideas entrepreneurs will come up with as the framework is better understood. Some other examples we have thought of:
 
