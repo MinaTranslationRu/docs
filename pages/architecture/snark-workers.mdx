@@ -1,19 +1,19 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Snark Workers for Node Operators" });
 
-## Intro
+## Введение
 
-While most protocols have just one primary group of node operators (often called miners, validators, or block producers), Mina has a second group — the **snark worker**.
+В то время как большинство протоколов имеют только одну основную группу нод-операторов (часто называемых майнерами, валидаторами или блок-продюсерами), у Mina есть вторая группа — **snark worker**.
 
-Snark workers are integral to the Mina network's health because these nodes are responsible for snarking, or producing SNARK proofs, of transactions in the network. By producing these proofs, snark workers help maintain the succinctness of the Mina blockchain.
+Снарк-воркеры являются неотъемлемой частью здоровья сети Mina, потому что именно эти узлы отвечают за "снаркинг" - производство SNARK-доказательств, связанных с транзакциями в сети. Производя эти доказательства, снарк-воркеры помогают поддерживать компактность блокчейн Mina.
 
-In this document, we'll briefly cover why snark workers are needed, how the economic incentives align, and provide operational details of performing snark work. Feel free to click through to any of the sections above that are most relevant to your needs.
+В этом документе мы вкратце расскажем о том, зачем нужны снарк-воркеры, как выстраиваются экономические стимулы, а также опишем операционные детали выполнения снарк-работы. Кликните на любой из вышеперечисленных разделов, который наиболее соответствует вашим интересам.
 
-Note: This document primarily targets node operators, and will not cover the theory of zk-SNARKs. Deep knowledge of SNARKs is not required to read this section, but it will be helpful to know roughly how SNARKs work and what they are useful for. If this is not the case, please check out [this primer on SNARKs](https://minaprotocol.com/blog/what-are-zk-snarks) first.
+Примечание: этот документ в первую очередь ориентирован на операторов нод и не будет охватывать теорию zk-SNARK. Глубокое знание теории SNARK не требуется для прочтения этого раздела. Но вам будет полезно приблизительно знать, как работают SNARK и для чего они используются. Пожалуйста, обратите внимание на [этот учебник по SNARK] в первую очередь.(https://minaprotocol.com/blog/what-are-zk-snarks)
 
-## Why Snark Workers?
+## Почему Снарк-воркеры?
 
-Mina's unique property is the succinct blockchain. Each block producer, when they propose a new block to the network, must also include a zk-SNARK along with that block. This allows nodes to discard all historical data that's been finalized, and retain just the SNARK. If you are unfamiliar with the Mina protocol, [this video is a good start](https://www.youtube.com/watch?v=eWVGATxEB6M).
+Уникальным свойством Mina является компактный блокчейн. Каждый блок-продюсер, когда он предлагает сети новый блок, должен также включить в этот блок zk-SNARK. Это позволяет нодам отказываться от всех исторических данных, которые были завершены, сохраняя только SNARK. Если вы незнакомы с протоколом Mina, [это видео будет хорошим началом].(https://www.youtube.com/watch?v=eWVGATxEB6M).
 
 However, it is not only sufficient for the block producers in Mina to generate SNARK proofs of blocks. Transactions also need to be snarked. The reason is because the blockchain SNARK does not make any statements of the validity of the transactions included in the block.
 
