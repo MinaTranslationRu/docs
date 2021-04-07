@@ -32,7 +32,7 @@ export default Page({ title: "Snark Workers for Node Operators" });
 
 К счастью для нас, мы можем использовать два свойства SNARK:
 
-1. доказательства могут быть совмещены - два доказательства могут быть объединены, чтобы сформировать _merge proof_
+1. доказательства могут быть объединены - два доказательства могут быть объединены, чтобы сформировать _merge proof_
 2. объединения сочетаемы - доказательства слияния идентичны, независимо от порядка их объединения
 
 <picture>
@@ -41,7 +41,7 @@ export default Page({ title: "Snark Workers for Node Operators" });
   <img src="/static/img/docsImages/Documents_FAQFork_Mobile 1.jpg" alt="Snark Workers"></img>
 </picture>
 
-What these two properties essentially allow us to do is take advantage of parallelism. If proofs can be merged, and it doesn't matter how they're combined, then SNARK proofs can be generated in parallel. Whichever proof is finished first can be combined later with the proofs in progress. This can be envisioned as a binary tree, where the bottom row (the leaves) consists of the individual transaction proofs, and each parent row, the set of respective merge proofs. We can combine these all the way to the root, which represents a state update performed by applying all the transactions.
+То, что эти два свойства по сути позволяют нам сделать -  это воспользоваться преимуществами параллелизма. Если доказательства могут быть объединены, и неважно, как они объединены, то доказательства SNARK могут быть сгенерированы параллельно. Какое бы доказательство не было получено первым, оно может быть объединено позже с доказательствами, находящимися в процессе генерации. Это можно представить как бинарное дерево, где нижняя строка (листья) состоит из доказательств отдельных транзакций, а каждая родительская строка - из набора соответствующих доказательств объединения. Мы можем объединить их до самого корня, что будет представлять собой обновление состояния, выполняемое путём внесения изменений во все транзакции.
 
 In addition, because the SNARK proofs don't depend on each other and we can exploit parallelism, this means anyone can do the work! The end result is that the distributed work pool is permission-less. Anyone with spare compute can join the network as snark workers, observe transactions that need to be snarked, and contribute their compute. And of course, they will be compensated for their work in what we affectionately call **the snarketplace**.
 
