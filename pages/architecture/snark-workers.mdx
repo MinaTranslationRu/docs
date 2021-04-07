@@ -15,25 +15,25 @@ export default Page({ title: "Snark Workers for Node Operators" });
 
 Уникальным свойством Mina является компактный блокчейн. Каждый блок-продюсер, когда он предлагает сети новый блок, должен также включить в этот блок zk-SNARK. Это позволяет нодам отказываться от всех исторических данных, которые были завершены, сохраняя только SNARK. Если вы незнакомы с протоколом Mina, [это видео будет хорошим началом].(https://www.youtube.com/watch?v=eWVGATxEB6M).
 
-However, it is not only sufficient for the block producers in Mina to generate SNARK proofs of blocks. Transactions also need to be snarked. The reason is because the blockchain SNARK does not make any statements of the validity of the transactions included in the block.
+Однако, блок-продюсерам Mina недостаточно только лишь создавать SNARK-доказательства блоков. Транзакции также должны cодержать снарки. Причина заключается в том, что сам блокчейн SNARK не делает каких-либо утверждений о валидности сделок, включенных в блок.
 
-For example — let's say the current head of the blockchain has a state hash `a6f8792226...` , and we receive a new block with a state hash `0ffdcf284f...` . This block will contain all the transactions that the block producer has chosen to include in this block, and associated metadata. We will also receive an accompanying SNARK that verifies the statement:
+Например - допустим, текущий заголовок блокчейна имеет хэш состояния `a6f8792226...`, и мы получаем новый блок с хэшем `0ffdcf284f...` . Этот блок будет содержать все транзакции, которые блок-продюсер выбрал для включения в этот блок, а также связанные с ним метаданные. Мы также получим сопроводительный SNARK, подтверждающий правильность сообщения:
 
 > "There exists a block with a state hash 0ffdcf284f which extends the blockchain
 > with a previous best tip with state hash a6f8792226."
 
-Notice that this statement says nothing about the validity of the transactions included in the new block. If we were to believe this SNARK, and do nothing else, we may be tricked by a malicious block producer sending this block. Luckily, we have the raw block and we can check each transaction to ensure it is valid. But what about nodes in the network that may just want to receive the proof and not verify each block?
+Обратите внимание, что в этом сообщении ничего не говорится о действительности сделок, включенных в новый блок. Если мы поверим этому SNARK и ничего больше не предпримем, нас может обмануть вредоносный блок-продюсер, посылающий этот блок. К счастью, у нас есть "сырой" блок, и мы можем проверить каждую сделку, чтобы убедиться, что она действительна. Но как насчет нод в сети, которые могут просто захотеть получить подтверждение без проверки каждого блока?
 
-## Snarking Transactions
+## Транзакции со SNARK
 
-In order to ensure that nodes can operate without trust on the Mina, it is important that each node can verify the state of the chain without needing to replay the transactions. In order for this to work, the above blockchain SNARK is not enough. We need to know that the transactions are also valid. Well, since SNARKs are good for exactly that, the naive suggestion might be to generate a SNARK of each transaction as they come in, and then combine them.
+Чтобы гарантировать, что ноды могут работать на Mina без доверия, важно, чтобы каждая нода могла проверить состояние блокчейна без необходимости воспроизводить транзакции. Для того, чтобы это сработало, описанного выше блокчейна SNARK недостаточно. Нам необходимо знать, что транзакции также достоверны. Поскольку SNARK хороши именно для этого, то элементарным предложением может быть генерация SNARK для каждой транзакции по мере их поступления, а затем их объединение.
 
-However, generating SNARK proofs is computationally expensive — if we had to compute SNARKs serially for each transaction, throughput would be very low and block times would skyrocket. Furthermore, transactions in a real world environment arrive asynchronously, so it would be very tough to predict when to perform the next item of work.
+Однако генерация доказательств SNARK является дорогостоящей вычислительной процедурой - если бы нам приходилось вычислять SNARK последовательно для каждой транзакции, то пропускная способность была бы очень низкой, а время формирования блоков - стремительно возрастало бы. Более того, транзакции в реальных условиях поступают асинхронно, поэтому было бы очень сложно предсказать, когда будет выполняться следующий этап работы.
 
-Lucky for us, we can leverage two properties about SNARKs:
+К счастью для нас, мы можем использовать два свойства SNARK:
 
-1. proofs can be merged - two proofs can be combined to form a _merge proof_
-2. merges are associative - merge proofs are identical, regardless of the order merged
+1. доказательства могут быть совмещены - два доказательства могут быть объединены, чтобы сформировать _merge proof_
+2. объединения сочетаемы - доказательства слияния идентичны, независимо от порядка их объединения
 
 <picture>
   <source media="(min-width:48rem)" srcset="/static/img/docsImages/Documents_FAQFork_Tablet 1.jpg"/>
