@@ -1,21 +1,21 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Tokens" });
 
-# Tokens
+# Токены
 
-Tokens provide a way for users to create and mint (issue) their own custom tokens, which requires a special token account.
+Токены предоставляют пользователям возможность создавать и выпускать собственные пользовательские токены, для чего требуется специальный токен-аккаунт.
 
 <Alert kind="warning">
 
-  As of release `0.0.16-beta7` this feature has been disabled and can only be used by enabling a build-time flag. We plan to enable this feature in future releases.
+  Начиная с версии `0.0.16-beta7` эта функция была отключена и может быть использована только при включении флага сборки. Мы планируем активировать эту возможность в будущих релизах.
 
 </Alert>
 
-In the Mina protocol, users can create their own Tokens which can be minted (or created) and sent by using special token accounts. The Mina CLI (command-line interface) is the primary way to interact with tokens on the Mina blockchain. It provides a client interface that supports functionality to create new tokens, create new token accounts, and mint non-default tokens. In addition to the tokens interface, there are other advanced client and daemon commands (see [CLI Reference](/docs/cli-reference#cli-reference)).
+В протоколе Mina пользователи могут создавать свои собственные Токены, которые могут быть созданы и использованы с помощью специальных токен-аккаунтов. Mina CLI (интерфейс командной строки) - это основной способ взаимодействия с токенами на блокчейне Mina. Он предоставляет клиентский интерфейс, поддерживающий функционал для выпуска новых токенов, создания новых токен-аккаунтов, а также создания нон-дефолтных токенов. В дополнение к интерфейсу токенов, есть и другие продвинутые клиентские и daemon-команды (см. [Ссылка CLI]) (/docs/cli-reference#cli-reference)).
 
-## Creating Tokens
+## Создание токенов
 
-With the CLI, you are able to create your own tokens on Mina. Non-default tokens are a new type of token that is introduced to the Mina blockchain. These new types of tokens have a unique identifier that differentiate them from all other tokens in the blockchain. Users with an associated token account can then receive/send this new type of token that is totally separate from the native Mina token itself! When you create a new token, you are then able to mint more of the token to be used (see below in [Minting Tokens](/docs/tokens#minting-tokens)).
+С помощью CLI вы можете создавать свои собственные токены на Mina. Нон-дефолтные токены - это новый тип токенов, который вводится в блокчейн Mina. Данный вид токенов имеет уникальный идентификатор, который отличает их от всех остальных токенов в блокчейне. Пользователи с соответствующими токен-аккаунтами могут получать/отправлять этот новый тип токена, который полностью отделен от самого токена Mina! Когда вы создаете новый токен, вы можете затем получать еще больше уже существующих токенов (см. ниже в разделе [Minting Tokens])(/docs/tokens#minting-tokens)).
 
 When creating a new token, a new token ID is created as well as a token account for your public key. This token account owns the token and can mint more of the token. The account will also (eventually) have the power to enable/disable accounts, and to set whether new accounts may be created for the token.
 
