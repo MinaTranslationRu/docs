@@ -1,18 +1,18 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "What's in a Block" });
 
-# What's in a Block
+# Что в блоке?
 
-A block is a set of transactions and consensus information that extend the state of the network. A block in Mina includes a proof that the current state of the network is fully valid. 
+Блок - это набор транзакций и информации о консенсусе, который влияет на состояние сети. Блок в сети Mina включает в себя доказательство того, что текущее состояние сети является в полной мере подтвержденным.
 
-A block in Mina is constituted of:
+Блок в Mina состоит из:
 
-* [Protocol state](#protocol-state)
-* [Protocol state proof](#protocol-state-proof)
+* [Состояние протокола](#protocol-state)
+* [Доказательство состояния протокола](#protocol-state-proof)
 * [Staged ledger diff](#staged-ledger-diff)
 * [Delta transition chain proof](#delta-transition-chain-proof)
-* Current protocol version
-* Proposed protocol version
+* Текущая версия протокола
+* Предлагаемая версия протокола
 
 When a node receives a block from a peer, it is first validated, applied to the existing state, and added to the node's transition frontier. If, according to the [consensus](/docs/architecture/consensus) rules, it results in increasing the length of the blockchain, the node's best tip is updated, and the root of the transition frontier is moved up to only maintain `k` blocks in the transition frontier.
 
