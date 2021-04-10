@@ -14,36 +14,36 @@ export default Page({ title: "What's in a Block" });
 * Текущая версия протокола
 * Предлагаемая версия протокола
 
-When a node receives a block from a peer, it is first validated, applied to the existing state, and added to the node's transition frontier. If, according to the [consensus](/docs/architecture/consensus) rules, it results in increasing the length of the blockchain, the node's best tip is updated, and the root of the transition frontier is moved up to only maintain `k` blocks in the transition frontier.
+Когда нода получает блок от пользователя, он сначала проверяется, применяется к существующему состоянию и добавляется к граничной транзакции ноды. Если, согласно правилам [консенсуса](/docs/architecture/consensus), это приводит к увеличению длины блокчейна, вершина ноды обновляется, а корень границы транзакции сдвигается вверх, чтобы поддерживать только блоки `k` на границе транзакции. 
 
 <Alert>
 
-In Mina, blocks are synonymous with "transitions". When this transition (block) is received from a peer, it is referenced as an external transition, whereas one generated and applied locally is referred to as an internal transition. 
+В Mina блоки - это синоним "переходов". Когда этот переход (блок) получен от пира, он называется "внешним переходом", а локально сгенерированный и примененный - "внутренним переходом". 
 
 </Alert>
 
-### Protocol State
+### Состояние протокола
 
-The protocol state is comprised of the **previous protocol state hash** and a body that contains:
+Состояние протокола состоит из **предыдущего хэша состояния протокола** и тела, которое содержит:
 
-* [Genesis state hash](#genesis-state-hash)
-* [Blockchain state](#blockchain-state)
-* [Consensus state](#consensus_state)
-* [Consensus constants](#consensus-constants)
+* [Хэш состояния генезиса](#genesis-state-hash)
+* [Состояние блокчейна](#blockchain-state)
+* [Состояние консенсуса](#consensus_state)
+* [Константы консенсуса](#consensus-constants)
 
-Each block contains the protocol state hash of the previous block, such that blocks may be linked together to form an immutable chain.
+Каждый блок содержит хэш состояния протокола предыдущего блока, таким образом, блоки могут быть соединены вместе, образуя непрерывную цепь.
 
-The protocol state hash is determined from the hash of hashes of the previous state and body and acts as a unique identifier for each block.
+Хэш состояния протокола определяется из хэша предыдущего состояния и тела, выступая в качестве уникального идентификатора для каждого блока.
 
-#### Genesis State Hash
+#### Хэш состояния генезиса
 
-The genesis state hash is the protocol state hash for the genesis protocol state.
+Хэш состояния генезиса - это хэш состояния протокола для состояния протокола генезиса.
 
-#### Blockchain State
+#### Состояние блокчейна
 
-The blockchain state is comprised of:
+Состояние блокчейна включает:
 
-* Staged ledger hash
+* Хэш состояния реестра
 * Snarked ledger hash
 * Snarked next available token
 * Genesis ledger hash
