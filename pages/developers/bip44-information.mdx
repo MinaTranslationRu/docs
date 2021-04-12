@@ -1,27 +1,27 @@
 import Page from '@reason/pages/Docs';
 export default Page({title: "BIP44 Information"});
 
-# BIP44 information
+# Информация о BIP44
 
 | index | hexa       | symbol | coin                              |
 |:------|:-----------|:-------|:----------------------------------|
 | 12586 | 0x8000312a | MINA   | [Mina](https://minaprotocol.com/) |
 
-Mina uses the 5 level [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) path format specified in [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)
+Mina использует 5-уровневый [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) формат пути, описанный в [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)
 
 ```
 m / purpose' / coin_type' / account' / change / address_index
 ```
 
-Keypairs are derived by varying only the ``account`` while keeping the ``change`` and ``address_index`` zero.
+Основные пары производятся путем изменения только ``account`` с сохранением ``change`` и ``address_index`` на нулевом уровне. 
 
-# BIP32 path format
+# Формат пути BIP32
 
 ```
 m / 44' / 12586' / account' / 0 / 0
 ```
 
-# Examples
+# Примеры
 
 | account | path                    |
 |:--------|:------------------------|
