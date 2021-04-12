@@ -53,20 +53,20 @@ export default Page({ title: "What's in a Block" });
 
 Состояние консенсуса включает: 
 
-* Длина блокчейна
-* Epoch count
-* Min window density
-* Sub window density
-* Last VRF output
+* Длину блокчейна
+* Отсчет эпохи
+* Минимальную плотность окна
+* Плотность подокна
+* Последний VRF-выход
 * Total currency
-* Current global slot
-* Global slot since genesis
-* Staking epoch data
-* Next epoch data
+* Текущий глобальный слот
+* Глобальный слот с момента генезиса
+* Данные по эпохе стейкинга
+* Данные следующей эпохи
 * Has ancestor in same checkpoint window
 * Block stake winner
-* Block creator
-* Coinbase receiver
+* Создателя блока
+* Получателя на Coinbase
 * [Supercharged coinbase](/docs/architecture/block-producers#supercharged-coinbase)
 
 #### Константы консенсуса
@@ -105,9 +105,9 @@ export default Page({ title: "What's in a Block" });
 
 ### Доказательство дельта-перехода цепи
 
-There is an allowed network delay when broadcasting or gossiping newly produced blocks around the network to allow for adverse network conditions. The delta transition chain proof proves that the block was produced within the allotted slot time.
+В случае неблагоприятных сетевых условий, допускается сетевая задержка при трансляции или вирусной передачи вновь создаваемых блоков. Доказательство дельта-перехода свидетельствует о том, что блок был изготовлен в пределах отведенного времени слота.
 
-### Example Block
+### Пример блока
 
 ```
 {
