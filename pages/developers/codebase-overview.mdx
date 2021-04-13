@@ -32,17 +32,17 @@ export default Page({ title: "Codebase Overview" });
     Unix  <-  Core  ->       Async
 ```
 
-There are actually multiple sources for `Core` documentation. To find the correct documentation, first go the GitHub then use that to locate the correct documentation. If you can't find the module you're looking for go to `Core_kernel` and if that fails then look for `Base` also note that find will not work if the sections are not expanded.
+На самом деле существует несколько источников документации `Core` . Чтобы найти нужную документацию, для начала перейдите на GitHub, и воспользуйтесь поиском. Если вы не можете найти нужный модуль, перейдите в `Core_kernel`, а если это не помогло, то ищите `Base`. Также обратите внимание, что поиск не будет работать, если секции не будут расширены.
 
-Instead of using the HTML documentation, a better way is to use editor integration using a tool like `merlin` which provides type hints. One downside though is that Merlin will only work if your code compiles. It also gives us code navigation like go to definition.
+Вместо использования HTML документации, лучше применить встроенный редактор, который, с помощью такого инструмента, как `merlin`, предоставляет подсказки по типам. Недостатком, однако, является то, что Merlin будет работать только в том случае, если ваш код компилируется. Кроме того, он дает нам навигацию по коду в виде перехода к определению.
 
-OPAM, which is the package manager for OCaml. usually ships documentation with libraries. This can be accessed through `merlin`.
+OPAM, который является пакетным менеджером для OCaml, обычно поставляет документацию с библиотеками. Доступ к этой документации можно получить через `merlin`.
 
-## Extensions
+## Расширения
 
-OCaml has a notion of compiler plugins, known as a ppx. This is just a hook that allows compile time code generation.
+В OCaml есть понятие плагинов компилятора, известное как ppx. Это обычный перехват, позволяющий компилировать временный код.
 
-An example of an extension on a type signature is as follows
+Примером расширения сигнатуры типа является следующее
 
 ```
     type t =
@@ -52,7 +52,7 @@ An example of an extension on a type signature is as follows
     [@@ deriving yojson]
 ```
 
-In the above example, the single `@` scopes an extension to a single expression, and the `@@` denotes the extension will be expanded in the scope of the calling context.
+В приведенном выше примере, одинарное `@` ограничивает расширение до одного выражения, а `@@` обозначает, что расширение будет увеличено в рамках вызывающего контекста.
 
 For an extension on a structure or a value, you use the following syntax.
 
