@@ -1,28 +1,28 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Codebase Overview" });
 
-# Codebase Overview
+# Обзор кодовой базы
 
-The Mina Protocol is written in OCaml, a statically typed, functional programming langauge.
+Протокол Mina написан на OCaml, статически типизированном, функциональном языке программирования.
 
-For OCaml beginners, it may help to skim through [Real World OCaml](https://realworldocaml.org/) for a good introduction to the language, and some deep dives into specific topics if you're interested.
-Assuming basic familiarity with OCaml, here's some more info on how it is used in the Mina Protocol.
+Если вы новичок в OCaml, то вам может быть полезно изучить [Real World OCaml](https://realworldocaml.org/) для хорошего знакомства с языком, а также глубже погрузиться в узкие темы, если вам это интересно.
+Если вы хорошо знакомы с OCaml, то вот дополнительная информация о том, как он используется в Mina Protocol.
 
-## Code Structure
+## Структура кода
 
-See the [Repository Structure page](/docs/developers/directory-structure/).
+Посмотреть [страницу репозитория структуры](/docs/developers/directory-structure/).
 
-## Compilation
+## Компиляция
 
-The OCaml compiler can target bytecode and native compilation. Our code statically links with some libraries so it can't compile to bytecode. Also our code doesn't play well with the REPL. Dune is our build system. Dune has a concept of folders representing modules in addition to each file representing a module. If the folder has a file with the same name, it's essentially equivalent to `index.js` in Node.
+Компилятор OCaml может быть нацелен на байт-код и нативную компиляцию. Наш код статически связывается с некоторыми библиотеками, так что он не может быть скомпилирован в байт-код. Также наш код не очень хорошо работает с REPL. Dune - наша система сборки. Dune имеет концепцию папок, представляющих модули в дополнение к каждому файлу, представляющему модуль. Если папка имеет файл с таким же именем, то это, по сути, эквивалентно `index.js` в Node.
 
-We also have interface files in OCaml -- they have the extension `.mli` which just contain type signatures and structures for a module. The corresponding implementation must have the same file name, but with the `.ml` extension. Only the things defined in the interface will be available from other modules. If an interface file does not exist for a module, everything is exposed by default. _Note: Reason follows the same rules with the `.rei` and `.re` extensions._
+У нас также есть файлы интерфейса в OCaml - они имеют расширение `.mli`, которое просто содержит подписи типа и структуры для модуля. Соответствующая реализация должна иметь то же имя файла, но с расширением `.ml`. Только то, что определено в интерфейсе, будет доступно из других модулей. Если для модуля не существует файла интерфейса, то всё отображается по умолчанию. _Примечание: язык программирования Reason следует тем же правилам с расширениями `.rei` и `.re`._
 
-For the linking step, `dune` uses `ldd` under the hood. You can also use things like `-O3` for optimization. For debugging, you can use `gdb` which isn't fully supported by OCaml but it works. The upcoming release of OCaml (4.08) will be compatible with `gdb`.
+Для перехода на шаг соединения, `dune` использует `ldd` под капотом. Для оптимизации также можно использовать такие вещи, как `-O3`. Для отладки вы можете использовать `gdb`, который не полностью поддерживается OCaml, но работает. Предстоящий релиз OCaml (4.08) будет совместим с `gdb`.
 
-## Documentation
+## Документация
 
-One difficult issue with learning OCaml is locating and reading documentation for libraries. One library in particular is the `Core` library, which has the following structure:
+Основной трудностью при изучении OCaml является поиск и чтение документации для библиотек. Одной из библиотек, в частности, является библиотека `Core`, которая имеет следующую структуру:
 
 ```
               Base
