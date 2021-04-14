@@ -76,13 +76,13 @@ For an extension on a structure or a value, you use the following syntax.
     [%% endif]
 ```
 
-**TL;DR** Anytime you see `[@ ...]` `[@@ ...]` `[% ...]` `[%% ...]` it's a language extension.
+**TL;DR** Каждый раз, когда вы видите `[@ ...]` `[@@ ...]` `[% ...]` `[%% ...]` - это языковое расширение.
 
-## Monads
+## Монады
 
-Functional design patterns that allows you to write computation in a very generic way, that removes the need for boilerplate code. Monads allow us to abstract up to a higher level of computation, while taking care of all the glue for us. In other words, monads are programmable semicolons.
+Функциональные шаблоны дизайна, которые позволяют производить вычисления в очень общем виде, что устраняет необходимость в шаблоне кода. Монады позволяют нам абстрагироваться до более высокого уровня вычислений, являясь связующим элементом для нас. Другими словами, монады - это программируемые точки с запятой.
 
-For example consider the following imperative example:
+Рассмотрим следующий императивный пример:
 
 ```
     function example(x) {
@@ -93,7 +93,7 @@ For example consider the following imperative example:
     }
 ```
 
-This can expressed similarly in functional programming using a monad, using option:
+Это может быть аналогичным образом выражено в функциональном программировании с использованием монад, с помощью опции:
 
 ```
     type a' option =
@@ -115,7 +115,7 @@ This can expressed similarly in functional programming using a monad, using opti
     let (>>|) m f = m >>= (fun x -> return (f x))
 ```
 
-Now we an use these primitives to reimplement the imperative example above as follows.
+Теперь мы используем эти первоисточники для повторения приведенного выше императивного примера следующим образом:
 
 ```
     let add_one = ((+) 1)
@@ -134,12 +134,12 @@ OCaml has a `ppx` that makes writing monads much easier to follow, using the let
     y >>= (fun x -> f x)
 ```
 
-Essentially, this syntax takes the value from the let statement and places it on the left of the bind infix call, and puts the assignment into a lambda.
+По сути, этот синтаксис берет значение из let-инструкции, помещает его слева от bind infix call, и помещает присвоение в lambda.
 
 ## Async
 
-Under the hood, Async uses Monads however Ivar's are the primitive. `a' Ivar.t` is essentially a mutex that can only be filled once. Once the value from a computation returns, it then fills the Ivar. The rest of the syntactic sugar takes the Ivar and passes them through `Deferred` monads.
+Под капотом Async использует монады, однако Ivar примитивны. `a' Ivar.t` - это, по сути, mutex, который можно заполнить только один раз. Как только значение из вычисления возвращается, оно затем заполняет Ivar. Остальной синтаксический сахар берет Ivar и пропускает их через `Deferred`-монады.
 
-There does exist a `yield` function, however we try to avoid using it since it has some weird behavior. Instead we usually operate on the wrapped values which happens in between `Deferred` bindings.
+Существует функция `yield`, однако мы стараемся избегать ее использования, так как она имеет несколько странное поведение. Вместо этого мы обычно оперируем с обернутыми значениями, которые происходят между привязками `Deferred`.
 
-Warning: One other thing to note is `Async.Pipe` which operates essentially like a buffer. DO NOT USE THIS. This is unsafe, since it has unlimited buffering by default (memory overflow), has some funky behavior around which end of the pipe should do what. Instead use `Strict_pipe` which wraps pipe, but gives us certain guarantees around how it can be used. One more custom helper we've written is `Broadcast_pipe` which allows a single pipe to be hooked up to multiple downstream pipes. Also, there's a `Linear_pipe` that was written before we really understood the pitfalls of pipes, this is deprecated now in favor of `Strict_pipe` and `Broadcast_pipe`
+Внимание: Еще одна функция, на которую стоит обратить внимание, это `Async.Pipe`, которая работает, по сути, как буфер. НЕ ИСПОЛЬЗУЙТЕ ЕЁ. Это небезопасно, так как по умолчанию она имеет неограниченную буферизацию (переполнение памяти), и немного странно себя ведет при выборе того, какой конец конвейера должен работать. Вместо этого используйте `Strict_pipe`, которая сворачивает конвейер, но даёт нам определённые гарантии относительно того, как его можно использовать. Еще один пользовательский помощник, который мы написали, это `Broadcast_pipe`, который позволяет одному конвейеру быть подключенным к нескольким последующим конвейерам. Кроме того, есть устаревшая команда `Linear_pipe`, которая была написана до того, как мы действительно смогли понять все подводные камни конвейера, и теперь вместо нее используются `Strict_pipe` и `Broadcast_pipe`.
