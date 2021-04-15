@@ -21,16 +21,16 @@ export default Page({ title: "Repository Structure" });
      Код для https://minaprotocol.com
 
     - `docs/`  
-       Documentation and instructions on joining the Mina network that live at https://minaprotocol.com/docs
+       Документация и инструкции по присоединению к сети Mina находятся по адресу https://minaprotocol.com/docs
 
     - `posts/`  
-       Markdown docs for blog posts
+       Документы Markdown для постов в блогах
 
     - `src/`  
-       Source code for the website
+       Исходный код сайта
 
     - `static/`  
-       Static files like images, etc.
+       Статические файлы, такие как изображения и т.д.
 
 - `rfcs/`  
    Этот каталог содержит все принятые RFC (или "запросы на комментарии"), сделанные в соответствии с [RFC-процессом](https://github.com/MinaProtocol/mina/blob/master/CONTRIBUTING.md#rfcs).
@@ -51,19 +51,19 @@ export default Page({ title: "Repository Structure" });
      Здесь все наши вэб-приложения.
 
     - `cli/`  
-       This is the mina client/daemon. It is what you use to run a staker, a snarker, or a simple client for sending and receiving transactions.
+       Это клиент/daemon Mina. Это то, что вы используете для запуска стейкера, снаркера или простого клиента для отправки и получения транзакций.
 
     - `website/`  
-       Soon to be deprecated directory for the website - most of the code has migrated over to `frontend/website/`
+       Каталог для веб-сайта скоро станет устаревшим - большая часть кода перенесена на `frontend/website/`. 
 
     - `reformat/`  
-       This program runs `ocamlformat` on most of the files in the source tree, with a few exceptions.
+       Эта программа запускает `ocamlformat` на большинстве файлов в дереве исходников, за некоторыми исключениями.
 
     - `logproc/`  
-       This utility reads from `stdin` and can filter and pretty print the log messages emitted by the mina daemon.
+       Эта утилита читает из `stdin`, с возможностью фильтрации и красивой печати сообщений журнала, генерируемых mina daemon.
 
     - `libp2p_helper/`  
-       This program uses go-libp2p to implement the peer-to-peer plumbing that Mina daemons need.
+       Эта программа использует go-libp2p для реализации peer-to-peer plumbing, который нужен для daemons Mina.
 
   - `external/`  
      Локальные копии внешних библиотек, в которые нам пришлось внести некоторые коррективы.
@@ -71,5 +71,5 @@ export default Page({ title: "Repository Structure" });
   - `lib/`  
      Библиотеки, продвигающие Mina.
     Библиотеки в основном делятся на две категории.
-    1. General purpose data-types and functionality. This includes `snarky`, `fold_lib`, `vrf_lib`, `sgn`, and others.
-    2. Application specific functionality, structured as a library. This includes `syncable_ledger`, `staged_ledger`, `transaction_snark`, and others.
+    1. Типы данных общего назначения и функционал. К ним относятся `snarky`, `fold_lib`, `vrf_lib`, `sgn` и другие.
+    2. Специфический функционал приложения, структурированный как библиотека. Включает в себя `syncable_ledger`, `stage_ledger`, `transaction_snark` и другие.
