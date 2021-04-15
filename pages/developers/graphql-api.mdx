@@ -14,13 +14,13 @@ Daemon Mina раскрывает [GraphQL API](https://graphql.org/), испол
 
 Для использования API GraphQL, подключите клиент GraphQL к `http://localhost:3085/graphql`, или откройте в своем браузере, чтобы пользоваться [GraphiQL IDE](https://github.com/graphql/graphiql). В целях безопасности, по умолчанию разрешены только соединения с `localhost`. Чтобы прослушивать на всех интерфейсах, добавьте флаг `-insecure-rest-server` к команде запуска daemon.
 
-In addition to information about the running node, the GraphQL API can return data about the network's latest blocks. However, as the blockchain's historical state is not persisted in Mina, only blocks in the node's transition frontier will be returned, i.e., the last `k` blocks. For other historical data, you should use the archive node, which is designed to retain and retrieve historical data.
+Помимо информации о работающей ноде, API GraphQL может возвращать данные о последних блоках сети. Однако, так как в Mina не сохраняется историческое состояние блокчейна, возвращаются только те блоки, которые находятся на границе перехода ноды, т.е. последние блоки `k`. Для других исторических данных следует использовать архивную ноду, которая предназначена для хранения и извлечения исторических данных.
 
-The full Mina GraphQL schema is available [here](https://minaprotocol.com/graphql-docs/index.html).
+Полная схема GraphQL Mina доступна [здесь] (https://minaprotocol.com/graphql-docs/index.html).
 
-### Queries:
+### Запросы:
 
-The Mina GraphQL API has a number of [queries](https://minaprotocol.com/graphql-docs/query.doc.html) to extract data from a running node. [GraphQL queries](https://graphql.org/learn/queries/) allow specifying the data to be returned in the response. For example to get the latest block and creator information known to the daemon:
+В API GraphQL Mina есть ряд [запросов](https://minaprotocol.com/graphql-docs/query.doc.html) для извлечения данных из работающей ноды. [GraphQL-запросы](https://graphql.org/learn/queries/) позволяют указать данные для их возврата в ответе. Например, чтобы получить самую свежую информацию о блоке и создателе, известную daemon:
 
 ```
 query {
@@ -40,7 +40,7 @@ query {
 }
 ```
 
-The following query requests all pending transactions in the [transaction pool](#) together with their fees. This query may be used to generate an estimate of a suggested fee for a transaction:
+В следующем запросе запрашиваются все отложенные транзакции в [пуле транзакций](#) вместе с их комиссиям..  Этот запрос может быть использован для определения предполагаемой платы за транзакцию:
 
 ```
 query {
@@ -53,11 +53,11 @@ query {
 
 <Alert>
 
-The memo field returned for a transaction is [Base58Check encoded](https://en.bitcoin.it/wiki/Base58Check_encoding).
+Поле memo, возвращаемое для транзакции - это [Base58Check encoded](https://en.bitcoin.it/wiki/Base58Check_encoding).
 
 </Alert>
 
-To retrieve the details of an account for the primary mina [token](https://minaprotocol.com/docs/architecture/tokens):
+Для получения подробной информации об аккаунте для основного mina [token](https://minaprotocol.com/docs/architecture/tokens):
 
 ```
 query {
@@ -71,7 +71,7 @@ query {
 }
 ```
 
-You can submit GraphQL requests from the command line of a node. For example, to use cURL to get the last ten block creators known to the node:
+Вы можете отправлять GraphQL-запросы из командной строки ноды. Например, использовать cURL, чтобы получить последние десять известных создателей блоков для ноды:
 
 ```
 curl -d '{"query": "{
@@ -81,17 +81,17 @@ curl -d '{"query": "{
 }"}' -H 'Content-Type: application/json' http://localhost:3085/graphql
 ```
 
-### Mutations:
+### Мутации:
 
-GraphQL mutations modify the running node in some way. For example, mutations may be used to send a payment, create a new account, or to add additional peers.
+Мутации GraphQL модифицируют запущенную ноду несколькими способами. Например, мутации могут быть использованы для отправки платежа, создания нового аккаунта, или добавления дополнительных пиров.
 
 <Alert>
 
-Consult the [GraphQL schema](https://minaprotocol.com/graphql-docs/mutation.doc.html) for all available mutations.
+Консультируйтесь с [GraphQL schema](https://minaprotocol.com/graphql-docs/mutation.doc.html) о всех доступных мутациях.
 
 </Alert>
 
-Adding a new peer:
+Добавление нового пира:
 
 ```
 mutation {
@@ -103,7 +103,7 @@ mutation {
 }
 ```
 
-Update a snark worker to use a fee of 0.1 mina:
+Обновить снарк-работника, чтобы использовать комиссию 0,1 mina:
 
 ```
 mutation {
@@ -111,15 +111,15 @@ mutation {
 }
 ```
 
-### Subscriptions:
+### Подписки:
 
-A GraphQL [subscription](https://minaprotocol.com/graphql-docs/subscription.doc.html) allows a GraphQL client to have data pushed to it when an event occurs. In Mina, there are subscriptions for:
+Подписка на GraphQL [подписка](https://minaprotocol.com/graphql-docs/subscription.doc.html) позволяет клиенту GraphQL-получать пуш-уведомления при возникновении события. В Mina имеются подписки на:
 
-* _newSyncUpdate_ - occurs when the sync status of the node changes.
-* _newBlock_ - occurs when a new block is received.
-* chainReorganisation - occurs when the best tip of the node changes in a non-trivial way.
+* _newSyncUpdate_ - происходит при изменении статуса синхронизации ноды.
+* _newBlock_ - происходит при получении нового блока.
+* chainReorganisation - происходит, когда вершина ноды меняется нетривиальным образом..
 
-For example, to subscribe to all new blocks produced:
+Например, подписаться на все новые произведённые блоки:
 
 ```
 subscription {
@@ -136,15 +136,15 @@ subscription {
 }
 ```
 
-The new block subscription may also be limited to only return new blocks created by a defined public key with the `publicKey` argument.
+Подписка на новые блоки также может быть ограничена только возвратом новых блоков, созданных определенным открытым ключом с аргументом `publicKey`.
 
-### GraphQL Public Proxy:
+### Открытый GraphQL Proxy:
 
-While exposing the GraphQL API to the internet is not recommended, an implementation of a [GraphQL proxy](https://github.com/MinaProtocol/mina/tree/master/automation/services/graphql-public-proxy) is available that removes the queries that pose a threat but still allows querying of the node's data from a public endpoint. Access the public proxy [here](http://graphql.o1test.net/graphql).
+Так как не рекомендуется открывать API GraphQL в интернете, доступна реализация [GraphQL proxy](https://github.com/MinaProtocol/mina/tree/master/automation/services/graphql-public-proxy), которая удаляет запросы, представляющие угрозу, но все же позволяет запрашивать данные ноды с публичной конечной точки. Доступ к публичному прокси [здесь](http://graphql.o1test.net/graphql).
 
-### Resources:
+### Источники:
 
-- [5-minute introduction video on Mina GraphQL API](http://bit.ly/GraphQLAPIin5)
-- [First steps with the Mina GraphQL API](https://garethtdavies.com/crypto/first-steps-with-coda-graphql-api.html)
-- [Introduction to GraphQL](https://graphql.org/learn/)
-- [Public GraphQL proxy](http://graphql.o1test.net/graphql)
+- [5-минутный вводный видеоролик о Mina GraphQL API](http://bit.ly/GraphQLAPIin5)
+- [Первые шаги в Mina GraphQL API](https://garethtdavies.com/crypto/first-steps-with-coda-graphql-api.html)
+- [введение в GraphQL](https://graphql.org/learn/)
+- [Открытый GraphQL proxy](http://graphql.o1test.net/graphql)
