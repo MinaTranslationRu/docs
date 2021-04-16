@@ -1,23 +1,23 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Sandbox Node" });
 
-# Sandbox Node
+# Нода Песочницы
 
-The Mina Sandbox Node will enable you to test and get familiar with core features of the protocol and build tooling in a stable environment -- it's a single-node private network that uses the same configuration as the live testnet. This sandbox supports multiple accounts, sending transactions between them, and will also support performing SNARK work, delegating, and staking. In fact since it's a single node network, you'll get all the block rewards!
+Нода Песочницы Mina позволит вам протестировать и ознакомиться с основными функциями протокола, а также построить инструментарий в стабильной среде - это приватная сеть с одной нодой, использующая ту же конфигурацию, что и реальная тестовая сеть. Песочница поддерживает несколько учетных записей, отправляя транзакции между ними, а также поддерживает выполнение SNARK-работы, делегирование и стейкинг. Более того, поскольку это сеть с одним узлом, вы получите все вознаграждения за блок!
 
 <Alert>
 
 
-The sandbox does **NOT** connect you to a live network.
+Песочница **НЕ** подключает вас к действующей сети.
 
 </Alert>
 
 
-## Installation
+## Установка
 
-[Docker](https://www.docker.com) is a tool for portably running applications. The Mina Sandbox Node is packaged with Docker. It’s easy to install--we suggest the [Docker Desktop](https://www.docker.com/products/docker-desktop).
+[Докер](https://www.docker.com) это инструмент для портативных запущенных приложений. The Mina Sandbox Node is packaged with Docker. Установить его очень просто--мы предлагаем [Docker Desktop](https://www.docker.com/products/docker-desktop).
 
-After you have Docker installed run the following command to spin up the Mina Sandbox.
+После установки Docker, запустите следующую команду, чтобы развернуть Песочницу Mina.
 
 ```
 docker run \
@@ -27,29 +27,29 @@ docker run \
   minaprotocol/mina-demo:sandbox-32a.1
 ```
 
-This command will start a daemon inside the docker container and expose the GraphQL port (3085), which is used for communication with the client, to your computer. This daemon will automatically be running in the background with a block producer and snark worker.
+Эта команда запустит daemon внутри контейнера докера и предоставит вашему компьютеру GraphQL-порт (3085), который используется для связи с клиентом. Daemon будет автоматически запущен в фоновом режиме с блок-продюсером и снарк-работником.
 
-You can view logs by executing.
+Вы можете просматривать логи, выполняя
 
 ```
 docker logs --follow mina
 ```
 
-And stop mina by running.
+И остановить Mina, запустив
 
 ```
 docker stop mina
 ```
 
-You can use the Mina CLI to interact with the sandbox node. The following command opens a shell inside the docker container from where you can issue any of the available [mina commands](/docs/cli-reference).
+Вы можете использовать Mina CLI для взаимодействия с нодой песочницы. Следующая команда открывает оболочку внутри контейнера докера, откуда вы можете запустить любую из доступных [команд Mina] (/docs/cli-reference).
 
 ```
 docker exec -it mina bash
 ```
 
-### Account details
+### Данные аккаунта
 
-The container has one account with this public key:
+Контейнер имеет один аккаунт с этим публичным ключом:
 
 ```
 B62qrPN5Y5yq8kGE3FbVKbGTdTAJNdtNtB5sNVpxyRwWGcDEhpMzc8g
@@ -57,12 +57,12 @@ B62qrPN5Y5yq8kGE3FbVKbGTdTAJNdtNtB5sNVpxyRwWGcDEhpMzc8g
 
 The password for this account is the empty string (there's no password -- you can leave the password field blank).
 
-## How to use the sandbox
+## Как использовать Песочницу
 
-There are a few things you can do with your sandbox now that you have it running:
+Пароль для этой учетной записи - пустая строка (нет пароля -- можно оставить поле пустым).
 
-- [Install Mina](/docs/getting-started#installation) as usual and use many of the client commands. Since the daemon is already running in the container, you don't need to run `mina daemon`!
+- [Установите Mina](/docs/getting-started#installation) в обычном режиме и используйте многочисленные команды клиента. Так как daemon уже запущен в контейнере, вам не нужно запускать `mina daemon`!
 
-- Install the [GUI Wallet](/docs/gui-wallet) app to use a graphical interface to your node. Enter '127.0.0.1' as the host of your node during setup.
+- Установите приложение [GUI Wallet](/docs/gui-wallet), чтобы использовать графический интерфейс для вашей ноды. Введите '127.0.0.1' в качестве хоста вашей ноды во время установки.
 
-- Head over to http://localhost:3085/graphql to play with the GraphQL API directly.
+- Зайдите на сайт http://localhost:3085/graphql, чтобы напрямую поиграть с GraphQL API.
