@@ -72,7 +72,7 @@ Daemon Мина ведет журнал логов на следующих ур�
 
 ### Выгрузка логов:
 
-Mina daemon предоставляет CLI-помощник для сжатия и упаковки доступных лог-файлов от ноды. 
+Mina daemon предоставляет CLI-помощника для сжатия и упаковки доступных лог-файлов от ноды. 
 
 При запущенном daemon, запустите `mina client export-logs`, где можно передать дополнительный флаг `-tarfile`, чтобы указать имя файла tar-архива, которое по умолчанию соответствует текущему моменту времени. Эта команда сжимает доступные логи и экспортирует их в каталог `exported_logs` в каталоге `~/.mina-config`.
 
@@ -105,13 +105,13 @@ Mina daemon предоставляет CLI-помощник для сжатия 
 
 ### Отчеты о сбоях:
 
-If the daemon crashes and is able, it will generate a crash report. Only the latest crash report will be retained, with the filename indicating the date-time of the crash and the compressed file being exported to the `~/.mina-config` directory. You can upload this crash report to any [GitHub issue](https://github.com/MinaProtocol/mina/issues) to identify new issues and aid in debugging.
+Если daemon даёт сбой, будет сгенерирован отчёт о сбое. Будет сохранен только последний отчет о сбое с именем файла, указывающим на время сбоя. Он будет сжат и экспортирован в каталог `~/.mina-config`. Вы можете загрузить этот отчет о сбое в любую из [записей о проблеме GitHub] (https://github.com/MinaProtocol/mina/issues), чтобы определить новые проблемы и содействовать в их устранении.
 
-The crash report will contain some, or all of, the following log files:
+Отчет о сбое будет содержать некоторые (или все) из следующих лог-файлов:
 
-* `crash_summary.json` - contains a summary of the crash, including the system info, the version information, and the final log output.
-* `mina_status.json` - an output of the `mina client status` command for a summary of the daemon's final state.
-* `mina_short.log` - contains the last 4MiB of the `mina.log` file.
-* `registered_mask.dot` - contains the latest ledger visualization.
-* `frontier.dot` - contains the latest frontier visualization.
-* `daemon.json` - a copy of the daemon configuration file.
+* `crash_summary.json` - содержит резюме сбоя, включая системную информацию, информацию о версии и окончательный лог-отчет.
+* `mina_status.json` - вывод команды `mina client status` для получения информации об окончательном состоянии daemon.
+* `mina_short.log` - содержит последние 4MiB файла `mina.log`.
+* `registered_mask.dot` - содержит последнюю визуализацию реестра.
+* `frontier.dot` - содержит последнюю визуализацию границы.
+* `daemon.json` - копия файла конфигурации daemon.
