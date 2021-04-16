@@ -1,24 +1,24 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Daemon Logging" });
 
-# Logging
+# Логгинг
 
-Mina logs are located in the configuration directory located at `~/.mina-config`. This directory contains the following log files:
+Логи Mina находятся в каталоге конфигурации, расположенном по адресу `~/.mina-config`. Этот каталог содержит следующие лог-файлы:
 
-* `mina.log` - this file contains the latest logs of the daemon. Each log file is limited to 10 Mebibyte (MiB) in size and rotates over 50 log files. Rotated log files are named `mina.log.x` from `mina.log.0` to `mina.log.50`.
-* `mina-best-tip.log` - this file contains the best tip logs of the daemon. This file makes it easier to collect the required logs from nodes to determine the best state for any hard fork. This file is limited to 5 Mebibyte (MiB) in size and rotates over a single log file `mina-best-tip.log.0`.
-* `mina-prover.log` - this file contains logs for the prover's memory usage and batch sizes. It is limited to 128 Mebibyte (MiB) and rotates over a single log file.
-* `mina-verifier.log` - this file contains logs for the verifier's memory usage and batch sizes. It is limited to 128 Mebibyte (MiB) and rotates over a single log file.
+* `mina.log` - этот файл содержит последние логи daemon. Каждый лог-файл ограничен размером 10 Мебибайт (MiB) и прокручивает более чем 50 лог-файлов. Вращающиеся лог-файлы называются `mina.log.x`, начиная с `mina.log.0` и заканчивая `mina.log.50`.
+* `mina-best-tip.log` - этот файл содержит логи лучших подсказок daemon. Этот файл облегчает сбор необходимых логов от нод, чтобы определить лучшее состояние для любого хардфорка. Этот файл ограничен размером 5 Мебибайт (MiB) и прокручивается над одним лог-файлом `mina-best-tip.log.0`.
+* `mina-prover.log` - этот файл содержит логи использования памяти prover, а также размеров пакетов. Он ограничен 128 Мебибайтами (МiB) и прокручивается над одним лог-файлом.
+* `mina-verifier.log` - этот файл содержит журналы использования памяти верификатора, а также размер пакетов. Он ограничен 128 Мебибайтами (МiB) и прокручивается над одним лог-файлом.
 
-To follow the logs, use one of the following commands, depending on how you started the daemon:
+Чтобы следить за логами, используйте одну из следующих команд, в зависимости от того, как вы запустили daemon:
 
-* Docker: `docker logs --follow mina`
-* Running as a service: `journalctl --user -u mina -n 1000 -f`
-* Other: `tail -f ~/.mina-config/mina.log`
+* Докер: `docker logs --follow mina`
+* Запуск в качестве службы: `journalctl --user -u mina -n 1000 -f`
+* Другое: `tail -f ~/.mina-config/mina.log`
 
-### Log levels:
+### Уровни логов:
 
-The Mina daemon logs at the following levels, in this order of precedence:
+Daemon Мина ведет журнал логов на следующих уровнях, в таком порядке старшинства:
 
 * Spam
 * Trace
