@@ -1,23 +1,23 @@
 import Page from '@reason/pages/Docs';
 export default Page({title: "Snarky DSL Guide"});
 
-Here you can find documentation on how to use **snarky**, a DSL for using zk-SNARKS, as well as **snarkyjs-crypto** a companion JavaScript library providing a suite of cryptographic primitives suitable for use with **snarky**.
+Здесь вы можете найти документацию по использованию **snarky**, DSL для использования zk-SNARKS, а также **snarkyjs-crypto** (сопутствующей библиотеки JavaScript, предоставляющей набор криптографических примитивов, подходящих для использования с **snarky**).
 
 
-## The structure of a SNAPP
+## Структура SNAPP
 
-A SNAPP (or snarkified app) has two parts:
+SNAPP (или SNARK-приложение) состоит из двух частей:
 
-1. The definition of your zk-SNARK program. This part will be built using **snarky**
-   and specifically the [snarky-universe](/docs/snarks/snarky-universe) standard library.
-2. The rest of the application, which calls into **snarky** to create and verify proofs.
-   There are currently APIs for Node.js and OCaml/ReasonML for interacting with **snarky** programs in this way.
+1. Определение вашей программы zk-SNARK. Эта часть будет построена с использованием **snarky**
+   и прежде всего стандартной библиотеки [snarky-universe](/docs/snarks/snarky-universe).
+2. Остальная часть приложения, которое вызывает **snarky** для создания и проверки доказательств.
+   В настоящее время существуют API для Node.js и OCaml/ReasonML для взаимодействия с программами **snarky** таким образом.
 
-    We'll use two Node.js libraries:
+    Мы используем две библиотеки Node.js:
 
-    - [snarkyjs-crypto](/docs/snarks/snarkyjs-crypto), which gives us access
-      to cryptographic hashes, merkle-trees, and signatures that mirror those in snarky-universe
-    - [snarkyjs](https://www.npmjs.com/package/snarkyjs) which gives us methods for creating and verifying SNARK proofs.
+    - [snarkyjs-crypto](/docs/snarks/snarkyjs-crypto), что дает нам доступ
+      к криптографическим хэшам, деревьям Меркла и подписям, которые зеркально отражают то, что есть в snarky-universe.
+    - [snarkyjs](https://www.npmjs.com/package/snarkyjs), который дает нам методы для создания и проверки SNARK-доказательств.
 
 ## An example app
 
