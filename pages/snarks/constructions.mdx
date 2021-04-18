@@ -1,19 +1,19 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "SNARK Constructions" });
 
-# Which SNARK construction should I use?
+# Какую конструкцию SNARK я должен использовать?
 
-There are many different SNARK constructions which have tradeoffs in performance and security.
-This page gives an overview of some of the important criteria to have in mind when selecting a scheme.
+Существует множество различных конструкций SNARK, которые имеют компромиссы в производительности и безопасности.
+На этой странице дается обзор некоторых важных критериев, которые необходимо иметь в виду при выборе схемы.
 
-## Non-malleability
+## Несовместимость
 
-For many applications, it is important for SNARKs to be _non-malleable_.
-Intuitively, a SNARK is _non-malleable_ if seeing proofs doesn't help you produce proofs on new statements.
+Для многих приложений важно, чтобы SNARK был _несовместим_.
+Интуитивно понятно, что SNARK _несовместим_ , если просмотр доказательств не поможет вам получить доказательства по новым инструкциям.
 
-A bit more in detail, a SNARK construction is _non-malleable_ if
-it is impossible to modify a proof **p** which verifies against input **x** into a proof **p'** which verifies
-against an input **x'**, unless you could have done so without seeing **(p, x)**.
+Немного подробнее: конструкция SNARK _несовместима_, если
+невозможно изменить доказательство **p**, которое подтверждает и сверяет ввод **x** в доказательстве **p'**, которое подтверждает и сверяет 
+ввод **x'**, за исключением случаев, когда вы могли сделать это без видимости **(p, x)**.
 
 The technical phrase for this kind of non-malleability is _simulation extractable_.
 
