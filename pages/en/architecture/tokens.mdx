@@ -1,27 +1,27 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Tokens" });
 
-# Tokens
+# Токены
 
-Tokens provide a way for users to create and mint (issue) their own custom tokens, which requires a special token account.
+У пользователей есть возможность создавать и выпускать собственные пользовательские токены, для чего требуется специальный токен-аккаунт.
 
 <Alert kind="warning">
 
-As of release `0.0.16-beta7` this feature has been disabled and can only be used by enabling a build-time flag. We plan to enable this feature in future releases.
+  Начиная с версии `0.0.16-beta7` эта функция была отключена и может быть использована только при включении флага сборки. Мы планируем активировать эту возможность в будущих релизах.
 
 </Alert>
 
-In the Mina protocol, users can create their own Tokens which can be minted (or created) and sent by using special token accounts. The Mina CLI (command-line interface) is the primary way to interact with tokens on the Mina blockchain. It provides a client interface that supports functionality to create new tokens, create new token accounts, and mint non-default tokens. In addition to the tokens interface, there are other advanced client and daemon commands (see [CLI Reference](/docs/using-mina/cli-reference#cli-reference)).
+В протоколе Mina пользователи могут создавать свои собственные Токены, которые могут быть созданы и использованы с помощью специальных токен-аккаунтов. Mina CLI (интерфейс командной строки) - это основной способ взаимодействия с токенами на блокчейне Mina. Он предоставляет клиентский интерфейс, поддерживающий функционал для выпуска новых токенов, создания новых токен-аккаунтов, а также создания нон-дефолтных токенов. В дополнение к интерфейсу токенов, есть и другие продвинутые клиентские и daemon-команды (см. [Ссылка CLI]) (/docs/cli-reference#cli-reference)).
 
-## Creating Tokens
+## Создание токенов
 
-With the CLI, you are able to create your own tokens on Mina. Non-default tokens are a new type of token that is introduced to the Mina blockchain. These new types of tokens have a unique identifier that differentiate them from all other tokens in the blockchain. Users with an associated token account can then receive/send this new type of token that is totally separate from the native Mina token itself! When you create a new token, you are then able to mint more of the token to be used (see below in [Minting Tokens](/docs/architecture/tokens#minting-tokens)).
+С помощью CLI вы можете создавать свои собственные токены на Mina. Нон-дефолтные токены - это новый тип токенов, который вводится в блокчейн Mina. Данный вид токенов имеет уникальный идентификатор, который отличает их от всех остальных токенов в блокчейне. Пользователи с соответствующими токен-аккаунтами могут получать/отправлять этот новый тип токена, который полностью отделен от самого токена Mina! Когда вы создаете новый токен, вы можете затем получать еще больше уже существующих токенов (см. ниже в разделе [Minting Tokens])(/docs/tokens#minting-tokens)).
 
-When creating a new token, a new token ID is created as well as a token account for your public key. This token account owns the token and can mint more of the token. The account will also (eventually) have the power to enable/disable accounts, and to set whether new accounts may be created for the token.
+При создании нового токена создается новый ID токена, а также токен-аккаунт для Вашего открытого ключа. Этот токен-аккаунт становится владельцем токена и, за счет этого, может выпускать больше токенов. Аккаунт также (в конечном счете) имеет право включать/отключать учетные записи, а также устанавливать, могут ли создаваться новые аккаунты для токена.
 
-Please note that creating new tokens requires an additional fee on top of the ever-present transaction fee. This additional fee is the fee that must be paid when creating a new token account. This means there is a fee for the account creation on top of the transaction fee that is normally applied.
+Обратите внимание, что создание новых токенов требует оплаты дополнительных сборов наряду с постоянно действующими комиссиями за транзакции. Эта дополнительная комиссия подлежит оплате при создании нового токен-аккаунта. Это означает, что оплата за создание счета взимается в дополнение к комиссии за транзакции, которая взимается в обычном порядке.
 
-### Create a new token
+### Создание нового токена
 
 ```
 $ mina client create-token -sender <PUBLIC_KEY>
@@ -29,31 +29,35 @@ $ mina client create-token -sender <PUBLIC_KEY>
 
 <Alert>
 
-The required field for creating a new token account is:
 
-- -**sender** : The public key from which you want to send the transaction
+Требуемое поле для создания нового токен-аккаунта:
+
+- -** отправитель** : Открытый ключ, с которого вы хотите совершить транзакцию
 
 </Alert>
 
-See
+
+Посмотреть
 
 ```
 $ mina client create-token -help
 ```
 
-to learn more about how to use the command.
+чтобы узнать больше о том, как использовать команду.
 
-## Creating Token Accounts
+## Создание токен-аккаунта
 
-With the CLI, you are able to create a token account for existing tokens. Token accounts are like regular accounts but solely meant to interact with the non-default tokens that exist in the Mina protocol. You must create a separate unique token account for each type of token you wish to interact with.
+С помощью CLI вы можете создать токен-аккаунт для уже существующих токенов. Эти аккаунты похожи на обычные учетные записи, но предназначены исключительно для взаимодействия с нон-дефолтными токенами, которые существуют в протоколе Mina. Вы должны создать отдельный уникальный токен-аккаунт для каждого типа токенов, с которым вы хотите взаимодействовать.
 
 <Alert kind="warning">
 
-To send or receive an existing token, you must have a token account with the specified token. If there is no valid token account with the token, the transaction will fail.
+
+Чтобы отправить или получить существующий токен, у вас должен быть токен-аккаунт с указанным токеном. В случае отсутствия действующего токен-аккаунта с данным токеном, сделка не может быть совершена.
 
 </Alert>
 
-### Create a new token account
+
+### Создание нового токен-аккаунта
 
 ```
 $ mina client create-token-account -token-owner <PUBLICKEY> -receiver <PUBLICKEY> -sender <KEY> -token <TOKEN_ID>
@@ -61,31 +65,33 @@ $ mina client create-token-account -token-owner <PUBLICKEY> -receiver <PUBLICKEY
 
 <Alert>
 
-If the token owner is not given, the CLI will query to find the token owner. If no owner is found, the command will fail with an error.
 
-The required fields for creating a new token account are:
+Если владелец токена не указан, CLI сделает запрос на поиск владельца токена. Если владелец не будет найден, команда выдаст ошибку.
 
-- -**receiver** : The public key to create the new account for, you can reuse your normal public key here
+Поля, обязательные для создания нового токен-аккаунта:
 
-- -**sender** : The public key for which you want to create the account
+- -**получатель** : Публичный ключ для создания новой учетной записи, вы можете повторно использовать ваш обычный публичный ключ здесь
 
-- -**token** : The ID of the token from which you want to send the transaction
+- -** отправитель** : Открытый ключ, для которого вы хотите создать учетную запись
+
+- -**токен** : Идентификатор токена, с которого вы хотите совершить транзакцию
 
 </Alert>
 
-See
+
+Посмотреть
 
 ```
 $ mina client create-token-account -help
 ```
 
-to learn more about how to use the command.
+чтобы узнать больше о том, как использовать команду.
 
-## Minting Tokens
+## Минтинг токенов
 
-With the CLI, you are able to mint your own tokens. Minting your own tokens simply increases the supply of a particular token. Minting tokens is how all non-default tokens are created, there are no other protocol-events or commands that can create non-default tokens. This command may only be issued by the token owner, but the tokens may be minted in any existing account for that token.
+С помощью CLI вы можете эмитировать собственные токены. Выпуск собственных токенов просто увеличивает запас определенного токена. Эмиссия токенов - это то, как создаются все нон-дефолтные токены. Нет никаких других протокольных событий или команд для этого. Данная команда может быть выдана только владельцем токена, но токены могут быть эмитированы любым существующим аккаунтом для этого токена.
 
-### Mint a token
+### Минтинг токена
 
 ```
 $ mina client mint-tokens -amount <VALUE> -sender <PUBLIC-KEY> -token <TOKEN_ID>
@@ -93,24 +99,26 @@ $ mina client mint-tokens -amount <VALUE> -sender <PUBLIC-KEY> -token <TOKEN_ID>
 
 <Alert>
 
-The required fields for creating a new token account are:
 
-- -**amount** : Number of new tokens to create
+Поля, обязательные для создания нового токен-аккаунта:
 
-- -**sender** : Public key from which you want to send the transaction
+- -**сумма** : Количество новых токенов для создания
 
-- -**token** : The ID of the token to mint
+- -** отправитель** : Открытый ключ, с которого вы хотите отправить транзакцию
 
-There is also an optional field that lets you specify the public key of the account to create the new tokens in:
+- -**токен** :ID токена для эмиссии
 
-- -**receiver** : Public key of the account to create new tokens in
+Существует также необязательное поле, в котором можно указать открытый ключ учетной записи для создания новых токенов:
+
+- -**получатель** : Публичный ключ учетной записи для создания новых токенов в
 
 </Alert>
 
-See
+
+Посмотреть
 
 ```
 $ mina client mint-tokens -help
 ```
 
-to learn more about how to use the command.
+чтобы узнать больше о том, как использовать команду.
