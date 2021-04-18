@@ -1,93 +1,102 @@
 import Page from '@reason/pages/Docs';
 export default Page({title: "Archive Redundancy"});
 
-# Archive Redundancy
+# Архивное Резервирование
 
-Archive data is critical for applications that require historical lookup. On the protocol side, archive data is important for disaster recovery in that it is needed to reconstruct a certain state. To that end, having a single [archive node setup](/docs/advanced/archive-node) might not be sufficient. If the daemon that sends blocks to the archive process or if the archive process itself fails for some reason, there can be missing blocks in the database. To minimize the risk of archive data loss there are a few redundancy techniques that can be employed.
+Ниже представлены три потока для доступа к информации о блоках и истории транзакциий.
 
-A single archive node setup has a daemon sending blocks to an archive process which writes them to the database.
+Представленные здесь пути отсортированы от «самых необработанных» до «наиболее обработанных».
 
-It is possible to connect multiple daemons to the archive process by specifying the address of an archive process in multiple daemons, thereby reducing the dependency on a single daemon to provide blocks to the archive process.
+O(1) labs будут разворачивать все три потока в своей инфраструктуре (с большой избыточностью), чтобы они могли предоставить недостающую информацию для пользователей потоков (A), (B) или (C) если их ноды отключатся по любой причине и упустят информацию.
 
-For example, the server-port of an archive process is 3086, then the daemons can connect to it using the flag `archive-address`
+## A. Логирование необработанных блоков
 
-```
-mina daemon \
-    .....
-  -archive-address <Ip-address>:3086\
-```
+У нас есть механизм для логирования высокоточного машиночитаемого образа блоков, включая некоторую дополнительную внутреннюю информацию, с помощью JSON. Мы используем эти логи для того, чтобы быстро найти нужные блоки и перейти к определенным состояниям цепи для устранения ошибок. Этой информации достаточно, чтобы воссоздавать точные состояния сети.
 
-Similarly, it is possible to have multiple archive processes write to the same database. In this case the postgres uri passed to the archive process would be same across multiple archive processes.
-
-However, multiple archive processes writing to a database concurrently could cause data inconsistencies (explained in https://github.com/MinaProtocol/mina/issues/7567). To avoid this, set the transaction isolation level of the archive database to `Serializable` using the following query:
-
-    ALTER DATABASE <DATABASE NAME> SET DEFAULT_TRANSACTION_ISOLATION TO SERIALIZABLE ;
-
-This should be done after creating the [database](/docs/advanced/archive-node) and before connecting an archive process to it.
-
-## Backing up block data
-
-To further ensure there that archive data can be restored one can use the following features to backup block data and restore them when necessary.
-
-We have a mechanism in place for logging a high-fidelity machine-readable representation of blocks using JSON including some opaque information deep within. We use these logs internally to quickly replay blocks to get to certain chain-states for debugging. This information suffices to recreate exact states of the network.
-
-Some of the internal data look like this:
+Некоторые внутренние данные выглядят так:
 
 ```json
 {"data":["Signed_command",{"payload":{"common":{"fee":"100","fee_token":"1","fee_payer_pk":"B62qixbmBBmCmv1xH5SeF1hw6EqwSNVPi9B28epa3phqVMSyuZk9EoH","nonce":"340","valid_until":"4294967295","memo":"E4YM2vTHhWEg66xpj52JErHUBU4pZ1yageL4TVDDpTTSsv8mK6YaH"},"body":["Payment",{"source_pk":"B62qixbmBBmCmv1xH5SeF1hw6EqwSNVPi9B28epa3phqVMSyuZk9EoH","receiver_pk":"B62qm2GCuGCEK79mEjeyaeiFoukThuZLJCHGe9HAzuAnfbtS5FHtPnP","token_id":"1","amount":"100000000"}]},"signer":"B62qixbmBBmCmv1xH5SeF1hw6EqwSNVPi9B28epa3phqVMSyuZk9EoH","signature":"7mXGz8Df1gu92HVWGue24wcrGxDWkgQrDK59xQGXc627PKFQvVAPSzZn7JMkHtfdBUXavDHcgLBZy4iR4UmA5seRCPMkFDci"}],"status":["Applied",{"fee_payer_account_creation_fee_paid":null,"receiver_account_creation_fee_paid":null,"created_token":null},{"fee_payer_balance":"31866000100000","source_balance":"31866000100000","receiver_balance":"34099000000"}]}],"coinbase":["One",null],"internal_command_balances":[["Coinbase",{"coinbase_receiver_balance":"75477804514901","fee_transfer_receiver_balance":null}],["Fee_transfer",{"receiver1_balance":"65266376010003","receiver2_balance":"78601129170700"}],["Fee_transfer",{"receiver1_balance":"66001820000000","receiver2_balance":"76870784414900"}],["Fee_transfer",{"receiver1_balance":"71158365898775","receiver2_balance":"59264207944722"}],["Fee_transfer",{"receiver1_balance":"68546088449962","receiver2_balance":"66721919100000"}],["Fee_transfer",{"receiver1_balance":"67700798001000","receiver2_balance":"66372760000000"}],["Fee_transfer",{"receiver1_balance":"85383891400000","receiver2_balance":"107174952265469"}],["Fee_transfer",{"receiver1_balance":"65879310000000","receiver2_balance":"66282230000000"}]]}]},"delta_transition_chain_proof":["jxLZWooV57gKCmanzCHHt1CDbHfUpMu6MkynUdqN9ZkBUJi7B1W",[]]}
 ```
 
-This JSON will evolve as the format of the block and transaction payloads evolve in the network. Though we don't expect much churn before mainnet. This block data can be uploaded to a google storage bucket or written to mina.log files which can be backed-up separately.
+JSON будет развиваться по мере изменения формата блока и роста нагрузки на сеть. Однако мы не ожидаем большого оттока пользователей до запуска mainnet.
 
-### Upload block data to google cloud storage
+Эта информация отображается в логах и передается на поток stdout. Мы можем предоставить инструменты фильтрации и получения только этих данных для их безопасного и постоянного хранения.
 
-To indicate a daemon to upload block data to google cloud storage, pass the flag `--upload-blocks-to-gcloud` . To successfully upload the file, daemon requires the following environment variables to be set:
-    1. `GCLOUD_KEYFILE` : Key file for authentication
-    2. `NETWORK_NAME`: Network name to be used in the filename to easily distinguish between blocks in different networks (main-net and testnets)
-    3. `GCLOUD_BLOCK_UPLOAD_BUCKET` : Google cloud storage bucket where the files are uploaded
+## B. JSON-Снапшоты GraphQL
 
-The daemon generates a file for each block with the name `<network-name>-<protocol-state-hash>.json` . These are called precomputed blocks and will have all the fields of a block.
+GraphQL сервер daemom Mina размещен на порте `0xc0d` или 3085 (по умолчанию, настраивается с помощью файла конфигурации или флага -rest-server-port) на вашем устройстве (вы можете открыть его для 0.0.0.0 с помощью -insecure-reset-server). Открытие этого порта для общего доступа в Интернет небезопасно.
 
-### Save block data from logs
+Мы предоставляем запрос `bestChain`, который по-прежнему сможет получить *по крайней мере* последние несколько блоков (хотя и не все). Смотрите подробную документацию, которая содержит всю необходимую информацию в формате JSON, здесь: [https://minaprotocol.com/graphql-docs/query. doc.html] (https://minaprotocol.com/graphql-docs/query.doc.html). Если вы производите запросы быстрее, чем каждые 3 минуты, вы будете получать информацию о каждом блоке. Вы также можете получать эту информацию с помощью подписки, отправленной вам через [https://minaprotocol.com/graphql-docs/subscription.doc.html] ](https://minaprotocol.com/graphql-docs/subscription.doc.html). 
 
-The daemon also logs the block data if the flag `-log-precomputed-blocks` is passed. The log to look for is `Saw block with state hash $state_hash` that contains `precomputed_block` in the metadata and has the block information. This is the same information (precomputed blocks) that gets uploaded to google cloud storage.
+В настоящее время в тестовых сетях существует множество приложений, которые используют эту информацию. O(1) labs полагается на этот источник данных в нескольких местах, и, вероятно, в основной сети будут новые пользователи этих данных.
 
-### Generate block data from another archive database
+## C. Официальная Архивная Нода PostgreSQL
 
-From a fully synced archive database, one can generate block data for each block using the `mina-extract-blocks` tool.
+O(1) labs будет поддерживать восстановление данных из резервных копий (B) или (A).
 
-The tool takes an `--archive-uri`, an `--end-state-hash`, and an optional --start-state-hash and writes all the blocks in the chain starting from start-state-hash and ending at end-state-hash (including start and end).
-
-If only the end hash is provided, then the tool generates blocks starting with the unparented block closest to the end block. This would be the genesis block if there are no missing blocks in between. The tool generates a file with name `<protocol-state-hash>.json` for each block. The block data in these files are called extensional blocks. Since these are generated from the database, they would have only the data stored in the archive database and would not contain any other information pertaining to a block (for example, blockchain snark) that the precomputed blocks would have and therefore, can only be used to restore blocks in the archive database.
-
-Alternatively, instead of specifying state hashes, you can provide the flag `--all-blocks`, and the tool will write out all blocks contained in the database.
-
-## Identifying missing blocks
-
-The tool `mina-missing-block-auditor` can be used to determine any missing blocks in an archive database. The tool outputs a list of state hashes of all the blocks in the database that are missing a parent. This can be used to monitor the archive database for any missing blocks. The URI of the postgres database can be specified using the flag `--archive-uri`
-
-## Restoring blocks
-
-Missing blocks in an archive database can be restored if there is block data (precomputed or extensional) available from the options listed [above](#Backing-up-block-data) using the tool `mina-archive-blocks`.
-
-1. Restore precomputed blocks: (from option [1](#Upload-block-data-to-google-cloud-storage) and [2](#Save-block-data-from-logs) above)
+Преимущество архивной ноды состоит в том, что в сети уже есть пользователи, которые используют запросы вида: «какой блок находится на высоте N в канонической цепи». Смотрите [Https://minaprotocol.com/docs/archive-nodepting](https://minaprotocol.com/docs/archive-node) для получения дополнительной информации.
 
 ```
-  mina-archive-blocks --precomputed --archive-uri <postgres uri> FILES
+WITH RECURSIVE chain AS (
+  (SELECT ... FROM blocks b WHERE height = (select MAX(height) from blocks)
+  ORDER BY timestamp ASC
+  LIMIT 1)
+
+  UNION ALL
+
+  SELECT ... FROM blocks b
+  INNER JOIN chain
+  ON b.id = chain.parent_id AND chain.id <> chain.parent_id
+) SELECT ..., pk.value as creator FROM chain c
+  INNER JOIN public_keys pk
+  ON pk.id = c.creator_id
+  WHERE c.height = ?
+
 ```
 
-2. For extensional blocks: (Generated from option [3](#Generate-block-data-from-another-archive-database))
+Настройка позволяет получить информацию о блоках в одном окне или о транзакциях в определенном срезе блоков.
+
+===
+
+## Детали Ликвидного Баланса:
+
+Потоки (A), (B), (C) содержат достаточно информации для расчета ликвидных балансов на вестинговых счетах.
+
+Если вы хотите увидеть ликвидные остатки на вестинговых счетах в определенный период времени, это можно сделать с помощью следующей функции (Примечание: функция вычисляет заблокированную часть счета):
 
 ```
-  mina-archive-blocks --extensional --archive-uri <postgres uri> FILES
+(*  
+ *  uint32 global_slot -- the "clock" it starts at 0 at the genesis block and ticks up every 3minutes.
+ *  uint32 cliff_time -- the slot where the cliff is (similar to startup equity vesting)
+ *  uint32 cliff_amount -- the amount that unlocks at the cliff
+ *  amount vesting_increment -- unlock this amount every "period"
+ *  uint32 vesting_period -- the period that we increment the unlocked amount
+ *  balance initial_minimum_balance -- the total locked amount until the cliff
+ *)
+let min_balance_at_slot ~global_slot ~cliff_time ~cliff_amount ~vesting_period
+    ~vesting_increment ~initial_minimum_balance =
+  let open Unsigned in
+  if Global_slot.(global_slot < cliff_time) then initial_minimum_balance
+  else
+    match Balance.(initial_minimum_balance - cliff_amount) with
+    | None ->
+        Balance.zero
+    | Some min_balance_past_cliff -> (
+        (* take advantage of fact that global slots are uint32's *)
+        let num_periods =
+          UInt32.(
+            Infix.((global_slot - cliff_time) / vesting_period)
+            |> to_int64 |> UInt64.of_int64)
+        in
+        let vesting_decrement =
+          UInt64.Infix.(num_periods * Amount.to_uint64 vesting_increment)
+          |> Amount.of_uint64
+        in
+        match Balance.(min_balance_past_cliff - vesting_decrement) with
+        | None ->
+            Balance.zero
+        | Some amt ->
+            amt )
+
 ```
-
-## Staking ledgers
-
-Staking ledgers are used to determine slot winners for each epoch. Mina daemon stores staking ledger for the current and the next epoch (after it is finalized). When transitioning to a new epoch, the "next" staking ledger from the previous epoch is used to determine slot winners of the new epoch and a new "next" staking ledger is chosen. Since staking ledgers for older epochs are no longer accessible, users may want to still keep them around for reporting or other purposes.
-
-Currently these ledgers can be exported using the cli command-
-
-    coda ledger export [current-staged-ledger|staking-epoch-ledger|next-epoch-ledger]
-
-Epoch ledger transition happens once every 14 days (given slot-time = 3mins and slots-per-epoch = 7140). The window to backup a staking ledger is ~27 days considering "next" staking ledger is finalized after k (currently 290) blocks in the current epoch and therefore will be available for the rest of the current epoch and the entire next epoch.
