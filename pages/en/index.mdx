@@ -1,22 +1,22 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Overview" });
 
-# Overview
+# Обзор
 
-Here's where you'll find all the documentation for the whole process of getting up and running with Mina.
+Здесь вы найдете всю документацию и сможете начать процесс установки и работы с Mina. 
 
-## What is Mina?
+## Что такое Mina?
 
-Mina is the first cryptocurrency protocol with a succinct blockchain. Current cryptocurrencies like Bitcoin and Ethereum store hundreds of gigabytes of data, and as time goes on, their blockchains will only increase in size. With Mina however, no matter how much the usage grows, the blockchain always stays the same size - about 22kb <Footnote refNumber="[1]" link="/blog/22kb-sized-blockchain-a-technical-reference" /> (the size of a few tweets). This means participants can quickly sync and verify the network.
+Mina - первый криптовалютный протокол, имеющий сжатый блокчейн. Такие современные криптовалюты, как Bitcoin и Ethereum, хранят сотни гигабайт данных, и со временем их блокчейны будут только увеличиваться. Однако блокчейн Mina, даже несмотря на масштабирование, всегда будет иметь одинаковый размер - около 22 КБ <Footnote refNumber="[1]" link="/blog/22kb-sized-blockchain-a-technical-reference" /> (размер нескольких твитов). Это означает, что участники могут быстро синхронизироваться и начать подтверждение в сети. 
 
-This breakthrough is made possible due to zk-SNARKs - a type of succinct cryptographic proof. Each time a Mina node produces a new block, it also generates a SNARK proof verifying that the block was valid. All nodes can then store the small proof, as opposed to the entire chain. By not having to worry about block size, the Mina protocol enables a blockchain that is decentralized at scale.
+Этот прорыв был осуществлен благодаря использованию zk-SNARK - типу сжатого криптографического доказательства. Каждый раз, когда нода Mina создает новый блок, генерируется доказательство SNARK, подтверждающее валидность блока. Потом все ноды могут хранить это небольшое доказательство вместо целого блокчейна. Протокол Mina позволяет не только не беспокоиться о размере блока, но и обеспечивает полную децентрализацию блокчейна. 
 
-## How does Mina work?
+## Как работает Mina?
 
-How does a ‘succinct blockchain’ work? Read our [technical white paper](https://minaprotocol.com/static/pdf/technicalWhitepaper.pdf) to learn more about our cryptographic preliminaries and the succinct blockchain construction used in Mina.
+Как работает ‘сжатый блокчейн’? Читайте наш [технический white paper](https://minaprotocol.com/static/pdf/technicalWhitepaper.pdf), чтобы узнать больше о криптографических процессах и сжатой конструкции блокчейна Mina. 
 
-Check out our [economics white paper](https://minaprotocol.com/static/pdf/economicsWhitepaper.pdf) to learn about the roles within Mina Protocol, the incentive design and the monetary policy.
+Читайте наш [экономический white paper](https://minaprotocol.com/static/pdf/economicsWhitepaper.pdf), чтобы узнать о функциях, необходимых для поддержания протокола Mina, разработке системы стимулирования и монетарной политике. 
 
-## Try Mina
+## Начните работу с Mina
 
-If you're ready to install Mina and begin running a node, head over to the [Getting Started page](/docs/getting-started).
+Если вы хотите установить Mina и начать работу с нодой, перейдите на [страницу начала работы](/docs/getting-started).
