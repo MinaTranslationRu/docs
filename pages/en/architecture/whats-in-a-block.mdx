@@ -1,77 +1,77 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "What's in a Block" });
 
-# What's in a Block
+# Что в блоке?
 
-A block is a set of transactions and consensus information that extend the state of the network. A block in Mina includes a proof that the current state of the network is fully valid. 
+Блок - это набор транзакций и информации о консенсусе, который влияет на состояние сети. Блок в сети Mina включает в себя доказательство того, что текущее состояние сети является в полной мере подтвержденным.
 
-A block in Mina is constituted of:
+Блок в Mina состоит из:
 
-* [Protocol state](#protocol-state)
-* [Protocol state proof](#protocol-state-proof)
-* [Staged ledger diff](#staged-ledger-diff)
-* [Delta transition chain proof](#delta-transition-chain-proof)
-* Current protocol version
-* Proposed protocol version
+* [Состояние протокола](#protocol-state)
+* [Доказательство состояния протокола](#protocol-state-proof)
+* [Дифф распределенного реестра](#staged-ledger-diff)
+* [Доказательство дельта-перехода цепи](#delta-transition-chain-proof)
+* Текущая версия протокола
+* Предлагаемая версия протокола
 
-When a node receives a block from a peer, it is first validated, applied to the existing state, and added to the node's transition frontier. If, according to the [consensus](/docs/architecture/consensus) rules, it results in increasing the length of the blockchain, the node's best tip is updated, and the root of the transition frontier is moved up to only maintain `k` blocks in the transition frontier.
+Когда нода получает блок от пира, он сначала проверяется, применяется к существующему состоянию и добавляется к граничной транзакции ноды. Если, согласно правилам [консенсуса](/docs/architecture/consensus), это приводит к увеличению длины блокчейна, вершина ноды обновляется, а корень границы транзакции сдвигается вверх, чтобы поддерживать только блоки `k` на границе транзакции. 
 
 <Alert>
 
-In Mina, blocks are synonymous with "transitions". When this transition (block) is received from a peer, it is referenced as an external transition, whereas one generated and applied locally is referred to as an internal transition. 
+В Mina блоки - это синоним "переходов". Когда этот переход (блок) получен от пира, он называется "внешним переходом", а локально сгенерированный и примененный - "внутренним переходом". 
 
 </Alert>
 
-### Protocol State
+### Состояние протокола
 
-The protocol state is comprised of the **previous protocol state hash** and a body that contains:
+Состояние протокола состоит из **предыдущего хэша состояния протокола** и тела, которое содержит:
 
-* [Genesis state hash](#genesis-state-hash)
-* [Blockchain state](#blockchain-state)
-* [Consensus state](#consensus_state)
-* [Consensus constants](#consensus-constants)
+* [Хэш состояния генезиса](#genesis-state-hash)
+* [Состояние блокчейна](#blockchain-state)
+* [Состояние консенсуса](#consensus_state)
+* [Константы консенсуса](#consensus-constants)
 
-Each block contains the protocol state hash of the previous block, such that blocks may be linked together to form an immutable chain.
+Каждый блок содержит хэш состояния протокола предыдущего блока, таким образом, блоки могут быть соединены вместе, образуя непрерывную цепь.
 
-The protocol state hash is determined from the hash of hashes of the previous state and body and acts as a unique identifier for each block.
+Хэш состояния протокола определяется из хэша предыдущего состояния и тела, выступая в качестве уникального идентификатора для каждого блока.
 
-#### Genesis State Hash
+#### Хэш состояния генезиса
 
-The genesis state hash is the protocol state hash for the genesis protocol state.
+Хэш состояния генезиса - это хэш состояния протокола для состояния протокола генезиса.
 
-#### Blockchain State
+#### Состояние блокчейна
 
-The blockchain state is comprised of:
+Состояние блокчейна включает:
 
-* Staged ledger hash
-* Snarked ledger hash
-* Snarked next available token
-* Genesis ledger hash
-* Timestamp
+* Хэш состояния реестра
+* Хэш реестра SNARK
+* Следующий доступный токен с SNARK
+* Хэш реестра генезиса 
+* Временная метка
 
-#### Consensus State
+#### Состояние консенсуса
 
-The consensus state is comprised of:
+Состояние консенсуса включает: 
 
-* Blockchain length
-* Epoch count
-* Min window density
-* Sub window density
-* Last VRF output
-* Total currency
-* Current global slot
-* Global slot since genesis
-* Staking epoch data
-* Next epoch data
+* Длину блокчейна
+* Отсчет эпохи
+* Минимальную плотность окна
+* Плотность подокна
+* Последний VRF-выход
+* Общий баланс
+* Текущий глобальный слот
+* Глобальный слот с момента генезиса
+* Данные по эпохе стейкинга
+* Данные следующей эпохи
 * Has ancestor in same checkpoint window
-* Block stake winner
-* Block creator
-* Coinbase receiver
-* [Supercharged coinbase](/docs/architecture/block-producers#supercharged-coinbase)
+* Победителя стейкинга в блоке
+* Создателя блока
+* Получателя на Coinbase
+* [Удвоенную награду Суперчардж](/docs/architecture/block-producers#supercharged-coinbase)
 
-#### Consensus Constants
+#### Константы консенсуса
 
-Constants define the consensus parameters:
+Константы задают параметры консенсуса:
 
 * k
 * delta
@@ -89,25 +89,25 @@ Constants define the consensus parameters:
 * delta_duration
 * genesis_state_timestamp
 
-### Protocol State Proof
+### Доказательство состояния протокола 
 
-The protocol state proof is a blockchain proof proving that the new protocol state generated by the block producer is valid. Due to the use of recursive SNARKs, this protocol state proof proves the entire history of the chain is valid.
+Доказательство состояния протокола - это доказательство блокчейн, подтверждающее, что новое состояние протокола, сгенерированное блок-продюсером, является действительным. Благодаря использованию рекурсивных SNARK, это доказательство состояния протокола подтверждает, что вся история цепи является истинной.
 
-### Staged Ledger Diff
+### Дифф распределенного реестра
 
-When a [block producer](/docs/architecture/block-producers) wins a slot to produce a block, they select transactions and any snark work required from the transaction and snark pools. They create the proposed next state of the blockchain, which comprises creating a diff of the staged ledger. A diff consists of:
+Когда [блок-продюсер](/docs/architecture/block-producers) выигрывает слот для производства блока, он выбирает транзакции и любую снарк-работу из пулов транзакций и snark. Таким образом, они создают предлагаемое следующее состояние блокчейна, которое включает в себя создание диффа распределенного реестра. Дифф состоит из:
 
-* Transactions included in the block
-* A list of SNARK proofs generated by [snark workers](/docs/architecture/snark-workers) for prior transactions added
-* Pending coinbase
+* Транзакций, включенных в блок
+* Списка SNARK-доказательств, сгенерированных [снарк-воркерами](/docs/architecture/snark-workers) для ранее добавленных транзакций
+* Отложенной монетной базы
 
-A staged ledger can be regarded as a pending accounts database that has transactions(payments, coinbase, and proof fee payments) applied for which there are no SNARKs available yet. A staged ledger consists of the accounts state (a ledger) and a transaction queue for transactions without SNARK proofs, which is the [scan state](/docs/architecture/scan-state).
+Распределенный реестр может рассматриваться как база данных нерассмотренных счетов, в которую занесены транзакции (платежи, монетная база и комиссионные за доказательства), для которых еще нет SNARK'ов. Распределенный реестр состоит из состояния счетов (реестр) и очередью транзакций без SNARK-доказательств , что представляет [состояние сканирования] (/документы/архитектура/сканирование-состояние).
 
-### Delta Transition Chain Proof
+### Доказательство дельта-перехода цепи
 
-There is an allowed network delay when broadcasting or gossiping newly produced blocks around the network to allow for adverse network conditions. The delta transition chain proof proves that the block was produced within the allotted slot time.
+В случае неблагоприятных сетевых условий, допускается сетевая задержка при трансляции или вирусной передачи вновь создаваемых блоков. Доказательство дельта-перехода цепи свидетельствует о том, что блок был изготовлен в пределах отведенного времени слота.
 
-### Example Block
+### Пример блока
 
 ```
 {
