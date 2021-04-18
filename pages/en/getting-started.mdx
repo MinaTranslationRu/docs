@@ -2,98 +2,101 @@ import Page from "@reason/pages/Docs";
 import StatusBadge from "@reason/components/StatusBadge";
 export default Page({ title: "Getting Started" });
 
-# Getting Started
+# Начало работы
 
-Welcome to Mina! This section will walk you through the process of setting up a Mina node. After we will show you how to generate a keypair for use with the network. Finally we'll show you how to connect to the network and begin producing blocks.
+Добро пожаловать в Mina! В этом разделе вы подробно узнаете, как установить ноду Mina. Далее мы расскажем, как сгенерировать KeyPair в новой тестовой сети, подключиться к сети, и, наконец, как начать создание блоков.
 
 <Alert>
 
-This documentation is for the **Mainnet** release.
 
-Network status: <StatusBadge service="Network" />
+Эта документация предназначена для работы в **мейннет**.
+
+Статус тестнета: <StatusBadge service="Network" />
 
 </Alert>
 
-## Requirements
 
-**Software**: macOS, Linux (currently supports Debian 9 and Ubuntu 18.04 LTS), or any host with Docker
+## Требования
 
-Note: Windows is not officially supported at this time. However, community members succeeded in setting up nodes using Windows Subsystem for Linux. Click [here](https://minawiki.com/index.php?title=Mina_on_Windows) for instructions on using Windows, which are created by the community. Additionally Windows users can use the Docker documentation.
+**ПО**: macOS, Linux (в настоящее время поддерживает Debian 9 и Ubuntu 18.04 LTS) или любой хост с Docker
 
-**Hardware**: Sending and receiving mina does not require any special hardware, but running a block producer on the Mina network currently requires:
+Примечание: В настоящий момент официальная поддержка Windows отсутствует. Однако участники сообщества смогли установить ноды на Windows Subsystem для Linux. Нажмите [здесь](https://minawiki.com/index.php?title=Mina_on_Windows), чтобы ознакомиться с инструкциями по использованию Windows, разработанными комьюнити. Пользователи Windows могут также использовать документацию Docker. 
 
-- at least a 8-core processor
-- at least 16GB of RAM
+**Аппаратное обеспечение**: Для отправки и получения mina не требуется специальное оборудование, но для запуска блок-продюсера в сети Mina требуется следующее:
 
-Note that if you plan on running a snark worker node at the same time as a block producer, you may need more RAM. GPUs aren't currently required, but may be required for node operators when the protoctol is upgraded.
+- минимально 8-ядерный процессор 
+- не менее 16 ГБ оперативной памяти 
 
-**Network**: At least 1 Mbps connection
+Внимание: если вы планируете запускать ноду snark-воркер и блок-продюсер  одновременно, вам может потребоваться больше оперативной памяти. Сейчас не требуется использование графических процессоров, но они могут понадобиться операторам нод после обновления протокола. 
 
-**VM Instances**:
-O(1) Labs has tested running nodes on several cloud providers, and recommends the following instances for basic node operator needs. Keep in mind that custom requirements as well as different cost constraints may require a different instance type.
+**Соединение сети**: не менее 1 Мбит/с 
+
+**Виды виртуальных машин (VM)**:
+O(1) Labs протестировали работу нод на нескольких облачных провайдерах и рекомендуют операторам нод использовать следующие виртуальные машины с необходимыми характеристиками. Примите во внимание, что вы можете использовать другие VM в зависимости от ваших индивидуальных требований или ценовой категории.  
 
 - AWS - [c5.2xlarge](https://www.ec2instances.info/?filter=c5.2xl&region=us-west-2&cost_duration=daily&selected=c5.2xlarge)
 - GCP - [c2-standard-8](https://cloud.google.com/compute/docs/machine-types)
 - Azure - [Standard_F8s_v2](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-compute#fsv2-series-1)
 - Digital Ocean - [c-8-16gib](https://cloud.digitalocean.com/droplets/new?size=c-8-16gib)
 
-Check out our [guide](https://youtu.be/M9lE2lgyVEo) for how to configure your Mina node on Google Cloud.
+Ознакомьтесь с нашим [руководством](https://youtu.be/M9lE2lgyVEo), чтобы узнать, как настраивать Mina в Google Cloud.
 
-## Installation
+## Установка
 
-The newest binary releases can be found below. Instructions are provided for macOS and Linux below:
+Последний релиз бинарных файлов вы можете найти ниже. Также далее представлены инструкции для macOS и Linux: 
 
-This is a large download, around 1GB, so the install might take some time.
+Для загрузки требуется около 1 ГБ, поэтому установка может занять какое-то время. 
 
 <Alert kind="warning">
 
-If you installed `mina` from a previous release, you'll need to upgrade it so that you won't get banned by the network for using an older client. See instructions below for upgrading both macOS and Linux builds.
+Если у вас установлена `mina` из предыдущего релиза, вам необходимо обновиться, чтобы не попасть в бан за использование более старой версии клиента. Смотрите ниже инструкции по обновлению сборок для macOS и Linux. 
 
 </Alert>
 
+
 ### Ubuntu 18.04 / Debian 9
 
-Add the Mina Debian repo and install:
+Добавьте репозиторий Mina Debian и установите:
 
 ```
 echo "deb [trusted=yes] http://packages.o1test.net release main" | sudo tee /etc/apt/sources.list.d/mina.list
 sudo apt-get update
-sudo apt-get install -y curl unzip mina-mainnet=1.1.5-a42bdee
+sudo apt-get install -y curl unzip mina-mainnet=1.1.3-48401e9
 ```
 
-Check that daemon installed correctly by running `mina version`. The output should read `Commit a42bdeef6b0c15ee34616e4df76c882b0c5c7c2a on branch master`.
+После запуска `mina version`. убедитесь, что daemon установлен правильно. Должно появиться следующее: `Commit 48401e92d94948c066c03ca76326c065e5cbfc92 on branch master`.
 
 ### Windows
 
-Windows is not yet natively supported. If you are interested in receiving a grant to develop Mina for Windows, please email grants@o1labs.org or reach out in the [Discord server](https://bit.ly/MinaDiscord).
+Windows еще не поддерживается. Если вы заинтересованы в получении гранта на разработку Mina для Windows, напишите нам на почту grants@o1labs.org или в[Discord](https://bit.ly/MinaDiscord).
 
-Please instead use the Docker instructions below.
+Пожалуйста, вместо этого используйте приведенные ниже инструкции для Docker. 
 
 ### macOS
 
-macOS is used by developers, but we are not officially supporting any pre-built packages at this time.
+Разработчики используют macOS, но в данный момент мы не предоставляем готовых пакетов.  
 
-Please instead use the Docker instructions below or you may build from source.
+Пожалуйста, вместо этого используйте приведенные ниже инструкции для Docker или выполните сборку из исходного кода. 
 
 ### Docker
 
-Docker is cross-platform tool that allows you to run a virtual machine that will execute any needed software. Please follow the official installation instructions for your platform on [this page](https://docs.docker.com/get-docker/). Once docker is installed, proceed to the Mina Docker instructions on [Connect to the Network](/docs/using-mina/connecting)
+Docker – это кроссплатформенный инструмент, с помощью которого можно запустить виртуальную машину и установить любое необходимое ПО. Пожалуйста, выполните установку на своей платформе, используя официальные инструкции на [этой странице](https://docs.docker.com/get-docker/). После установки docker перейдите к инструкциям Mina Docker для [Подключения к сети](/docs/connecting)
 
-### Build from source
+### Сборка из исходника
 
-If you're running another Linux distro or some version of macOS, you can [try building Mina from source code](https://github.com/MinaProtocol/mina/blob/master/README-dev.md#building-mina). Please note that other operating systems haven't been tested thoroughly, and may have issues. Feel free to share any logs and get troubleshooting help in the [Discord server](https://bit.ly/MinaDiscord).
+Если вы используете дистрибутив Linux или версию macOS, вы можете попробовать [собрать Mina, используя исходный код](https://github.com/MinaProtocol/mina/blob/master/README-dev.md#building-mina). Обратите внимание, что другие операционные системы не были полностью протестированы, в результате чего могут возникать неполадки. Делитесь любыми логами и получайте помощь по устранению неполадок в [Discord](https://bit.ly/MinaDiscord).
 
-## Set up port forwarding and any firewalls
+## Настройка переадресации портов и любых файрволов 
 
-If you are running a firewall, you should allow traffic on TCP port 8302. Additionally, unless the `-external-ip YOUR_IP` flag is provided, the daemon will use HTTPS (443) and HTTP (80) to try and determine its own IP address.
+Если вы используете файрвол, вы должны разрешить трафик на TCP-порт 8302. Кроме того, если не указан флаг `-external-ip YOUR_IP`, daemon будет использовать HTTPS (443) и HTTP (80), чтобы попытаться определить свой собственный IP-адрес. 
 
-You may need to configure your router's port forwarding to allow inbound traffic to the following ports through your **external** IP address.
+Возможно, потребуется настроить переадресацию портов вашего маршрутизатора, чтобы разрешить входящий трафик на следующие порты через **внешний** IP-адрес.
 
 - `TCP` port `8302`
-- _Optionally_ to use the GraphQL service, expose `TCP` port `3085`
+*Опционально* при использовании службы GraphQL откройте `TCP` порт `3085`
 
-For walk-through instructions see [this guide](/docs/troubleshooting#port-forwarding).
+Смотрите подробные инструкции в [этом руководстве](/docs/troubleshooting#port-forwarding).
 
-## Next
+## Следующий шаг 
 
-Now that you've installed Mina and configured your network, let's move on to the next step - [generating a keypair](/docs/using-mina/keypair)!
+Теперь, когда вы установили Mina и настроили сеть, давайте перейдем к следующему шагу - [генерации keypair](/docs/keypair)!
