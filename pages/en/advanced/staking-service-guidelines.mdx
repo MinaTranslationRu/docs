@@ -26,9 +26,9 @@ The `mina ledger export` command can be used to export ledgers from a running da
 <!-- insert breakpoints to space out table -->
 <br /> <br />
 
-In order to ensure you always have each staking ledger available for use after epochs have expired, we recommend exporting the staking-epoch-ledger every $\dfrac{7140\times3}{60} = 357$ hours (there are $7140$ slots in an epoch, and each slot is $3$ minutes long).
+Чтобы каждый реестр стейкинга всегда был доступен для использования по истечению эпох, мы рекомендуем экспортировать реестр стейкинга каждые $\dfrac{7140\times3}{60} = 357$ часов ($7140$ слотов за эпоху, каждый слот длится $3$ минуты). 
 
-By default, ledgers are exported as json data. See `mina ledger export -help` for documentation of flags which will enable other formats. When output as json, the ledger will be represented as an array of account objects. Below is an example of what an account object in json looks like.
+По умолчанию реестры экспортируются как данные json. Смотрите `mina ledger export -help`, чтобы получить документацию по флагам, которые включают другие форматы. При выводе в формате json реестр будет представлен как множество объектов учетной записи. Ниже приведен пример того, как выглядит объект учетной записи в json. 
 
 ```json
 {
@@ -50,7 +50,7 @@ By default, ledgers are exported as json data. See `mina ledger export -help` fo
 }
 ```
 
-For a running staking service, you are interested in the accounts which you control and the accounts which are staking to accounts you control. As an example, if we only had one account in our staking service, we could grab all the accounts we are intersted in for a ledger using a command like:
+Для того, чтобы осуществлять стейкинг, вам должны быть интересны аккаунты, которые вы контролируете, и аккаунты, которые осуществляют стейкинг в аккаунты, которые вы контролируете. Например, если бы в нашем стекинг-сервисе участвовал только один аккаунт, мы могли бы присвоить все аккаунты, в которых мы заинтересованы, реестру, используя такую команду: 
 
 ```sh
 mina ledger export staking-epoch-ledger | jq "$(cat <<EOF
@@ -63,7 +63,7 @@ EOF
 )"
 ```
 
-An important detail you will want to compute as a staking service is whether or not an account will receive supercharged coinbase rewards, which you will likely want to include into the staking service's weighting when paying out participants. Accounts with locked tokens (which are the accounts that *do not* receive supercharged staking rewards) will have a special `"timing"` field in their json representation. Here is an example of what this looks like:
+Важная деталь, которую вы захотите вычислить как стейкинг-сервис – будет ли аккаунт получать суперчардж-вознаграждения за монетную базу, котору вы, вероятно, захотите включить в стейкинг-сервис при выплате участникам. Аккаунты с заблокированными токенами (являющиеся аккаунтами, которые *не* получают суперчардж-вознаграждения за стейкинг) будут иметь специальное поле `"timing"` в своем представлении json. Вот пример того, как это выглядит: 
 
 ```json
 {
@@ -80,7 +80,7 @@ An important detail you will want to compute as a staking service is whether or 
 }
 ```
 
-Just because an account has a `"timing"` field, it does not necessarily mean that account has locked tokens. Timed accounts contain locked and unlocked tokens, and the `"timing"` field describes the unlock schedule for the locked tokens in that account. If an account has a `"timing"` field, you can compute the global slot at which that account's tokens will be fully unlocked, after which point the account will receive supercharged rewards. This can be computed by determining how long a timed account will take to fully vest it's tokens, and adding that to the `"cliff_time"`, which is the slot where the account begins vesting tokens. Here is some example python code which will compute this unlock time from an account's timing information.
+Только потому, что в аккаунте есть поле `"timing"`, необязательно означает, что в аккаунте заблокированы токены. Аккаунты, ограниченные по времени, содержат заблокированные и разблокированные токены, а поле `"timing"` описывает график разблокировки заблокированных токенов в этом аккаунте. Если в аккаунте есть поле `"timing"`, вы можете вычислить глобальный слот, в котором токены этого аккаунта будут полностью разблокированы, после чего аккаунт получит суперчардж-вознаграждения. Это можно вычислить, определив, сколько времени потребуется ограниченному по времени аккаунту, чтобы полностью осуществить вестинг своих токенов, и добавив это к `"cliff_time"`, то есть слоту, в котором аккаунт начинает вестинг токенов. Вот пример, кода Python, который вычислит это время разблокировки на основе информации о времени аккаунта. 
 
 ```python
 vesting_amount = initial_min_balance - cliff_amount
