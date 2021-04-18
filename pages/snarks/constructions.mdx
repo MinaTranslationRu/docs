@@ -15,51 +15,49 @@ export default Page({ title: "SNARK Constructions" });
 невозможно изменить доказательство **p**, которое подтверждает и сверяет ввод **x** в доказательстве **p'**, которое подтверждает и сверяет 
 ввод **x'**, за исключением случаев, когда вы могли сделать это без видимости **(p, x)**.
 
-The technical phrase for this kind of non-malleability is _simulation extractable_.
+Технической фразой для такого рода несовместимости является _извлекаемая симуляция_.
 
-### When do I need non-malleability?
+### Когда мне нужна несовместимость?
 
-In applications where the witness or part of the witness should remain secret, you probably need
-non-malleability. There are techniques for achieving the same security while still using a
-malleable SNARK, but they are best left to the experts.
+В приложениях, в которых валидатор (или его часть) должны оставаться в тайне, вам, вероятно, понадобится
+несовместимость. Существуют методы достижения той же безопасности при одновременном использовании
+гибкого SNARK, но их лучше оставить экспертам.
 
-In practice, there is only a small performance penalty to using a non-malleable SNARK so unless
-one is confident one doesn't need it, there is no harm in using such a SNARK.
+На практике существует лишь небольшой штраф за использование несовместимого SNARK, так что нет ничего плохого в его использовании, 
+если только кто-то уверен, что такой SNARK не нужен. 
 
-## Setup type
+## Тип настройки
 
-This is one of the biggest practical considerations to keep in mind when selecting a SNARK construction.
-Some SNARKs require a "setup" which involves either a trusted party or group of parties (one of whom you can
-trust) running a computation to generate keys for a SNARK. This is the much publicized "ceremony" as was
-done for ZCash.
+Это одно из самых больших практических соображений, которые следует учитывать при выборе конструкции SNARK.
+Некоторые SNARK требуют "настройки", которая включает в себя либо доверенную сторону, либо группу сторон ( одной из которых вы можете
+доверять), выполняющих вычисления для генерации ключей для SNARK. Это широко обсуждаемая "церемония", как уже было ранее сделано для ZCash.
 
-There are two kinds of setups:
+Существуют два вида настроек:
 
-1. **Universal.** Universal setups only need to be performed once and the resulting keys can be re-used for all future SNARK programs.
-2. **Per-program.** Per-program setups must be run once per SNARK program.
+1. **Универсальная.** Универсальная настройка должна выполняться только один раз, а результирующие ключи могут быть повторно использованы для всех будущих программ SNARK.
+2. **Для каждой программы.** Настройки каждой программы должны выполняться один раз для каждой программы SNARK.
 
-Universal setups are much more convenient, but SNARK constructions with per-program setups have better performance.
+Универсальные настройки намного удобнее, но конструкции SNARK с настройками для каждой программы имеют лучшую производительность.
 
-There are also SNARKs with no setup at all. In general these SNARKs have much larger proof sizes: 50-200kB compared
-to 100s of bytes for SNARKs with setup.
+Есть также SNARK, которые вообще не имеют настроек. В целом, эти SNARK имеют гораздо большие размеры: 50-200 кБ, по сравнению
+со 100 байтами для SNARK с настройкой.
 
-## Performance
+## Производительность
 
-The following efficiency characteristics are important to keep in mind when selecting a SNARK construction:
+При выборе конструкции SNARK важно помнить о следующих характеристиках эффективности:
 
-- **Prover time.** How long does generating a proof take?
-- **Proof size.** How large is each proof?
-- **Verifier time.** How long does it take to check a proof?
+- **Время проверки.** Сколько времени требуется для получения доказательств?
+- **Размер доказательства.** Насколько велико каждое доказательство?
+- **Время верификации.** Сколько времени занимает проверка доказательства?
 
-There are other performance criteria that are of interest if one intends to use recursive SNARKs, but
-that is outside the scope of this document.
+Существуют и другие критерии эффективности, которые представляют интерес, если предполагается использование рекурсивных SNARK, но
+это выходит за рамки данного документа.
 
-## Overview of the landscape
+## Обзор landscape
 
-Let's evaluate some of the existing SNARK constructions according to our criteria.
-Performance descriptions for some of the parameters will remain subjective until someone gets
-around to running a proper, fair benchmark. There are many holes in the below table, so please
-make a PR if you are so moved :)
+Давайте оценим некоторые из существующих конструкций SNARK по нашим критериям.
+Описания производительности для некоторых параметров будут оставаться субъективными до тех пор, пока кто-то не сможет запустить корректный, справедливый бенчмарк. В нижеприведенной таблице много пробелов, так что, пожалуйста.
+сделайте пиар, если вы тронуты :)
 
 
 <picture>
@@ -69,7 +67,7 @@ make a PR if you are so moved :)
 </picture>
 
 
-## Footnotes
+## Примечания
 
-In this document, by "no setup", I mean a transparent setup, which in practice amounts to a choice of a hash function
-like SHA256, blake2s, etc.
+В этом документе под определением "без установки" я подразумеваю прозрачную установку, которая на практике равнозначна выбору хэш-функции
+типа SHA256, blake2s и т.д.
