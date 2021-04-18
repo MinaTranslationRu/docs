@@ -82,7 +82,7 @@ end
 
 [ocaml-modules-functor-arity]: #ocaml-modules-functor-arity
 
-Functor can have a maximum arity of 3 (arity is the number of arguments; in this case, the number of nested functors - functors returning functors). If a functor requires more than 3 modules as arguments, then the required modules should all be nested into one module. The standard pattern for this is to define a signature `Inputs_intf` for your functor, which will, in turn, define the module arguments to the functor. See below for a simple example.
+Функтор может иметь максимальную арность 3 (арность - количество аргументов; в данном случае количество вложенных функторов - functors returning functors). Если функтор требует в качестве аргументов более 3 модулей, то все необходимые модули должны быть вложены в один модуль. Стандартным шаблоном для этого является определение сигнатуры `Inputs_intf` для вашего функтора, которая, в свою очередь, будет определять аргументы модуля к данному функциональному объекту. Смотрите ниже простой пример.
 
 ```
 module type Inputs_intf = sig
