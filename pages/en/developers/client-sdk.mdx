@@ -1,26 +1,26 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Client SDK" });
 
-# Client SDK
+# Клиент SDK
 
-The [Mina Client Javascript SDK](https://www.npmjs.com/package/@o1labs/client-sdk) allows generating keypairs, signing and verifying messages, and signing transactions that can be broadcast to the network. 
+[Mina Client Javascript SDK](https://www.npmjs.com/package/@o1labs/клиент-sdk) позволяет генерировать пары ключей, подписывать и проверять сообщения, а также подписывать транзакции, которые могут транслироваться в сеть.
 
-The project contains Typescript and ReasonML typings but can be used from plain NodeJS as well. The following methods are available:
+Проект содержит типы Typescript и ReasonML, но может быть использован и из обычного NodeJS. Доступны следующие методы:
 
-* `genKeys` - generates a public/private keypair.
-* `derivePublicKey` - derives the public key of the corresponding private key.
-* `signMessage` - signs an arbitrary message.
-* `verifyMessage` - verifies that a signature matches a message.
-* `signPayment` - signs a payment using a private key.
-* `signStakeDelegation` - signs a stake delegation using a private key.
+* `genKeys` - генерирует пару публичных/приватных ключей.
+* `derivePublicKey` - производит открытый ключ соответствующего частного ключа.
+* `signMessage` - подписывает случайное сообщение.
+* `verifyMessage` - проверяет соответствие подписи сообщению.
+* `signPayment` - подписывает платеж с помощью приватного ключа.
+* `signStakeDelegation` - подписывает передачу стейка с помощью приватного ключа.
 
 <Alert>
 
-The client SDK enables the ability to generate and sign transactions on an air-gapped device that never exposes a private key to the internet.
+Клиент SDK позволяет генерировать и подписывать транзакции на air-gap устройстве, которое никогда не раскрывает приватный ключ в сети Интернет.
 
 </Alert>
 
-## Install
+## Установка
 
 ```
 yarn add @o1labs/client-sdk
@@ -28,7 +28,7 @@ yarn add @o1labs/client-sdk
 npm install --save @o1labs/client-sdk
 ```
 
-## Usage
+## Использование
 
 ### Typescript
 
@@ -96,6 +96,6 @@ let signedPayment = MinaSDK.signPayment({
 
 <Alert>
 
-When generating transactions, you will need to specify the account nonce. This is available for an account via the CLI using `mina advanced get-nonce -address <PUBLIC_KEY>` or using [GraphQL](/docs/developers/graphql-api).
+При генерации транзакций вам необходимо будет указать порядковый номер счета nonce. Это можно сделать через CLI, используя `mina advanced get-nonce -address <PUBLIC_KEY>` или используя [GraphQL](/docs/developers/graphql-api). 
 
 </Alert>
