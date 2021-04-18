@@ -3,163 +3,163 @@ export default Page({ title: "FAQ" });
 
 # FAQ
 
-## Testnet
+## Тестовая сеть
 
-#### Do I need any specific hardware?
+#### Мне нужно специальное оборудование?
 
-Currently, a 8-core processor and 16 GB of RAM are the minimum requirements.
+В настоящее время к минимальным требованиям относится наличие 8-ядерного процессора и 16 ГБ оперативной памяти. 
 
-#### What about software?
+#### Какое программное обеспечение необходимо?
 
-You can download all the software required to run a Mina node [here](/docs/getting-started#installation). Right now, we have builds that work on macOS, as well as Debian 9 and Ubuntu 18.04. You can also [build from source](https://github.com/minaprotocol/mina) or run via [Docker](/docs/using-mina/connecting#docker) for other unsupported systems.
+Вы можете скачать необходимое ПО для запуска ноды Mina [здесь](./getting-started/#installation). В настоящий момент у нас есть сборки для работы на macOS, Debian 9 и Ubuntu 18.04. Вы также можете [собрать mina из исходника](https://github.com/minaprotocol/mina) или запустить с помощью [Docker](./getting-started/#installation), если у вас другая ОС.
 
-#### What can I do on the Mina network?
+#### Какие функции я могу выполнять в сети Mina? 
 
-Any node can send and receive transactions on the Mina network. Additionally, any node can choose to be a "Node operator". Node operators play two specific roles:
+Каждая нода может отправлять и получать транзакции в сети Mina. Более того, любая нода может быть "оператором нод". Операторы нод выполняют две определенные функции: 
 
-1. Block Producer - this is analogous to being a Bitcoin "miner" or a "validator" in other proof-of-stake networks. By staking mina, you can be selected to produce a block and win the block reward
+1. Блок-продюсер (block producer) - это аналог "майнера" в биткоин-сети или "валидатора" в других PoS-сетях. Если вы осуществляете стейкинг в Mina, вас могут выбрать для выполнения функции создания блоков, и за подтверждение блоков вы будете получать вознаграждения. 
 
-2. Snark Worker - this job is what helps compress data in Mina's network. The snark worker nodes generate proofs of transactions, and the block producer buys these proofs on the network (we call it a "snarketplace" :)) - thus, the snark worker gets rewarded a bit of the block reward for their efforts.
+2. Снарк-воркер (snark worker) - работа благодаря которой происходит сжатие данных в сети Mina. Ноды снарк-воркеров генерируют доказательства транзакций, в то время как блок-продюсер приобретает эти доказательства в сети (назовем это "снаркетплейс" :)) - при этом снарк-воркер получает часть вознаграждения за блоки в обмен за приложенные усилия.
 
-#### What is the point of a testnet?
+#### В чем суть Testnet?
 
-The Mina testnet's goal is to improve Mina's stability, improve the software through bug fixes and addressing user experience, and to test the economic incentive design in Mina. By participating in the testnet, you get to be the first participants in the Mina protocol, and help develop it from ground zero.
+Цель тестовой сети Mina - повысить стабильность Mina, улучшить программное обеспечение за счет исправления ошибок и решения проблем пользователей, а также протестировать схему экономического стимулирования в Mina. Принимая участие в тестовой сети, вы становитесь первыми участниками протокола Mina и помогаете развивать его с нуля. 
 
-#### Where can I try out Devnet?
+#### Как начать работу в Devnet?
 
-Head over to the [Devnet page](/docs/advanced/connecting-devnet) to learn more and get started.
+Перейдите на [страницу Devnet](/docs/advanced/connecting-devnet), чтобы узнать больше и начать работу.
 
-#### My daemon crashed -- where should I share the error log?
+#### Daemon выдает ошибку -- куда сообщить лог ошибки?
 
-First, check out [Github issues](https://github.com/minaprotocol/mina/issues) to see if this is a known issue. If the error you experienced is a new issue, file a Github issue with the appropriate tags (daemon, bug). Mina developers will triage the issue and fix it in a future sprint -- thanks for your help!
+Сначала проверьте раздел [Github issues](https://github.com/minaprotocol/mina/issues), и, возможно, вы найдете там решение. Если ошибка нераспространенная, сообщите о проблеме на Github с указанием соответствующих тэгов (daemon, bug). Благодаря вам разработчики Mina смогут узнать о проблеме, и ошибка будет устранена в следующем спринте. 
 
-#### How can I report other issues / get in touch with the development team?
+#### Куда сообщать о других проблемах/как связаться с командой разработчиков? 
 
-- The Mina community's live discussion channel is the [Discord server](https://bit.ly/MinaDiscord)
-- You can also create Github issues: https://github.com/minaprotocol/mina/issues
-- If you need to get in touch, you can submit a ticket via the [Mina Support chat](https://support.minaprotocol.com/).
+- Вы можете задать вопрос сообществу Mina напрямую на [канале Discord](https://bit.ly/MinaDiscord)
+- Вы также можете поднять тему на Github issues: https://github.com/minaprotocol/mina/issues
+- Чтобы связаться с поддержкой, отправьте тикет в [чат поддержки Mina](https://support.minaprotocol.com/).
 
-#### Is there a block explorer?
+#### Есть ли у вас блок-эксплорер?
 
-Yes, check out these block explorers:
+Да, наши блок-эксплореры:
 
 https://minaexplorer.com/
 
 https://mina.bitfly.at/
 
-## General Questions
+## Общие вопросы
 
-#### What consensus algorithm does Mina use?
+#### Какой алгоритм консенсуса использует Mina?
 
-Mina's consensus mechanism is an implementation of Ouroboros Proof-of-Stake. Due to Mina's unique compressed blockchain, certain aspects of the algorithm have diverged from the Ouroboros papers, and the version Mina uses is called Ouroboros Samisika. Stay tuned for more details on Ouroboros Samisika and some technical writeups on its details and implementation.
+В качестве механизма консенсуса в Mina используется реализация Ouroboros Proof-of-Stake. Так как у Mina уникальный сжатый блокчейн, некоторые аспекты алгоритма отличаются от документации Ouroboros, и версия, которую использует Mina, называется Ouroboros Samisika. Следите за обновлениями, чтобы узнать больше об Ouroboros Samisika, а также детальную техническую информацию. 
 
-#### How does Mina achieve scalability?
+#### Как масштабируется Mina?
 
-Mina achieves scalability through the use of recursive zk-SNARKs. By generating a proof that attests to the validity of historic blockchain states, Mina can keep the blockchain size fixed. This allows for increased throughput due to block size limits not being as taxing on the network, thereby increasing the scalability of the network.
+Mina масштабируется за счет использования рекурсивных zk-SNARK. При создании доказательства, подтверждающего достоверность исторических состояний блокчейна, Mina может поддерживать фиксированный размер блокчейна. Благодаря этому увеличивается пропускная способность, так как ограничения по размеру блока не являются существенными для сети, и таким образом увеличивается масштабируемость сети. 
 
-#### Why did you develop a new protocol, rather than augmenting existing cryptocurrencies?
+#### Почему вы не создаете решения для существующих криптовалют, а разработали новый протокол? 
 
-The reason for developing a new protocol instead of offering services to other blockchains is because adding SNARKs after the fact to a Layer 1 project is not trivial. Even basic operations need to be optimized for performance inside a SNARK, and existing implementations are not able to be retrofit as such. If we look at hashing functions for example, SHA256 (used by Bitcoin) or Keccak (used by Ethereum) are extremely expensive inside a SNARK circuit, but Poseidon (what Mina uses) is optimized for performance. This and many other technical considerations make it infeasible to easily add recursive SNARKs to existing Layer 1’s, without entirely overhauling the base protocol.
+Мы разработали новый протокол вместо того, чтобы предоставлять сервисы для других блокчейнов, из-за сложностей с добавлением SNARK в проект первого уровня. Внутри SNARK даже базовые операции должны быть оптимизированы, чтобы обеспечить производительность, а существующие реализации не могут быть модифицированы как таковые. Если учитывать функции хеширования, то, например, SHA256 (используется в Биткоине) или Keccak (в Ethereum) слишком затратны внутри SNARK-схемы, а Poseidon (который используется в Mina) оптимизирован для обеспечения производительности. В связи с этим и по другим техническим соображениям, невозможно добавить рекурсивные SNARK в существующие протоколы первого уровня без полной перестройки базового протокола. 
 
-#### Will you require a trusted setup?
+#### Требуется ли доверительная настройка? 
 
-No! Mina uses a [Pickles SNARK](https://medium.com/minaprotocol/meet-pickles-snark-enabling-smart-contract-on-coda-protocol-7ede3b54c250), which requires no trusted setup.
+Нет! Mina использует [Pickles SNARK](https://medium.com/minaprotocol/meet-pickles-snark-enabling-smart-contract-on-coda-protocol-7ede3b54c250) благодаря чему доверительная настройка не требуется.
 
-#### Does Mina support smart contracts? If so, what smart contracting languages does it support?
+#### Поддерживает ли Mina смарт-контракты? Если да, то какие языки смарт-контрактов? 
 
-See the [documentation for Snapps](https://minaprotocol.com/docs/architecture/snapps), Mina's Snarkified applications.
+Смотрите [документацию Snapps](https://minaprotocol.com/docs/architecture/snapps) о снарк-приложениях Mina.
 
-#### Does Mina support shielded transactions, like in Zcash?
+#### Поддерживает ли Mina защищенные транзакции, как Zcash? 
 
-No, Mina does not natively implement privacy features at the moment. However, privacy is a key consideration for cryptocurrencies, and is also on the development roadmap.
+Нет, на данный момент Mina не поддерживает функции конфиденциальности. Тем не менее, конфиденциальность является ключевым фактором в криптовалютах, и этот раздел есть в дорожной карте. 
 
-#### Can I run the Mina daemon as a service
+#### Могу ли я запустить daemon Mina в качестве службы? 
 
-[See here](/docs/using-mina/connecting#ubuntu-1804--debian-9-1) for information about using launchd or systemd with mina.
+[Смотрите здесь](/docs/using-mina/connecting#ubuntu-1804--debian-9-1), чтобы узнать информацию об использовании launchd или systemd с mina.
 
-## Block Producers
+## Блок-продюсеры
 
-#### How can I verify that I am indeed producing blocks?
+#### Как проверить, что я действительно создаю блоки? 
 
-(Via the CLI):
-Execute `mina client status`
+(С помощью CLI):
+Выполните `mina client status`
 
-As output, you should see a block of text, there will be a line similar to this if your Block Producer is running:
+Если ваш блок-продюсер запущен, вы увидите текст, в котором будет примерно такая строка: 
 `Block producers running: 1 (B62qrPN5Y5yq8kGE3FbVK...)`
 
-If your Block Producer has won a slot, you will see something like this:
+Если ваш блок-продюсер создал блок на своем слоте, вы увидите примерно следующее: 
 `Next block will be produced in: in 17.52m`
 
-(Via the Logs):
-The following text appears each time the daemon produces a block:
+(С помощью Logs):
+Следующий текст будет появляться каждый раз, когда daemon создает блок: 
 
 `Producing new block with parent $breadcrumb`
 
-#### I produced a block, why wasn't it selected for the _Canonical Chain_?
+#### Я создал блок, почему он не был включен в _каноническую цепь_?
 
-Due to a property of the Ouroboros Samisika consensus protocol, it's entirely possible that more than one block is produced in a particular slot. The network resolves the short-lived forks and will consolidate onto one block per slot by random selection.
+Благодаря свойству консенсуса протокола Ouroboros Samisika на определенном слоте может создаваться больше одного блока. В сети могут происходить кратковременные форки, и увеличение на один любой блок происходит на определенном слоте. 
 
-Below is a visualization of the Mina Blockchain:
-![Visualization of the Mina Blockchain and its Singleton Forks](/static/img/faq/mina-singleton-forks.png)
+Ниже представлена визуализация блокчейна Mina: 
+![Визуализация блокчейна Mina и его синглтон-форков](/static/img/faq/mina-singleton-forks.png)
 
-## SNARKs and Snark Workers
+## SNARKs и Snark Workers
 
-#### If I run a Snark Worker, how do I get paid for my SNARKs that I generate?
+#### Если я запускаю Snark-воркер, какую плату я буду получать за созданные мною SNARKs? 
 
-Block producers (the validators who add new blocks to the blockchain) are required to buy SNARKs from the network (or from what we call the Snarketplace) and will pay out some of their block reward as fees to the snark workers who generated SNARKs. This creates a secondary incentive mechanism in the network to reward nodes that help compress transactions.
+Блок-продюсерам (валидаторы, которые добавляют новые блоки в блокчейн) необходимо покупать в сети SNARK (мы еще называем это Snarketplace) и выплачивать часть своего вознаграждения за блок в качестве комиссии для snark-воркеров, сгенерировавшим SNARK. Это обеспечивает создание вторичного механизма стимулирования в сети, чтобы иметь возможность вознаграждать ноды, которые обеспечивают сжатие транзакций. 
 
-#### Is generating SNARKs similar to Proof-of-Work (PoW) mining?
+#### Является ли создание SNARK аналогом майнинга в сетях Proof-of-Work (PoW)? 
 
-No, they are different in several ways:
+Нет, различия следующие:
 
-- SNARK work is deterministic, while PoW mining requires randomly calculating hashes to try and solve a puzzle. There is no luck element in SNARK work — if a snark worker wants to generate a SNARK of a transaction, they only need to generate the proof once. This means SNARK work is much less expensive and environmentally wasteful, as the compute is all spent towards a productive goal.
-- There is no difficulty increase for SNARK work, as there is with PoW mining. In fact, as SNARK constructions, and proof generation times improve, the difficulty may actually decrease.
-- SNARK work is not directly involved in consensus. Snark workers play no role in determining the next state of the blockchain. Their role is to simply generate SNARKs of transactions observed in the network
-- As a snark worker, there is no requirement for uptime. PoW miners need to run their rigs non-stop to ensure they don't miss out on a potential block. Snark workers can come online and offline as they please — it is more like Uber, where there will always be work to be done, and nobody needs to say ahead of time when they want to work.
+- Работа SNARK детерминирована, в то время как PoW-майнингу требуется случайное вычисление хэшей для решения головоломки. В работе SNARK отсутствует элемент удачи - если snark-воркер хочет генерировать SNARK-транзакции, ему нужно сгенерировать доказательство только один раз. Это означает, что работа со SNARK намного дешевле и является более экологичной, поскольку все вычисления используются для обеспечения производительности. 
+- При работе со SNARK сложность не увеличивется, как при PoW-майнинге. Фактически, по мере совершенствования SNARK-конструкций и улучшения времени генерации доказательств, сложность может снижаться. 
+- SNARK-воркеры не участвуют напрямую в достижении консенсуса. Они не играют никакой роли в определении следующего состояния блокчейна. Их роль - просто генерировать SNARK-транзакции, отслеживающиеся в сети. 
+- Для snark-воркеров не существует требований по uptime. PoW-майнерам необходимо работать в режиме нон-стоп, чтобы не пропустить потенциальный блок. Snark-воркеры могут подключаться и отключаться на свое усмотрение – это больше похоже на работу Uber, где всегда можно работать, но никому не нужно заранее говорить, когда именно вы хотите работать. 
 
-#### Why have my SNARKs not been included? (A.K.A. How should I price my SNARKs?)
+#### Почему мои SNARK не были включены? (Или: Как мне установить цену на SNARK?) 
 
-Even though your SNARK Worker might be producing SNARKs at a breakneck pace, if someone else produces a cheaper proof for a particular job you have already completed, their SNARK would be preferred due to its lower fee.
+Даже если ваш SNARK-воркер производит SNARK с огромной скоростью, но кто-то другой предоставит более дешевое доказательство для конкретной работы, которую вы уже выполнили, его SNARK будет предпочтительнее из-за более низкой платы. 
 
-Pricing your SNARKs is a delicate balance between the cost of compute, the market environment (demand for SNARKs), your SNARK throughput, and the speed at which each of your SNARK Worker processes can produce SNARKs. Sometimes, it might even be economically prudent to turn off your SNARK Worker altogether until the market improves.
+При ценообразовании ваших SNARK вам необходимо соблюдать тонкий баланс между стоимостью вычислений, рыночной средой (спрос на SNARK), пропускной способностью ваших SNARK и скоростью, с которой каждый из ваших SNARK-воркеров производит SNARK. Иногда экономически целесообразно полностью отключить SNARK-воркер и подождать, пока ситуация на рынке изменится в лучшую сторону.  
 
-#### Will Snark Workers require more storage and computing power over time? What about compared to Mina full nodes?
+#### Потребуется ли со временем больше памяти и вычислительной мощности для Snark-воркеров? В чем отличие от полных нод Mina? 
 
-Snark workers will not need more storage or computing power over time. Snark workers simply query the mempool for pending transactions requiring Snark proofs, and then generate said proof -- this does not require syncing historical data. In addition, the underlying proving cost of Snark work doesn’t get more expensive with time.
+Вам не потребуется со временем больше места или вычислительной мощности для SNARK-воркеров. Snark-воркеры просто запрашивают у мемпула ожидающие транзакции, требующие Snark-доказательств, а затем генерируют указанное доказательство - для этого не трубется синхронизация исторических данных. В дополнение, основная доказательная стоимость работы Snark не будет увеличиваться через время. 
 
-If we are comparing Snark worker nodes with full nodes on Mina, then yes Snark workers will benefit from specialized hardware as generating SNARK proofs is currently compute intensive. Again, however, with the explosion of SNARK research, this is likely to change and become more accessible to consumer hardware.
+Если сравнивать ноды Snark-воркеров с полными нодами в Mina, то Snark-воркеры имеют преимущества за счет использования специализированного оборудования, поскольку для создания SNARK-доказательств в настоящее время требуются более сложные вычисления. Опять же, поскольку ведутся активные исследования в области SNARK, это, вероятно, изменится, они станут более доступными, и их можно будет запускать с помощью пользовательского оборудования. 
 
-#### What is the difference between a SNARK, a SNARK proof, and snark work?
+#### В чем разница между SNARK, SNARK-доказательством и работой snark? 
 
-SNARKs are a very overloaded term currently — when you read **SNARK**, it could be referring to the concept of succinct non-interactive proof systems (eg. SNARKs vs Bulletproofs), the specific technical implementation of the proof system (eg. the construction, the circuit, or the prover), or the individual instance of the proof itself (eg. the blockchain SNARK).
+SNARK - многозначный термин - когда вы видите **SNARK**, это может означать концепцию сжатых неинтерактивных систем доказательства (например, SNARKs vs Bulletproofs), конкретную техническую реализацию системы доказательства (например, конструкция, цикл или прувер) или отдельный экземпляр самого доказательства (например, SNARK блокчейна). 
 
-When we speak about it, we will try to adhere to using:
+Когда мы говорим о снарках, мы можем иметь в виду следующее: 
 
-- SNARK: as the general concept of succinct, non-interactive zero-knowledge proofs
-- SNARK circuit: the specific circuit and prover, as pertaining to an app
-- SNARK proof: an individual proof that is generated by a SNARK prover
-- snark work: a Mina protocol data structure that is a wrapper around one or two SNARK proofs and a price to be paid to the snark worker that generated the proof(s). This is made unforgeable by a Signature of Knowledge scheme that will be detailed in another section.
+- SNARK: сжатые неинтерактивные доказательства с нулевым разглашением, согласно общей концепции
+- SNARK-цикл: определенный цикл и прувер, которые относятся к приложению 
+- SNARK-доказательство: индивидуальное доказательство, созданное SNARK-прувером  
+- Работа snark: структура данных протокола Mina, представляющая из себя оболочку для одного или двух SNARK-доказательств, а также цена, которую необходимо заплатить snark-воркеру, создавшему доказательства. Это невозможно подделать с помощью схемы подписи знаний, которая будет подробно описана в другом разделе. 
 
-#### Is there any concern about a single large snark worker [dumping](<https://en.wikipedia.org/wiki/Dumping_(pricing_policy)>) work in the snarketplace, and then raising prices after monopolizing the market?
+#### Стоит ли беспокоиться о том, что один крупный снарк-воркер [демпинг](<https://en.wikipedia.org/wiki/Dumping_(pricing_policy)>) работает на снаркетплейсе, а затем поднимет цены после монополизации рынка? 
 
-In economics, there is a pricing strategy called predatory pricing (or dumping) where one supplier of a product seeks to exhaust competing suppliers in the market by undercutting the market price. The supplier prices their goods much cheaper than the market rate, in order to drive out competitors, even if it means incurring short-term losses. Once the market has been cleared, the dominant supplier then increases prices [above competitive market rates](https://en.wikipedia.org/wiki/Supracompetitive_pricing), as competition has been extinguished.
+В экономике существует стратегия ценообразования, которая называется хищническим ценообразованием (или демпингом), при котором один поставщик продукта стремится ослабить конкурирующих поставщиков на рынке, занижая свою рыночную цену. Поставщик оценивает свои товары намного дешевле рыночных, чтобы вытеснить конкурентов, даже если это приведет к краткосрочным убыткам. Как только с рынка уходят конкуренты, доминирующий поставщик делает цены [выше рыночных](https://en.wikipedia.org/wiki/Supracompetitive_pricing), поскольку конкуренция прекращается. 
 
-However, this strategy is only effective in markets where there are high barriers to entry. Meaning, competitors who were crowded out in the predation stage are unable to rejoin the market.
+Однако эта стратегия эффективна только на рынках с высокими барьерами входа. Это означает, что конкуренты, которые были вытеснены на стадии хищничества, не могут вернуться на рынок. 
 
-This is not the case for snark work, as the barriers to entry are low. Anyone who has spare compute can join the snarketplace and produce as little as one snark work, and profit on that unit of work. The only barrier to entry is the initial capital expense on hardware, but we anticipate hardware requirements to be low, such that users with spare equipment can come online and participate. If any snark worker succeeds in driving out the market and increases prices, it is anticipated that newcomers would reappear and drive prices back down.
+Это не относится к работе со снарками благодаря невысоким барьерам входа. Каждый, у кого есть небольшие вычислительные ресурсы, может присоединиться к снаркетплейсу и заниматься генерацией с помощью одного снарка, получая прибыль за работу этой единицы. Единственное препятствие для входа на рынок – основные начальные затраты на оборудование, но мы полагаем, что требования к оборудованию будут невысокими, тогда пользователи с менее мощным оборудованием смогут подключиться и участвовать в сети. Если какому-либо снарк-воркеру удастся повлиять на рынок и повысить цены, мы считаем, что опять появятся новые пользователи, которые снизят цены. 
 
-#### Does speed of producing snarks matter? If my computer is slower, will I be at a disadvantage?
+#### Имеет ли значение скорость производства снарков? Если мой компьютер будет работать медленнее, станет ли мне это невыгодно? 
 
-No, provided that the snark work produced is still required by block producers, it doesn't matter who produced it first — only the price matters in the block producers' eyes. The caveat here is that earlier inclusion into the snark mempool is obviously beneficial, as block producers are likely to "see" the work earlier.
+Нет, при условии, что работа, созданная снарком, по-прежнему будет затребована среди блок-продюсеров, и не имеет значения, кто произвел ее первым - для блок-продюсеров важна только цена. Однако следует учесть, есть вероятность, чем раньше работа снарка будет включена в мемпул, тем раньше блок-продюсеры ее "заметят". 
 
-One could however envision a scenario where a set of snark workers are favored because they produced the most number of snark works that are profitable, and buying proofs from as few entities as possible would allow for more transactions to be included in any block.
+Однако можно представить сценарий развития, когда предпочтение отдается ряду снарк-воркеров, потому что они создали наибольшее количество прибыльных работ, а покупка доказательств у как можно меньшего числа объектов позволит включить больше транзакций в любой блок. 
 
-There is also a threshold at which time becomes a factor, but this would only apply to very underpowered devices. We will follow up with detailed benchmarks, when we have run more tests.
+Также существует порог с учетом временного фактора, но это относится только к устройствам с очень низкой мощностью. Мы запустим больше тестов и продолжим проверку. 
 
-#### Will a full node need to store all intermediate SNARK proofs? Eg. Will the storage requirements grow linearly with blocks?
+#### Будет ли полная нода хранить все промежуточные доказательства SNARK? Т.е, будут ли требования к хранилищу расти параллельно с блоками? 
 
-Nope -- when a new block is generated, Mina computes the proof recursively over the prior proof and the new block. This is the advantage of recursive composition -- at any given time, nodes only need to store the most recent proof. Intermediate proofs are not needed. See this talk for more clarity on how this architecture emerged: https://www.youtube.com/watch?v=eWVGATxEB6M
+Нет -- когда генерируется новый блок, Mina рекурсивно вычисляет доказательство по предыдущему доказательству и новому блоку. В этом заключается преимущество рекурсивной композиции -- в любое время ноды должны хранить только самое последнее доказательство. Промежуточные доказательства не нужны. Смотрите видео, чтобы лучше понять, как появилась эта архитектура: https://www.youtube.com/watch?v=eWVGATxEB6M
 
-#### How do you control or limit the number of cores Snark Workers use?
+#### Как контролируется или ограничивается количество ядер, используемых Snark-воркерами? 
 
-You can use the `-snark-worker-parallelism` flag when starting up `mina daemon`.
+Вы можете использовать флаг `-snark-worker-parallelism` при запуске `mina daemon`.
