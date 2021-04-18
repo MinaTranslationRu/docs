@@ -1,10 +1,10 @@
 import Page from '@reason/pages/Docs';
 export default Page({title: "Snarky Universe"});
 
-**snarky-universe** is a snarky standard library that provides functions for dealing
-with various useful objects (field elements, hashes, Merkle trees, signatures, integers).
+**snarky-universe** - стандартная библиотека snarky, которая предоставляет функции для работы.
+с различными полезными объектами (элементами поля, хэшами, деревьями Меркл, подписями, целыми числами).
 
-## API documentation
+## Документы API 
 
 ```reasonml
 module Field = {
@@ -341,14 +341,13 @@ module type Cond_intf = {
 
 ```
 
-### "Constant" module pattern
+### Паттерн модуля "Constant"
 
-Most modules in **snarky-universe** have a submodule called "Constant". For example,
-there is a module `Field` with the submodule `Field.Constant`.
+Большинство модулей в **snarky-universe** имеют подмодуль под названием "Constant". К примеру,
+существует модуль `Field` с подмодулем `Field.Constant`.
 
-`Field` provides operations on "in SNARK" variable field elements, whereas
-`Field.Constant` provides operations on regular old field elements.
+`Поле` обеспечивает операции с элементами переменного поля "в SNARK", в то время как
+`Field.Constant` обеспечивает операции по обычным старым элементам поля.
 
-The difference is the following. The only things you can fundamentally do with "in snark" field
-elements is add and multiply them. With "Constant" field elements, you can look at their bits,
-turn them into a string, print them out to the console, etc.
+Разница заключается в следующем. Единственное, что вы можете в принципе сделать с элементами поля "в SNARK" - это складывать и умножать их. 
+С помощью элементов поля "Constant" вы можете посмотреть на их BITS, превратить их в строку, распечатать их на консоль и т.д.
