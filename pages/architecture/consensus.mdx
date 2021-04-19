@@ -50,26 +50,26 @@ export default Page({ title: "Consensus Mechanism Abstraction" });
 
 ### next_proposal
 
-The `next_proposal` hook informs the protocol when it is valid to generate and propose the next transition. This hook may either return a time to propose a transition at, or a time to check the hook again. This allows a consensus mechanism to space out proposals, as well as control more advanced scheduling of proposals based on other information in the protocol.
+Хук `next_proposal` информирует протокол о том, когда он готов сгенерировать и предложить следующий переход. Этот хук может возвращать либо время для предложения перехода, либо время для повторной попытки хука. Это позволяет механизму консенсуса регулировать предложения, а также контролировать более продвинутое планирование предложений на основе другой информации в протоколе.
 
 <!-- <sup>_For more information on how the `next_proposal` hook interacts the `Proposer`, see the [`Proposer` documentation](proposer.md#proposal-scheduling)._</sup> -->
 
 ### next_state_checked
 
-The `next_state_checked` hook returns a checked computation which calculates/constrains the next consensus state in a blockchain sequence given its predecessor's transition. This hook is included into the checked computation which makes up the blockchain snark constraint system. As such, this is the primary function in which validation is performed on consensus states.
+Хук `next_state_checked` возвращает проверяемое вычисление, которое рассчитывает/ограничивает следующее состояние консенсуса в последовательности блокчейна, исходя из перехода предшественника. Этот хук включен в проверяемые вычисления, которые составляют систему ограничения SNARK блокчейн. Таким образом, это является основной функцией, в рамках которой проводится проверка на основе состояний консенсуса.
 
 ### select
 
-The `select` hook informs the protocol that, given two states, which state is "better" in the eyes of the consensus mechanism. This hook plays a vital role in how consensus is achieved, as it is the primary operation which determines, between two chains, which should be kept. When called, it will inform the caller to either `Keep` the existing state, or to `Take` the candidate state.
+Учитывая наличие двух состояний, хук `select` информирует протокол о том, какое состояние "лучше" в понимании механизма консенсуса. Этот хук играет жизненно важную роль в том, как достигается консенсус, так как именно он является основной операцией, определяющей какая из двух цепей должна быть сохранена. При вызове он сообщит вызывающему либо `Keep` (сохранить существующее состояние), либо `Take` (принять следующее состояние).
 
 ### received_at_valid_time
 
-The `received_at_valid_time` hook is a predicate on whether or not a given consensus state is valid at a given time. This lets the consensus mechanism optionally control temporal properties of when a consensus state was valid to generate, rejecting the received protocol state if it was recieved out of band. The implementation of the protocol should call this hook whenever a transition is received from the network, before processing the transition and adding it to the frontier.
+Хук `received_at_valid_time` является предикатом на то, является ли данное состояние консенсуса допустимым в данный момент времени. Это позволяет механизму консенсуса дополнительно контролировать временные характеристики, когда состояние консенсуса было правомерно для генерации, отвергая полученное состояние протокола, если оно было получено вне диапазона. Реализация протокола должна вызывать этот хук всякий раз при получении перехода из сети, перед обработкой перехода и добавлением его к границе.
 
 ### frontier_root_transition
 
-The `frontier_root_transition` hook needs to be called whenever a transition occurs at the point of finality (in mina, this is the root of the transition frontier). This provides a chance for the consensus mechanism to update its local state in accordance with the network's finalized state.
+Хук `frontier_root_transition` должен вызываться всякий раз, когда переход происходит в конечной точке (в Mina - это корень границы перехода). Это дает возможность механизму консенсуса обновить свое локальное состояние в соответствии с окончательным состоянием сети.
 
 ### should_bootstrap
 
-The `should_bootstrap` hook informs the protocol whether or not a transition received over the network requires the node to begin bootstrapping its state to the current network state. The consensus mechanism determines how long it will take until state finalization, and whether or not a node should bootstrap is also connected to this concept. This hook should be called whenever a transition is received from the network and initial validation is performed successfully.
+Хук `should_bootstrap` информирует протокол о том, требует ли полученный по сети переход, чтобы нода начала бустрэйп своего состояния до текущего состояния сети. С этой концепцией также связан вопрос о том, должна ли нода начинать бутстрэйп. Этот хук должен вызываться всякий раз, когда происходит переход из сети и первоначальная проверка успешно выполнена.
