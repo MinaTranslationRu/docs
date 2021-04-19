@@ -50,7 +50,7 @@ The `mina ledger export` command can be used to export ledgers from a running da
 }
 ```
 
-Для того, чтобы осуществлять стейкинг, вам должны быть интересны аккаунты, которые вы контролируете, и аккаунты, которые осуществляют стейкинг в аккаунты, которые вы контролируете. Например, если бы в нашем стекинг-сервисе участвовал только один аккаунт, мы могли бы присвоить все аккаунты, в которых мы заинтересованы, реестру, используя такую команду: 
+Для осуществления стейкинга вам должны быть интересны аккаунты, которые вы контролируете, и аккаунты, которые осуществляют стейкинг в аккаунты, которые вы контролируете. Например, если бы в нашем стейкинг-сервисе участвовал только один аккаунт, мы могли бы присвоить все аккаунты, в которых мы заинтересованы, реестру, используя такую команду: 
 
 ```sh
 mina ledger export staking-epoch-ledger | jq "$(cat <<EOF
@@ -63,7 +63,7 @@ EOF
 )"
 ```
 
-Важная деталь, которую вы захотите вычислить как стейкинг-сервис – будет ли аккаунт получать суперчардж-вознаграждения за монетную базу, котору вы, вероятно, захотите включить в стейкинг-сервис при выплате участникам. Аккаунты с заблокированными токенами (являющиеся аккаунтами, которые *не* получают суперчардж-вознаграждения за стейкинг) будут иметь специальное поле `"timing"` в своем представлении json. Например, это будет выглядеть так: 
+Расчитывая выплаты, важно знать, будет ли аккаунт получать суперчардж-вознаграждения за монетную базу, котору вы, вероятно, захотите включить в коэффициент взвешивания стейкинг-сервиса при выплате участникам. Аккаунты с заблокированными токенами (являющиеся аккаунтами, которые *не* получают суперчардж-вознаграждения за стейкинг) будут иметь специальное поле `"timing"` в образе json. Например, это может выглядеть так: 
 
 ```json
 {
@@ -80,7 +80,7 @@ EOF
 }
 ```
 
-Только потому, что в аккаунте есть поле `"timing"`, необязательно означает, что в аккаунте заблокированы токены. Аккаунты, ограниченные по времени, содержат заблокированные и разблокированные токены, а поле `"timing"` описывает график разблокировки заблокированных токенов в этом аккаунте. Если в аккаунте есть поле `"timing"`, вы можете вычислить глобальный слот, в котором токены этого аккаунта будут полностью разблокированы, после чего аккаунт получит суперчардж-вознаграждения. Это можно вычислить, определив, сколько времени потребуется ограниченному по времени аккаунту, чтобы полностью осуществить вестинг своих токенов, и добавив это к `"cliff_time"`, то есть слоту, в котором аккаунт начинает вестинг токенов. Вот пример, кода Python, который вычислит это время разблокировки на основе информации о времени аккаунта. 
+Только потому, что в аккаунте есть поле `"timing"`, необязательно означает, что в аккаунте заблокированы токены. Временные аккаунты содержат заблокированные и разблокированные токены, а поле `"timing"` описывает график разблокировки заблокированных токенов в этом аккаунте. Если в аккаунте есть поле `"timing"`, вы можете вычислить глобальный слот, в котором токены этого аккаунта будут полностью разблокированы, после чего аккаунт получит суперчардж-вознаграждения. Это можно вычислить, определив, сколько времени потребуется временному аккаунту, чтобы полностью осуществить вестинг своих токенов, и добавив это к `"cliff_time"`, то есть слоту, в котором аккаунт начинает вестинг токенов. Например, Python вычислит время этой разблокировки на основе информации о времени аккаунта. 
 
 ```python
 vesting_amount = initial_min_balance - cliff_amount
@@ -88,17 +88,17 @@ vesting_time = vesting_amount * math.ceil(vesting_period / vesting_increment)
 unlocked_time = cliff_time + vesting_time
 ```
 
-## Choosing How to Payout Rewards
+## Выбор способа выплаты вознаграждения 
 
-It's up to each staking service to decide how they wish to compute rewards. It's important to take account supercharging and the weights of different delegators into account, depending no how you choose to payout rewards. 
+Каждый стейкинг-сервис определяет, как рассчитывать вознаграждение. Вам необходимо принимать во внимание чрезмерную нагрузку и вес различных делегатов, в зависимости от того, как вы решите выплачивать вознаграждения. 
 
-As an example for calculating staking service payouts, we recommend taking a look at a document put together by a member of our community over at [docs.minaexplorer.com](https://docs.minaexplorer.com/minaexplorer/calculating-payments).
+Мы рекомендуем просмотреть документ, составленный участником нашего сообщества на [docs.minaexplorer.com](https://docs.minaexplorer.com/minaexplorer/calculating-payments), чтобы понять, как расчитывать выплаты за стекинг-сервис.  
 
-## Odds of Winning a Block
+## Шансы на выигрыш блока 
 
-Blocks in Mina are produced within distinct time intervals called "slots". Each account in the ledger has a chance of winning each slot on the network, which allows them to produce a block for that slot (or, in the case of delegation, allows the delegated account to produce a block on their behalf). An account computes a random number (via a [Verifiable Random Function, or VRF](https://en.wikipedia.org/wiki/Verifiable_random_function)) for each slot, and compares that random number against a required threshold to determine if they have "won" that slot and can produce a block at that time. Their chance of winning a slot is thus determined by the threshold, which is a function of their relative stake in the network.
+Блоки в Mina создаются в определенные промежутки времени, которые называются "слотами". Каждый аккаунт в реестре имеет шанс выиграть каждый слот в сети, что позволяет им создавать блок для этого слота (или, в случае делегирования, позволяет делегированному аккаунту создавать блок от их имени). Аккаунт вычисляет случайное число (с помощью [проверяемой случайной функции или VRF](https://en.wikipedia.org/wiki/Verifiable_random_function)) для каждого слота и сравнивает это случайное число с требуемым порогом, чтобы определить, "выиграли" ли они этот слот и могут ли произвести блок в это время. Таким образом, их шанс выиграть слот определяется порогом, который является функцией их относительной доли в сети. 
 
-The stake distribution that is sampled when determining the VRF threshold are contained in a special ledger called the "staking ledger". Staking ledgers are fixed ledgers from past epochs in the network (epochs are fixed spans of slots; every epoch is 7140 slots long). Using past fixed ledgers prevents malicious stakers from increasing their chances of winning during an epoch by altering the distribution of stake on the main ledger (the "staged ledger"). Every epoch, the staking ledger changes. Due to this constraint, any account on the system can only check for "winning slots" within the next 2 epochs at any given time.
+Распределение стеков, которое выбирается при определении порогового значения VRF, содержится в специальном реестре, который называется "staking ledger". Staking ledger – это фиксированные реестры прошлых эпох в сети (эпохи – это фиксированные промежутки слотов; каждая эпоха длится 7140 слотов). Использование прошлых фиксированных реестров не позволяет злоумышленникам увеличить свои шансы на выигрыш в течение эпохи, изменяя распределение стека в основном рееестре ("staged ledger"). Каждую эпоху staking ledger меняется. Из-за этого ограничения любой аккаунт в системе может проверять только "выигрышные слоты" в течение следующих 2 эпох в любой момент времени. 
 
 Once you know the staking ledger that will be used for a given epoch, the required VRF threshold for producing blocks in that epoch can be computed for each account. We can compute a stake ratio for a given account by dividing the stake that account controls in the staking ledger by the total amount of currency in the staking ledger. Figure 1 on page 20 of the [Ouroboros Genesis](https://eprint.iacr.org/2018/378.pdf) paper provides the raw function for computing VRF thresholds. Filling in Mina's value for the active slots coefficient $f$ gives us the following function: $\phi\left(\alpha\right) \triangleq 1 - \left(\dfrac{1}{4}\right)^\alpha$. This function takes as a parameter $\alpha$, which is the stake ratio we compute for an account.
 
