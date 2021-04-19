@@ -45,7 +45,7 @@ Breadcrumb – нода на [границе перехода](#transition-front
 
 #### Catchup
 
-Catchup - это заключительный этап процесса [синхронизации](#syncing). Во время catchup нода будет пытаться догнать текущий [best tip](#best-tip), определяя, а затем загружая все [переходы](#transition) между [корнем](#root)границы перехода и текущим best tip. Сначала нода запрашивает недостающие хэши перехода и доказательство цепочки транзакций. Это доказательство доказывает, что указанный путь действителен, т.е., что предоставленные хэши перехода ведут от корня к best tip. Как только нода получит все хэши перехода, она запрашивает у пиров полный внешний переход для каждого хэша перехода. 
+Catchup - это заключительный этап процесса [синхронизации](#syncing). Во время catchup нода будет пытаться догнать текущий [best tip](#best-tip), определяя, а затем загружая все [переходы](#transition) между [корнем](#root) границы перехода и текущим best tip. Сначала нода запрашивает недостающие хэши перехода и доказательство цепочки транзакций. Это доказательство доказывает, что указанный путь действителен, т.е. что предоставленные хэши перехода ведут от корня к best tip. Как только нода получит все хэши перехода, она запрашивает у пиров полный внешний переход для каждого хэша перехода. 
 
 With each external transition, the node builds up its transition frontier by applying each to the prior state to construct a [breadcrumb](#breadcrumb). When catchup is complete, the node's local best tip is the same as the network's best tip, and breadcrumbs have been constructed for all transitions from the transition frontier root (best tip - k) to the current tip, and each has been validated. At this point, the node is [synced](#synced).
 
