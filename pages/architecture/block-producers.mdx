@@ -1,27 +1,27 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Block Producers" });
 
-# Block Producers
+# Блок-продюсеры
 
-The role of a block producer in Mina is to achieve [consensus](/docs/architecture/consensus) and provide security to the blockchain. The block producer is responsible for creating new blocks, which include recent transactions broadcast on the network and a blockchain proof that proves the current state of the chain is valid.
+Роль блок-продюсера в Mina заключается в достижении [консенсуса] (/docs/architecture/consensus) и обеспечении безопасности блокчейна. Блок-продюсер отвечает за создание новых блоков, которые включают в себя недавние транзакции, транслируемые в сети, и блокчейн-доказательство, которое подтверждает, что текущее состояние цепочки является действительным.
 
-In Mina, anyone may become a block producer. There is an unbounded number of participants with the chance of producing a block proportional to the funds staked. Funds are not locked and are not subject to slashing.
+В Mina любой может стать блок-продюсером. Существует неограниченное количество участников, у которых есть шанс произвести блок пропорционально средствам в стеке. Средства не блокируются и не подлежат слэшингу.
 
-In return for staking funds and generating the required blockchain proofs, blocks produced and included in the canonical chain are rewarded in the form of a coinbase and transaction fees, less any fees paid to purchase required [transaction snark work](/docs/architecture/snark-workers).
+Взамен на стейкинг средств и генерирование необходимых доказательств блокчейн, блоки, произведенные и включенные в каноническую цепь, вознаграждаются в виде монетной базы и комиссий за транзакции, за вычетом любых комиссий, уплаченных за транзакции для покупки требуемой [снарк-работы] (//docs/architecture/snark-workers).
 
-To produce a block successfully, a block producer must have the current state of the blockchain. Additionally, they must have enough available compute to produce a blockchain SNARK within the slot time and be connected to peers to broadcast the generated block within an acceptable delay as defined by the network consensus parameters.
+Для успешного производства блока, блок-продюсер должен знать текущее состояние блокчейна. Кроме того, они должны иметь достаточно доступных вычислительных возможностей, чтобы произвести SNARK для блокчейна в течение времени слота и быть подключены к пирам, чтобы передать сгенерированный блок с приемлемой задержкой, определяемой параметрами сетевого консенсуса.
 
-### Selecting a block producer
+### Выбор блок-продюсера
 
-The opportunity to produce a block for a slot is determined by a [verifiable random function](https://en.wikipedia.org/wiki/Verifiable_random_function) (VRF). This function can be thought of as a lottery. Each block producer independently runs this VRF for each slot, and if they get an output greater than a threshold proportional to the producer's stake, they have the chance to produce a block at the designated slot.
+Возможность произвести блок для слота определяется [верифицируемой случайной функцией](https://en.wikipedia.org/wiki/Verifiable_random_function) (VRF). Эту функцию можно рассматривать как лотерею. Каждый блок-продюсер самостоятельно запускает эту VRF для каждого слота, и, если они получат вывод, который превышает порог, пропорциональный доле производителя, у них появляется шанс произвести блок в обозначенном слоте.
 
-This process is secret, in that only the private key holder can determine the VRF output, and hence only they know when they are to produce a block. This aids security as it is impossible for an adversary to target a known block producer at a certain slot, e.g., by a denial of service or targeted attack. As a result, it also means that multiple producers can be selected for the same slot. If multiple producers produce a valid block for the same slot, this will produce a short-range fork where the consensus rules will select the longest chain.
+Этот процесс является секретным в том смысле, что только владелец закрытого ключа может определить VRF для вывода, и поэтому только он знает, когда он должен произвести блок. Это повышает безопасность, так как злоумышленник не может нацелиться на известного блок-продюсера в определенном месте (например, путем отказа в обслуживании или целенаправленной атаки). В результате, это также означает, что для одного и того же слота могут быть выбраны несколько производителей. Если несколько блок-продюсеров производят действительный блок для одного и того же слота, это приводит к появлению форка с коротким интервалом, в котором правила консенсуса выбирают самую длинную цепочку.
 
-The stake distribution is determined from the snarked ledger at the last block of `current epoch-2`, so there is a delay for any recently acquired or [delegated stake](#stake-delegation). For example, if the current epoch is 10, the staking distribution is determined from the snarked ledger of the last block of the 8th epoch.
+Распределение стека определяется на основе реестра со SNARK на последнем блоке `current epoch-2`, поэтому существует задержка для любого недавно приобретенного или [делегированного стека](#stake-delegation). Например, если текущая эпоха - 10, то распределение стека определяется из реестра со SNARK последнего блока 8-ой эпохи.
 
 <Alert>
 
-View the output of the VRF in the logs by looking for `Checking VRF evaluations`.
+Просмотреть вывод VRF в логах можно с помощью поиска `Checking VRF evaluations`.
 
 </Alert>
 
