@@ -1,31 +1,31 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Block Producer Sidecar" });
 
-# Block Producer Sidecar
+# Sidecar для блок-продюсера
 
-In order to maintain eligibility for various grants and the Foundation Delegation Program, you must run a sidecar with your daemon to report node uptime.
+Чтобы сохранить право на получение различных грантов и участие в программе Foundation Delegation Program, вам необходимо запустить sidecar со своим daemon для сообщения об аптайме ноды. 
 
-If you are required to keep your node online for a grant or specific program, you must run a small sidecar program that will report your daemon's uptime. This tutorial will walk you through the process of installing, configuring and running the sidecar program.
+Если требуется, чтобы ваша нода была подключена к сети для получения гранта или запуска конкретной программы, вы должны запустить небольшую вспомогательную программу, которая будет сообщать об аптайме вашего daemon. Это руководство поможет вам выполнить установку, настройку и запуск программы sidecar. 
 
-## Installation
+## Установка
 
-The sidecar is a seperate package that can be installed on Debian/Ubuntu or run along side a Docker solution.
+Sidecar – это отдельный пакет, который можно установить на Debian / Ubuntu или запустить вместе с решением Docker. 
 
 ### Debian / Ubuntu
 
-Install the sidecar package using the apt package manager.
+Установите пакет sidecar с помощью диспетчера пакетов apt. 
 
 ```
 sudo apt-get install -y mina-bp-stats-sidecar=1.1.5-a42bdee
 ```
 
-This will install the following files:
+Установятся следующие файлы: 
 
-1. `/usr/local/bin/mina-bp-stats-sidecar` (the mina sidecar program)
-2. `/etc/mina-sidecar.json` (the config file for the mina sidecar)
-3. `/etc/systemd/system/mina-bp-stats-sidecar.service` (the systemd config to run it as a service)
+1. `/usr/local/bin/mina-bp-stats-sidecar` (программа sidecar mina)
+2. `/etc/mina-sidecar.json` (файл конфигурации для sidecar mina)
+3. `/etc/systemd/system/mina-bp-stats-sidecar.service` (конфигурация systemd для запуска службы) 
 
-We will need to update the config file with the correct parameters. So use your prefered editor to replace the contents of `/etc/mina-sidecar.json` with the following:
+Нам нужно будет обновить файл конфигурации с правильными параметрами. Поэтому используйте предпочитаемый вами редактор, чтобы заменить содержимое файла `/etc/mina-sidecar.json` следующим: 
 
 ```
 {
@@ -36,15 +36,16 @@ We will need to update the config file with the correct parameters. So use your 
 
 ### Docker
 
-If you are using docker, you can simply pull the latest image which we will run in the next section.
+Если вы используете docker, вы можете просто загрузить последний образ, запуск которого описан в следующем разделе. 
+
 
 ```
 docker pull minaprotocol/mina-bp-stats-sidecar:latest
 ```
 
-Next we will need to setup the config file, for this tutorial we will assume you are on a Linux based host system.
+Затем нам нужно будет настроить файл конфигурации, например, вы работаете в хост-системе на основе Linux, для которой и предназанчено это руководство. 
 
-We will need to create a config file with the correct parameters. So use your prefered editor to replace the contents of `~/mina-sidecar-config.json` with the following:
+Нам нужно будет создать файл конфигурации с правильными параметрами. Поэтому используйте предпочитаемый вами редактор, чтобы заменить содержимое файла `~/mina-sidecar-config.json` следующим: 
 
 ```
 {
@@ -53,31 +54,31 @@ We will need to create a config file with the correct parameters. So use your pr
 }
 ```
 
-We will pass this file into the Docker container in the next step.
+При выполнении следующего шага мы передадим этот файл в контейнер Docker. 
 
-## Usage
+## Применение
 
-This sidecar will need to communicate with a running daemon, so you will first need to start your daemon. You will need to run the daemon with the flag `--limited-graphql-port 3095` in order for the sidecar to be able to communicate with the daemon. Further instructions can be found on the [connecting page](/docs/using-mina/connecting).
+Этот sidecar должен взаимодействовать с запущенным daemon, поэтому сначала вам нужно будет запустить свой daemon. Необходимо запустить daemon с флагом `--limited-graphql-port 3095`, чтобы sidecar мог взаимодействовать с daemon. Дальнейшие инструкции можно найти на [странице подключения](/docs/using-mina/connecting).
 
 ### Debian / Ubuntu
 
-First ensure the daemon is running on the same machine with the flag `--limited-graphql-port 3095`.
+Сначала убедитесь, что daemon работает на одной машине с флагом `--limited-graphql-port 3095`.
 
-To (optionally) enable the sidecar service to run on reboot you can use:
+Чтобы (необязательно) разрешить запуск службы Sidecar при перезагрузке, вы можете использовать: 
 
 ```
 sudo systemctl enable mina-bp-stats-sidecar
 ```
 
-Then to manually start the sidecar service, use this command:
+Затем, чтобы вручную запустить службу sidecar, используйте эту команду: 
 
 ```
 sudo service mina-bp-stats-sidecar start
 ```
 
-From there you can check that it's running and see the most recent logs with `service mina-bp-stats-sidecar status`
+Там вы можете проверить, что он запущен, и просмотреть самые последние логи с `service mina-bp-stats-sidecar status`
 
-If you want to get logs from the sidecar service, you can use `journalctl`:
+Если вы хотите получать логи из службы sidecar, вы можете использовать `journalctl`:
 
 ```
 journalctl -f -u mina-bp-stats-sidecar.service
@@ -85,15 +86,15 @@ journalctl -f -u mina-bp-stats-sidecar.service
 
 ### Docker
 
-First you will need to create a network for the daemon and sidecar containers:
+Сначала вам нужно будет создать сеть для контейнеров daemon и sidecar: 
 
 ```
 docker network create mina-network
 ```
 
-Next you will need to start the daemon with `--network mina-network` passed to docker, and some new flags `--open-limited-graphql-port --limited-graphql-port 3095` passed to the daemon.
-
-To start the sidecar container, simply use the following command:
+Затем вам необходимо запустить daemon с `--network mina-network`, переданным docker, и несколькими новыми флагами `--open-limited-graphql-port --limited-graphql-port 3095`, переданными daemon. 
+ 
+Чтобы запустить контейнер sidecar, просто используйте следующую команду: 
 
 ```
 docker run \
@@ -104,15 +105,15 @@ docker run \
 minaprotocol/mina-bp-stats-sidecar:latest
 ```
 
-You can check the logs using the `docker logs` command:
+Вы можете проверить логи с помощью команды `docker logs`: 
 
 ```
 docker logs -f mina-sidecar
 ```
 
-## Troubleshooting
+## Поиск проблемы
 
-If you get a 400 while running your sidecar:
+Если при запуске sidecar появляется ошибка 400:
 
 ```
 INFO:root:Fetching block 2136...
@@ -124,4 +125,4 @@ ERROR:root:HTTP Error 400: Bad Request
 ERROR:root:Sleeping for 30s and trying again
 ```
 
-It likely means you're shipping off data to the ingest pipeline without any block producer key configured on your Mina node - since your BP key is your identity we can't accept node data since we don't know who is submitting it!
+Скорее всего, это означает, что вы отправляете данные в конвейер приема без какого-либо ключа блок-продюсера, настроенного на вашей ноде Mina – поскольку ваш ключ блок-продюсера - ваша идентификация, мы не можем принимать данные ноды, поскольку мы не знаем, кто их отправляет! 
