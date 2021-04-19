@@ -138,118 +138,118 @@ Pickles is a new proof system and associated toolkit that is the first deployed 
 
 #### Libp2p
 
-A peer-to-peer networking library that provides things like message broadcast and filesharing. Mina uses this under the hood.
+Сетевая p2p-библиотека, обеспечивающая такие вещи, как транслирование сообщений и обмен файлами. Mina использует ее для ознакомления пользователей. 
 
-#### Private Key
+#### Приватный ключ
 
-The other component in public-key cryptography - private keys are held private while public keys can be issued publicly. Only the holder of the a public key's corresponding private key can attest to ownership of the public key. This allows for signing transactions to prove that you are the honest holder of any funds associated with any given public key.
+Другой компонент криптографии с использованием публичного ключа - приватный ключ (закрытый ключ) – хранится в секрете, в то время как публичные ключи могут быть предоставлены кому-либо. Только владелец публичного ключа, соответствующего приватному ключу, может подтвердить право собственности на публичный ключ. Это позволяет подписывать транзакции с целью доказать, что вы являетесь честным держателем любых средств, связанных с любым таким публичным ключом. 
 
-#### Protocol State
+#### Состояние протокола
 
-The state of the network. The protocol state comprises the previous protocol state hash to link blocks together and a body containing the genesis state hash, blockchain state, consensus state, and consensus constants.
+Состояние сети. Состояние протокола включает в себя хэш предыдущего состояния протокола для связывания блоков вместе, а также тело, содержащее хэш состояния генезиса, состояние цепочки блоков, состояние консенсуса и константы консенсуса. 
 
-#### Protocol State Hash
+#### Хеш состояния протокола 
 
-The protocol state hash is the hash of hashes of the previous state and [protocol state](#protocol-state) body. Acts a unique identifier for a block.
+Хэш состояния протокола - это хеш хэшей предыдущего состояния и тела [состояния протокола](#protocol-state). Действует в качестве уникального идентификатора блока. 
 
 #### Proof-of-Stake
 
-The type of consensus algorithm Mina implements allowing nodes to agree upon the state of the network. Proof-of-Stake (PoS) allows nodes to [stake](#staking) mina on the network to increase their chance of being selected as the next block producer.
+Тип алгоритма консенсуса, используемый Mina, позволяет нодам согласовывать состояние сети. Proof-of-Stake (PoS) позволяет нодам осуществлять [стейкинг](#staking) mina в сети, увеличивая свои шансы быть выбранным в качестве следующего блок-продюсера. 
 
-#### Public Key
+#### Публичный ключ
 
-One component of public-key cryptography - public keys can be widely shared with the world and can be thought of as "addresses" or identifiers for the person who holds the corresponding private key.
+Один из компонентов криптографии с использованием публичного ключа - публичный ключ (открытый ключ) – может широко использоваться в мире и считаться "адресом" или идентификатором человека, который владеет соответствующим приватным ключом. 
 
 #### Pub-sub
 
-Short for publish-subscribe, pub-sub is a a messaging pattern where message senders broadcast messages, and any listeners that have previously subscribed to that sender's messages will be notified. Mina utilizes this pattern, for example, as a way to notify clients when a new block has been added to the chain. This event can be "heard" by all listeners, and each listener need not independently poll for new data.
+Pub-sub - это сокращение от слова "публикация-подписка". Это шаблон обмена сообщениями, в котором отправители сообщений транслируют сообщения, и все слушатели, которые ранее подписались на сообщения этого отправителя, будут о них уведомлены. Mina, например, использует этот шаблон в качестве способа уведомления клиентов о добавлении нового блока в блокчейн. Об этом событии могут "услышать" все слушатели, и каждому независимому слушателю не нужно запрашивать новые данные. 
 
-#### Reorganization
+#### Реорганизация 
 
-When a competing fork of the blockchain increases in length relative to the main branch, the blockchain undergoes a reorganization to reflect the stronger fork as the main branch. After a reorganization, the transactions on the dropped branch are no longer guaranteed inclusion into the blockchain and will need to be added to new blocks on the longest branch.
+Когда конкурирующий форк блокчейна увеличивается по длине относительно основной ветки, блокчейн подвергается реорганизации, чтобы отразить более сильный форк в качестве главной ветки. После реорганизации не гарантируется включение транзакций на отвергнутой ветке в блокчейн, и их нужно будет добавлять в новые блоки на самой длинной ветке. 
 
-#### Root (of Transition Frontier)
+#### Корень (границы перехода)
 
-The root of the [transition frontier](#transition-frontier) is the block `k` blocks from the [best tip](#best-tip). The root is obtained from peers during [bootstrap](#bootstrap). Once a new best tip is seen, the root is moved, so only `k` blocks are persisted.  The root is the point where the block has been [finalized](#finality) due to consensus.
+Корень [границы перехода](#transition-frontier) - это блок `k` блоков из [best tip](#best-tip). Корень может быть получен пирами во время [бустрэпа](#bootstrap). Как только появляется новый best tip, корень перемещается, поэтому остаются только блоки k. Корень - это точка, в которой блок был [завершен](#finality) в результате консенсуса. 
 
 #### RPC
 
-A remote procedure call [(RPC)] (https://en.wikipedia.org/wiki/Remote_procedure_call) is used to communicate between nodes on the network and to interact with the running [daemon](#daemon).
+Удаленный вызов процедур [(RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call) используется для взимодействия между нодами в сети, а также для взаимодействия с запущенным [daemon](#daemon).
 
 #### Scan State
 
-The [scan state](/docs/architecture/scan-state) is a data structure that queues transactions requiring transaction SNARK proofs and allows parallel processing of these transaction SNARKS by [snark workers](#snark-worker).
+[Scan state](/docs/architecture/scan-state) – это структура данных, которая ставит в очередь транзакции, требующие подтверждения SNARK-доказательств транзакций, и позволяет выполнять параллельную обработку этих SNARKS транзакций [снарк-воркерами](#snark-worker). 
 
-#### Signatures
+#### Подписи
 
-Short for digital signatures, signatures are a way to establish authenticity or ownership of digitally signed messages. This is possible because given a public-private key pair, the owner of the private key can sign a message and create a signature, which can then be verified by anyone with the associated public key.
+Сокращение цифровых подписей. Подписи – это способ установить подлинность или право собственности на сообщения с цифровой подписью. Это возможно, потому что при наличии keypair, состоящего из публичного и приватного ключей, владелец приватного ключа может подписать сообщение и создать подпись, которую может проверить каждый, у кого есть связанный публичный ключ. 
 
-#### Slot
+#### Слот
 
-A slot in Mina is a unit of time. As of Mainnet launch, a slot is 3minutes long. An [epoch](#epoch) is divided into slots. Block producers can win the chance to produce a block during a slot.
+Слот в Mina – это единица времени. На момент запуска Mainnet продолжительность слота составляет 3 минуты. [Эпоха](#epoch) делится на слоты. Блок-продюсеры могут выиграть возможность произвести блок во время слота. 
 
 #### SNARK Pool
 
-The snark pool contains work completed by [snark workers](#snark-worker) for required work in the [scan state](#scan-state). The snark pool, also referred to as the "snarketplace", only contains the cheapest work offered by snark workers for each work bundle. If cheaper, valid work is seen by the node, it will replace that already existing in the pool.
+Снарк-пул содержит работу, выполненную [снарк-воркерами](#snark-worker) для необходимой работы в структуре данных [scan state](#scan-state). Снарк-пул, также называемый "снаркетплейсом", содержит только самые дешевые работы, предлагаемые снарк-воркерами для каждого комплекта работ. Если нода видит более дешевую и валидную работу, она заменит ею уже существующую в пуле. 
 
 #### SNARK Worker
 
-A node on the network that is participating in transaction SNARK generation. The SNARK worker is incentivized to help compress transactions because they receive mina as compensation for their efforts.
+Нода в сети, участвующая в генерации SNARK для транзакций. Снарк-воркер заинтересован в том, чтобы оказывать помощь в сжатии транзакции, потому что он получает mina в качестве вознаграждения за свои усилия. 
 
-#### Snarked Ledger
+#### Snarked ledger
 
-The snarked ledger is the ledger that only contains transactions that have an associated proof. The snarked ledger is updated once a proof has been emitted from the [scan state](#scan-state) that attests to all of the transactions included in a tree of transactions added via prior [block producers](#block-producers).
+Snarked ledger – это реестр, который содержит только транзакции, имеющие связанное доказательство. Snarked ledger обновляется после того, как из [scan state](#scan-state) было отправлено доказательство, подтверждающее все транзакции, включенные в дерево транзакций, добавленных благодаря предыдущим [блок-продюсерам](#block-producers). 
 
 #### Staged Ledger
 
-The staged ledger is the current account state. It contains a pending accounts ledger and also a pending queue of un-SNARKed transactions known as the [scan state](#scan-state).
+Поэтапный реестр (staged ledger) – это текущее состояние аккаунта. Он содержит реестр ожидающих аккаунтов, а также очередь из ожидающих необработанных SNARK-транзакций, известную как [scan state](#scan-state). 
 
-#### Staking
+#### Стейкинг
 
-Staking mina allows nodes on the network to increase their chances of being selected as a block producer in accordance with the consensus mechanism. The chance of winning the block scales in proportion to the amount of mina staked. For example, if one node stakes 50% of the available mina in the network, they theoretically have a 50% chance of being selected to produce future blocks. Mina uses Ouroboros Samisika Proof-of-Stake to implement the details of staking. If a node chooses to stake its mina, it is required to be online and connected to the Mina network.
+Стейкинг mina позволяет нодам в сети увеличивать свои шансы быть избранными в качестве блок-продюсеров в соответствии с механизмом консенсуса. Шанс выигрыша блока увеличивается пропорционально размеру стека mina. Например, если одна нода отправляет в стейкинг 50% доступных mina в сети, у нее теоретически есть 50% шанс быть избранной для создания следующих блоков. Mina использует Proof-of-Stake Ouroboros Samisika для реализации деталей стейкинга. Если нода решает отпавить свои mina в стейкинг, она должна находится онлайн и быть подключенной к сети Mina. 
 
-#### Staking Ledger
+#### Реестр стейкинга
 
-The staking ledger is the ledger used to determine block producers for a slot, as the probability of winning a slot is proportional to the amount of stake. The stake distribution of the current epoch is the [snarked ledger](#snarked-ledger) of the last block of the current epoch - 2.
+Реестр стейкинга – это реестр, который используется при выборе блок-продюсеров для слота, поскольку вероятность выигрыша слота пропорциональна сумме стека. Распределение стека текущей эпохи – это [snarked-ledger](#snarked-ledger) последнего блока текущей эпохи - 2. 
 
-#### Staking Pool
+#### Стейкинг-пул
 
-A pool of delegated funds that is run by a staking pool owner. Other nodes may choose to delegate funds to a staking pool to avoid the requirement of being online.
+Пул делегированных средств, которыми управляет владелец стейкинг-пула. Другие ноды могут делегировать средства в стейкинг-пул, чтобы избежать необходимости быть онлайн. 
 
-#### Syncing
+#### Синхронизация
 
-To successfully produce a block that extends the Mina blockchain, a node requires the current state. To achieve this, a node will initialize to connect to peers, [bootstrap](#bootstrap), and then perform a [catchup](#catchup).
+Чтобы успешно создать блок, который расширяет блокчейн Mina, ноде необходимо текущее состояние. Для этого нода инициализируется для подключения к пирам, использует [бустрэп](#bootstrap), а затем выполняет [наверстывание](#catchup). 
 
-The syncing process builds the node's [transition frontier](#transition-frontier) by creating [breadcrumbs](#breadcrumb) for all transitions between the transition frontier's [root](#root-of-transition-frontier) to the current [best tip](#best-tip). When complete, the node is synced.
+В процессе синхронизации создается [граница перехода](#transition-frontier) ноды путем создания [хлебных крошек](#breadcrumb) для всех переходов между [корнем](#root-of-transition-frontier) границы перехода и текущим [best tip](#best-tip). По завершении узел синхронизируется. 
 
-#### Time-locked accounts
+#### Временно заблокированные аккаунты
 
-An account with a non-vested amount of tokens that may not be moved until a specific condition has been met, such as a number of blocks, has been produced.
+Аккаунт с необеспеченным количеством токенов, которые нельзя перемещать до тех пор, пока не будет выполнено определенное условие, такое как производство определенного количества блоков. 
 
-#### Transaction Pool
+#### Пул транзакций 
 
-A list of all pending transactions - sometimes referred to as the "mempool". Each node has a local transaction pool that contains transactions that have been gossiped to the node and validated. If the transaction pool becomes full, transactions within the pool may be evicted based on the fee, with the lowest being evicted.
+Список всех ожидающих транзакций – иногда называется "мемпулом". У каждой ноды есть локальный пул транзакций, который содержит транзакции, которые были переданы ноде и подтверждены. Если пул транзакций заполняется, транзакции, находящиеся в пуле, могут быть исключены в соответствии с комиссией – будет исключена самая низкая сумма. 
 
-#### Transition
+#### Переход
 
-A transition in Mina is synonymous to a [block](#block).
+Переход в Mina является синонимом [блока](#block). 
 
-#### Transition Frontier
+#### Граница перехода
 
-A local data store that contains the last `k` blocks of the network. It is a rose tree-type data structure as each "node" of the tree may have multiple children, i.e., forks. Each node in the tree is referred to as a [breadcrumb](#breadcrumb).
+Локальное хранилище данных, которое содержит последние `k` блоки сети. Это структура данных многостороннего дерева, поскольку каждая нода дерева может иметь несколько дочерних элементов, то есть форков. Каждая нода в дереве называется [хлебной крошкой или breadcrumb](#breadcrumb). 
 
-#### User Transaction
+#### Пользовательская транзакция 
 
-A transaction issued by a user - either a payment or a delegation change
+Транзакция, совершенная пользователем – либо платеж, либо изменение делегирования 
 
 #### VRF
 
-The verifiable random function (VRF) is used to select a block producer for a slot. It takes as input a random seed, derived from the previous epoch's VRF outputs, in addition to a public key and the current staking ledger and is deterministic, i.e., it will always return the same output regardless of how often it is run.
+Проверяемая случайная функция (VRF) используется при выборе блок-продюсера для слота. В качестве входных данных она принимает случайный сид, полученный из выходных данных VRF предыдущей эпохи, в дополнение к публичному ключу и текущему реестру стейкинга, и является детерминированной, то есть она всегда будет возвращать один и тот же результат независимо от того, как часто она запускается. 
 
-#### Zero-Knowledge Proof
+#### Доказательство с нулевым разглашением 
 
-A proof by which one party (a prover) can prove to another party (verifiers) that they have knowledge of something - without giving away that specific knowledge. Mina uses zero-knowledge proofs, and specifically, zk-SNARKs, to generate a proof attesting to the blockchain's validity and allowing any node on the network to verify this quickly.
+Доказательство, с помощью которого одна сторона (доказывающий) может доказать другой стороне (проверяющим), что они что-то знают, при этом не передавая эти конкретные знания. Mina использует доказательства с нулевым разглашением, в частности, zk-SNARK, для создания доказательства, подтверждающего валидность блокчейна и позволяющего любой ноде в сети быстро это проверить. 
 
 #### zk-SNARK
 
-A type of zero-knowledge proof - the acronym stands for "zero-knowledge succinct non-interactive argument of knowledge". The specific properties of interest in Mina's implementation of SNARKs are succinctness and non-interactivity, which allow for any node to quickly verify the state of the network.
+Тип доказательства с нулевым разглашением – акроним, представляющий собой "сжатый неинтерактивный аргумент знания с нулевым разглашением". Особые свойства, представляющие интерес в реализации SNARK Mina, – это сжатость и отсутствие интерактивности, что позволяет любой ноде быстро проверять состояние сети. 
