@@ -5,7 +5,7 @@ export default Page({ title: "Glossary" });
 
 #### Аккаунт
 
-Mina использует аккаунты для отслеживания состояния каждого публичного ключа, что отличается от UTXO-модели Биткоина для поддержания состояния реестра. 
+Mina использует аккаунты для отслеживания состояния каждого публичного ключа в отличии от UTXO-модели, используемой Биткоином для поддержания состояния реестра. 
 
 #### Архивная нода
 
@@ -29,11 +29,11 @@ Best tip - последний блок блокчейна с самой высо
 
 #### Скорость заполнения блока 
 
-Часть [слотов](#slot), которая должна содержать блок. Некоторые слоты являются пустыми преднамеренно, чтобы сеть могла "наверстать упущенное" в случае задержки сообщений. 
+Часть [слотов](#slot), которая должна содержать блок. Некоторые слоты являются пустыми специально, чтобы сеть могла "наверстать упущенное" в случае задержки сообщений. 
 
 #### Блок-продюсер
 
-Нода, которая участвует в процессе определения, какие блоки ей разрешено создавать, а затем создает блоки, содержащие транзакции, которые могут транслироваться в сеть. 
+Нода, которая участвует в процессе определения, какие блоки ей разрешено создавать, чтобы затем создать блоки, содержащие транзакции, которые могут транслироваться в сеть. 
 
 #### Bootstrap
 
@@ -45,96 +45,98 @@ Breadcrumb – нода на [границе перехода](#transition-front
 
 #### Catchup
 
-Catchup - это заключительный этап процесса [синхронизации](#syncing). Во время catchup нода будет пытаться догнать текущий [best tip](#best-tip), определяя, а затем загружая все [переходы](#transition) между [корнем](#root) границы перехода и текущим best tip. Сначала нода запрашивает недостающие хэши перехода и доказательство цепочки транзакций. Это доказательство доказывает, что указанный путь действителен, т.е. что предоставленные хэши перехода ведут от корня к best tip. Как только нода получит все хэши перехода, она запрашивает у пиров полный внешний переход для каждого хэша перехода. 
+Catchup (наверстывание) - это заключительный этап процесса [синхронизации](#syncing). Во время catchup нода будет пытаться "догнать" текущий [best tip](#best-tip), определяя, а затем загружая все [переходы](#transition) между [корнем](#root) границы перехода и текущим best tip. Сначала нода запрашивает недостающие хэши перехода и доказательство цепочки транзакций. Это доказательство доказывает, что указанный путь действителен, т.е. предоставленные хэши перехода ведут от корня к best tip. Как только нода получит все хэши перехода, она запрашивает у пиров полный внешний переход для каждого хэша перехода. 
 
-With each external transition, the node builds up its transition frontier by applying each to the prior state to construct a [breadcrumb](#breadcrumb). When catchup is complete, the node's local best tip is the same as the network's best tip, and breadcrumbs have been constructed for all transitions from the transition frontier root (best tip - k) to the current tip, and each has been validated. At this point, the node is [synced](#synced).
+При каждом внешнем переходе нода выстраивает границу перехода, применяя каждую из них к предыдущему состоянию, чтобы построить [хлебные крошки](#breadcrumb). Когда наверстывание завершается, локальный best tip ноды совпадает с best tip сети, а также строятся хлебные крошки для всех переходов от корня границы перехода (best tip - k) к текущему tip, и каждый из них проверяется. Теперь нода [синхронизирована](#synced).
 
-At any time, a catchup may be triggered if the node sees a disjoint transition in the same path, indicating there are missing transitions.
+Запуск процесса сatchup может произойти в любое время, если нода видит непересекающийся переход на том же пути, что указывает на отсутствие переходов. 
 
-#### Chain Strength
+#### Прочность цепи
 
-As there is no full history available in Mina, a newly connected node to the network cannot sync from genesis by applying all prior transitions. To allow a node to determine the strongest chain, a minimum chain density is stored for a sliding window of time. As a result, honest nodes may choose the blockchain with the higher minimum density or chain strength.
+Поскольку в Mina нет полной истории, новая нода, подключенная к сети, не может синхронизироваться с начала генезиса, применяя все предыдущие переходы. Чтобы позволить ноде определить самую сильную цепь, минимальная плотность цепи сохраняется в течение скользящего окна времени. В результате честные ноды могут выбрать блокчейн с более высокой минимальной плотностью или прочностью цепи. 
 
-#### Compressing
+#### Сжатие 
 
-Generating a SNARK for a computation output can be thought of as "compressing" that output, as the proofs are fixed size. For example, Mina maintains a succinct blockchain by compressing all the historical data in a blockchain into a zk-SNARK. However, this is computationally different from lossy compression, and the term compress is used to more figuratively describe the process of reducing the size of data required.
+Генерацию SNARK для вывода вычислений можно считать "сжатием" этого вывода, так как эти доказательства имеют фиксированный размер. Например, Mina поддерживает сжатый блокчейн, в котором все исторические данные в блокчейне сжимаются при помощи zk-SNARK. Однако в вычислительном отношении это отличается от принципа сжатия, несущего потери, и термин "сжатие" используется в качестве образного описания процесса уменьшения размера требуемых данных. 
 
-#### Consensus
+#### Консенсус
 
 An algorithm or set of rules that Mina nodes all agree upon when deciding to update the state of the network. Rules may include what data a new block can contain and how nodes are selected and rewarded for adding a block. Mina implements Ouroboros Samisika as its consensus mechanism.
+Алгоритм или ряд правил, с которыми соглашаются все ноды Mina при принятии решения об обновлении состояния сети. Правила могут включать, какие данные может содержать новый блок, и как происходит выбор нод и их вознаграждение за добавление блоков. Mina использует механизм консенсуса Ouroboros Samisika. 
 
-#### Consensus Node
+#### Нода консенсуса
 
-A participant in the Mina network that performs the consensus function, i.e., a [block producer](#block-producer). For a node to participate in consensus, it requires the recent state.
+Участник сети Mina, выполняющий функцию консенсуса, то есть [блок-продюсер](#block-producer). Чтобы нода могла участвовать в консенсусе, ей требуется последнее состояние. 
 
-#### Cryptocurrency
+#### Криптовалюта
 
-A digital asset or currency that uses cryptographic primitives to secure financial transactions and to verify ownership via public-private key pairs.
+Цифровой актив или валюта, которые используют криптографические примитивы для защиты финансовых транзакций и подтверждения права собственности с помощью keypair – публичного и приватного ключей. 
 
 #### Daemon
 
-The Mina daemon is a background process that implements the Mina protocol and runs on a node locally. This allows a local client or wallet to talk to the Mina network. For example, when a CLI is used to issue a command to send a transaction, this request is made to the Mina daemon, which then broadcasts it to the peer-to-peer network. It also listens for events like new blocks and relays this to the client via a [pub-sub](#pub-sub) model.
+Daemon Mina – это фоновый процесс, работающий локально на ноде, благодаря которому происходит реализация протокола Mina. Это позволяет локальному клиенту или кошельку взаимодействовать с сетью Mina. Например, когда интерфейс командной строки (CLI) используется для выполнения команды отправки транзакции, этот запрос направляется daemon Mina, который затем транслирует его в p2p-сеть. Он также "прослушивает" такие события, как создание новых блоков, и передает их клиенту через модель "публикация-подписка" [pub-sub](#pub-sub). 
 
-#### Delegating
 
-Because staking mina requires nodes to be online, some nodes may desire to delegate their mina to another node that runs a staking service. This process is called delegating a stake, and often the service provider or staking pool operator may charge a fee for running this service, which will be deducted any time the delegator gets selected to be a block producer.
+#### Длегирование
 
-#### Epoch
+Так как для осуществления стейкинга mina требуется, чтобы ноды находились онлайн, некоторые ноды могут выбрать делегирование своих mina другой ноде, которая предоставляет стейкинг-сервис. Этот процесс называется делегированием доли, и часто поставщик услуг или оператор стейкинг-пула может взимать плату за предоставление этой услуги, которая будет вычитаться каждый раз, когда делегат избирается в качестве блок-продюсера. 
 
-An epoch is a unit of time equal to 7140 slots at Mainnet. An epoch is divided into [slots](#slot) of 3minutes each.
+#### Эпоха
 
-#### External Port
+Эпоха - это единица времени, которая состоит из 7140 слотов в Mainnet. Эпоха делится на [слоты](#slot), каждый из которых длится по 3 минуты. 
 
-This is the port that the Mina daemon uses to connect to other nodes on the network. It can be set using `-external-port` when starting the daemon.
+#### Внешний порт 
 
-#### External Transition
+Это порт, который daemon Mina использует для подключения к другим нодам сети. Его можно установить с помощью `-external-port` при запуске daemon. 
 
-An external transition also referred to as a [block](#block), is a transition that is generated externally, i.e., by another block producer, and gossiped to a node.
+#### Внешний переход
+
+Внешний переход, также называется [блоком](#block) – это переход, который генерируется извне, то есть другим блок-продюсером, и передается ноде. 
 
 #### Finality
 
-A consensus constant `k` the point at which chain [reorganizations](#reorganizations) are no longer possible. Once a block has `k` [block confirmations](#block-confirmations), defined by the consensus constants, it is considered final.
+Константа консенсуса `k` - точка, в которой [реорганизация](#reorganizations) цепи становится невозможной. Как только блок имеет `k` [подтверждений блока](#block-confirmations), определенных константами консенсуса, он считается окончательным. 
 
-#### Full Node
+#### Полная нода
 
-A Mina node that is able to verify the state of the network trustlessly. In Mina, every node is a full node since all nodes can receive and verify zk-SNARKs.
+Нода Mina, которая может проверять состояние сети без необходимости доверять другой стороне. В Mina каждая нода является полной, поскольку все ноды могут получать и проверять zk-SNARK. 
 
-#### Internal Transition
+#### Внутренний переход
 
-A [transition](#transition) that is produced locally, i.e., by a block producer. The generated transition is applied locally and added to the [transition frontier](#transition-frontier) before being broadcast to peers.
+[Переход](#transition), который создается локально, то есть блок-продюсером. Сгенерированный переход применяется локально и добавляется к [границе перехода](#transition-frontier), прежде чем он будет передан пирам. 
 
 #### Kademlia
 
-A distributed hash table (DHT) for decentralized peer-to-peer networks. Mina uses Kademlia for peer discovery so that nodes can find neighbor nodes to share information about the network state.
+Распределенная таблица хэшей (DHT) в децентрализованных p2p-сетях. Mina использует Kademlia для обнаружения одноранговых узлов, чтобы ноды могли находить соседние ноды для обмена информацией о состоянии сети. 
 
 #### Keypair
 
-A combination of a [private](#private-key) and [public](#public-key) key. Keypairs may be generated via a running daemon or using a dedicated keygen tool. 
+Комбинация [приватного](#private-key) и [публичного](#public-key) ключей. Keypair могут генерироваться с помощью рабочего daemon или специального инструмента для генерации ключей. 
 
 #### Mina
 
-- "Mina" with a capital M references the underlying cryptocurrency protocol and the network infrastructure that the system depends upon
-- "mina" is the unit of the cryptocurrency that is exchanged by participating nodes on the network
+- "Mina" с заглавной буквой M означает базовый криптовалютный протокол и сетевую инфраструктуру, которая влияет на систему
+- "mina" – это единица криптовалюты, которой обмениваются участвующие в сети ноды  
 
-#### Node
+#### Нода
 
-A node is a machine running the mina daemon.
+Нода – это машина, на которой запущен daemon mina. 
 
-#### Non-consensus Node
+#### Неконсенсусная нода
 
-A [full node](#full-node) in the Mina protocol that does not participate in consensus but can still fully verify the zero-knowledge proof to trustlessly validate the state of the chain. When referring to the size of Mina as 22kb, this is in reference to non-consensus nodes.
+[Полная нода](#full-node) в протоколе Mina, которая не участвует в консенсусе, но все же может полностью проверить доказательство с нулевым разглашением для обеспечения надежности состояния цепи. Когда упоминается 22kb-размер Mina, речь идет о неконсеснсусных нодах. 
 
 #### Nonce
 
-An incrementing number attached to a transaction used to prevent a replay of a transaction on the network. Transactions are always included in blocks in the sequential order of the nonce.
+Увеличивающееся число, прикрепленное к транзакции, которое используется для предотвращения повторного воспроизведения транзакции в сети. Транзакции всегда включаются в блоки в последовательном порядке nonce. 
 
 #### Peer-to-peer
 
-Networking systems that rely on peer nodes to distribute information amongst each other are called peer-to-peer networks. These networks are often distributed in nature, and unlike client-server networking models, do not rely on any centralized resource broker.
+Сетевые системы, которые полагаются на одноранговые ноды для распределения между собой информации, называются peer-to-peer (p2p) сетями. Эти сети часто имеют распределенный характер и, в отличие от сетевых моделей "клиент-сервер", не обращаются к услугам какого-либо централизованного посредника. 
 
 #### Pickles SNARK
 
-Pickles is a new proof system and associated toolkit that is the first deployed SNARK capable of recursive composition with no trusted setup. Pickles serves as the basis for developers to build private, scalable smart contracts on Mina. [Read more](https://medium.com/minaprotocol/meet-pickles-snark-enabling-smart-contract-on-coda-protocol-7ede3b54c250).
+Pickles - это новая система проверки и относящийся к ней инструментарий, который является первым развернутым SNARK, способным к рекурсивной композиции без доверенной настройки. Разработчики используют Pickles в качестве основы для создания частных масштабируемых смарт-контрактов на Mina. [Подробнее](https://medium.com/minaprotocol/meet-pickles-snark-enabling-smart-contract-on-coda-protocol-7ede3b54c250). 
 
 #### Libp2p
 
