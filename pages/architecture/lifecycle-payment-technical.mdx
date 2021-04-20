@@ -32,11 +32,11 @@ $ mina client send-payment \
 В частности, очень часто используются [Core](https://opensource.janestreet.com/core/) (общие структуры данных) и [Async](https://opensource.janestreet.com/async/) (асинхронное программирование с использованием составного типа `Deferred.t`).
 Поверх большинства файлов вы увидите какой-либо вариант `open Core` и `open Async`.
 В [client.ml](https://github.com/minaprotocol/mina/tree/master/src/app/cli/src/client.ml) мы тоже это видим. `Async` затеняет тип `Command` и позволяет нам декларативно отразить детали каждой команды.
-If you scroll to the bottom of [client.ml](https://github.com/minaprotocol/mina/tree/master/src/app/cli/src/client.ml), you'll find we register the `send-payment` command to the function `send_payment`.
-Here we describe the flags this action depends on: `receiver` a [public key](#public-key), a fee, an amount, and a path to your [private key](#private-key). These flag param kinds are defined in [daemon_rpcs.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/daemon_rpcs.ml).
-In the body of `send_payment` we build a payment and send it over to the [daemon](#daemon).
+Если вы прокрутите вниз [client.ml](https://github.com/minaprotocol/mina/tree/master/src/app/cli/src/client.ml), вы увидите, что мы регистрируем команду `send-payment` в функции `send_payment`.
+Здесь мы описываем флаги, от которых зависит это действие: `receiver` [публичного ключа](#public-key), комиссии, суммы и пути к вашему [приватному ключу](#private-key). Эти типы параметров флага определены в [daemon_rpcs.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/daemon_rpcs.ml).
+В теле `send_payment` мы создаем платеж и пересылаем его [daemon](#daemon).
 
-## Payment
+## Платеж
 
 In [payment.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/mina_base/payment.mli), you'll see a couple important things. (1) we break down payments into a [payment payload](#payment-payload) (the part that needs to be [signed](#signature)) and the rest. and (2) you see the type defined in what will seem to be a strange manner, but is a common pattern in our codebase.
 
