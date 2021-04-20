@@ -1,62 +1,62 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Troubleshooting" });
 
-# Troubleshooting
+# Поиск проблемы 
 
-Here are some common problems you might encounter while trying to set up the Mina daemon. If you can't find your issue here please ask for help on [Discord](https://bit.ly/MinaDiscord) or open an issue on [Github](https://github.com/MinaProtocol/mina/issues/new).
+Вот несколько распространенных проблем, с которыми вы можете столкнуться при установке daemon Mina. Если вы не можете найти свою проблему здесь, обратитесь за помощью в [Discord](https://bit.ly/MinaDiscord) или в [Github](https://github.com/MinaProtocol/mina/issues/new).
 
-- [General](#general)
-- [Syncing a node](#syncing-a-node)
-- [Networking](#networking)
-- [Accounts and Transactions](#accounts-and-transactions)
-- [Block producer](#block-producer)
-- [Snark worker](#snark-worker)
-- [Logging](#logging)
+- [Общее](#general)
+- [Синхронизация ноды](#syncing-a-node)
+- [Нетворкинг](#networking)
+- [Аккаунты и транзакции](#accounts-and-transactions)
+- [Блок-продюсер](#block-producer)
+- [Снарк-воркер](#snark-worker)
+- [Логгинг](#logging)
 
-## General
+## Общее
 
-### My node crashes every few minutes?
+### Сбой моей ноды происходит каждые несколько минут. 
 
-If the node crashes quickly and repeatably, this is likely a configuration issue such as incorrect permissions on the private key, failing to find peers due to incorrectly passing the peers.txt file, an incorrect password or special characters in the password. The last few lines of the logs should provide more information on the issue.
+Если краш ноды происходит быстро и часто, скорее всего, существует проблема с конфигурацией, связанная с некорректными разрешениями для закрытого ключа, невозможностью обнаружить пиры из-за неправильной передачи файла peers.txt, неправильным введением пароля или определенных символов в пароле. Последние несколько строк логов должны содержать дополнительную информацию о проблеме. 
 
-### I closed my SSH terminal, and the node crashed?
+### Я закрыл свой SSH-терминал, и произошел сбой ноды. 
 
-If you start the mina daemon in the foreground, once you detach from it, it will shut down (via a SIGINT signal). To run the process in the background so that you may detach, you have many options:
+Если вы запустите daemon mina на переднем плане, как только вы отключитесь от него, он также отключится (с помощью сигнала SIGINT). Чтобы запустить процесс в фоновом режиме для того, чтобы вы смогли отключиться, используйте любую опцию: 
 
-- Start the daemon with the `-background` flag.
-- Run as a systemd service (see [the docs](/docs/using-mina/connecting#ubuntu-1804--debian-9-1)).
-- Run with Docker (see [the docs](/docs/using-mina/connecting#docker)).
-- Run the daemon in a terminal multiplexer such as screen or [tmux](https://icohigh.gitbook.io/mina-node-testnet/english/setting-up-tmux) that you can detach from to keep the process running.
+- Запустите daemon с `-background`. 
+- Запуститесь, используя службу systemd (смотрите [документацию](/docs/using-mina/connecting#ubuntu-1804--debian-9-1)).
+- Запуститесь с Docker (смотрите [документацию](/docs/using-mina/connecting#docker)). 
+- Запустите daemon в терминальном мультиплексоре, таком как screen или [tmux](https://icohigh.gitbook.io/mina-node-testnet/english/setting-up-tmux), от которых вы сможете отключиться, чтобы процесс продолжился. 
 
-Running as a service / via Docker is recommended as they have the advantage of automated restarts if your node crashes.
+Рекомендуется запуск с использованием службы/через Docker, так как они имеют преимущество в виде автоматического перезапуска в случае сбоя вашей ноды. 
 
-### What permissions are required for the keys directory?
-
-The `keys` directory should have 700 permissions, and the private key file 600. For example, these commands update the permissions when the keys directory is contained within your home directory and your private key file is named `my-wallet`:
+### Какие разрешения требуются для директории ключей? 
+ 
+Директория `keys` должна иметь 700 разрешений, а файл закрытого ключа – 600. Например, с помощью этих команд обновляются разрешения, когда директория ключей содержится в вашем домашнем каталоге, а ваш файл закрытого ключа называется `my-wallet`:
 
 ```
 chmod 700 ~/keys
 chmod 600 ~/keys/my-wallet
 ```
 
-### Can I run on a Raspberry Pi / ARM-based device?
+### Могу ли я запуститься на устройстве на базе Raspberry Pi / ARM? 
 
-No. Only x86-64 is supported and not ARM.
+Нет. Поддерживается только x86-64, но не ARM.
 
-### I have special characters in my password, and it is giving an error?
+### В моем пароле есть специальные символы, и выдает ошибку. 
 
-You should use quotes around the password i.e. `"MY_PASSWORD"` and/or you can escape the special characters such as `$` in the password using the `\` character.
+Вам необходимо заключить пароль в кавычки, например, `"MY_PASSWORD"`, и/или не использовать специальные символы, такие как `$` в пароле, используя символ `\`. 
 
-### I get a permissions error when running the docker command?
+### Выдает ошибку разрешений при запуске команды docker. 
 
-Add the current user to the docker group as per [this article](https://docs.docker.com/engine/install/linux-postinstall/). You could prefix the command with `sudo`, but this is not recommended.
+Добавьте текущего пользователя в группу docker, как указано в [этой статье](https://docs.docker.com/engine/install/linux-postinstall/). Вы можете добавить к команде префикс `sudo`, но это не рекомендуется. 
 
-### I see monitor.ml.Error "Timed out getting connection from process" on macOS?
+### Я вижу monitor.ml.Error "Timed out getting connection from process" на macOS. 
 
-If you're running Mina on macOS and see the following time out error `monitor.ml.Error "Timed out getting connection from process"`, you'll need to add your hostname to `/etc/hosts` by running the following:
+Если вы запускаете Mina на macOS и видите следующую ошибку тайм-аута `monitor.ml.Error "Timed out getting connection from process"`, вам необходимо добавить свой hostname в `/etc/hosts`, выполнив следующую команду : 
 
-- $ `hostname` to get your hostname
-- Open the `/etc/hosts` file and add the mapping:
+- $ `hostname`, чтобы получить hostname
+-Откройте файл `/etc/hosts` и добавьте маппинг: 
 
 ```
 ##
@@ -70,13 +70,13 @@ If you're running Mina on macOS and see the following time out error `monitor.ml
 This is necessary because sometimes macOS doesn't resolve your hostname to your local IP address.
 ```
 
-### What hardware do I need?
+### Какое оборудование мне нужно? 
 
-See the requirements for the current network [here](https://minaprotocol.com/docs/getting-started). Some lower-tier VPS providers may have an issue producing blocks within the slot time. If you continue to experience missing blocks, you may wish to try on more powerful hardware.
+Смотрите требования для работы в текущей сети [здесь](https://minaprotocol.com/docs/getting-started). При использовании некоторых VPS-провайдеров более низкого уровня может возникнуть проблема при создании блоков в течение времени слота. Если вы продолжаете сталкиваться с проблемой пропущенных блоков, вы можете попробовать использовать более мощное оборудование. 
 
-### I would like the mina service to start on boot?
+### Я бы хотел, чтобы служба mina запускалась в момент загрузки. 
 
-If you use `systemd` to manage the Mina daemon then it will not automatically restart on a reboot of the machine. You can manually run the service via `systemctl --user start mina` or run `systemctl --user enable mina` to have the service automatically start on boot.
+Если вы используете `systemd` для управления daemon Mina, он не будет автоматически перезагружаться при перезагрузке машины. Вы можете запустить службу вручную с помощью `systemctl --user enable mina` или запустить `systemctl --user enable mina`, чтобы служба автоматически запускалась при загрузке. 
 
 ### What should I add for CODA_PRIVKEY_PASS?
 
