@@ -86,9 +86,9 @@ This is necessary because sometimes macOS doesn't resolve your hostname to your 
 
 Этот файл необязательно использовать при передаче [параметров конфигурации](https://minaprotocol.com/docs/node-operator) daemon (вместо передачи с помощью командной строки). Daemon ищет его по умолчанию, что приводит к ошибке, если вы его не включите. Просто проигнорируйте эту ошибку (если вы не пытаетесь его включить), поскольку она не фатальна, и daemon запустится в нормальном режиме. 
 
-### Я вижу сообщения о том, что доказывающий/проверяющий периодически убиваются.  
+### Я вижу сообщения о том, что прувер/верификатор периодически убиваются.  
 
-Это нормальный процесс, и в настоящее время они периодически завершаются и перезапускаются. Игнорируйте эти сообщения, если они не приводят к фатальной ошибке/сбою. 
+Это нормальный процесс, и в настоящее время они периодически завершаются и перезапускаются. Игнорируйте эти сообщения, если они не ведут к фатальной ошибке/сбою. 
 
 ### Произошел сбой, появилось сообщение: "Fatal error: out of memory". 
 
@@ -145,11 +145,12 @@ cat peers.txt | xargs -I % mina advanced add-peers %
 
 ## Работа в сети
 
-### My hosting provider is warning me: "Abuse message: Netscan detected"
+### Мой хостинг-провайдер предупреждает меня: "Abuse message: Netscan detected"
 
-There is some behavior with our p2p networking module that triggers this warning on some hosting providers (specifically we've heard this happening with Hetzner). To mitigate this configure your firewall to allow traffic from ssh, http, https and deny outgoing traffic to all private ip addresses.
+Существует определенное поведение нашего сетевого p2p-модуля, которое вызывает появление этого предупреждения на некоторых хостинг-провайдерах (в частности, мы слышали, что это происходит с Hetzner). Чтобы смягчить его поведение, настройте брандмауэр, чтобы разрешить трафик с ssh, http, https и запретить исходящий трафик на все частные IP-адреса. 
 
-Here is an example of this using the [ufw](https://help.ubuntu.com/community/UFW#UFW_-_Uncomplicated_Firewall) firewall tool. Thanks Ducca for sharing these rules and confirming they fix the issues on Hetzner.
+Here is an example of this using the [ufw](https://help.ubuntu.com/community/UFW#UFW_-_Uncomplicated_Firewall) firewall tool. Thanks Ducca for sharing these rules and confirming they fix the issues on Hetzner. 
+Приводим пример использования брандмауэра, используя [ufw](https://help.ubuntu.com/community/UFW#UFW_-_Uncomplicated_Firewall) Благодарим Ducca за то, что поделился этими правилами и подтвердил, что они устраняют проблемы на Hetzner. 
 
 Allow SSH, HTTP, HTTPS porst:
 
