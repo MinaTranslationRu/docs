@@ -1,14 +1,14 @@
 import Page from "@reason/pages/Docs";
 export default Page({ title: "Lifecycle of a Payment Technical Guide" });
 
-# The Lifecycle of a Payment - Technical Guide
+# Жизненный цикл платежа - Технический справочник
 
-In Mina, payments pass through several steps before they are considered verified and complete. This document is meant to walk through what happens to a single payment as it works its way through the codebase. For a more high-level overview aimed at users who want to understand how payments work on a macroscopic level, check out the [lifecycle of a payment](/docs/architecture/lifecycle-payment).
+Платежи в Mina проходят через несколько этапов, прежде чем они считаются проверенными и завершенными. Этот документ предназначен для того, чтобы познакомиться с тем, что происходит с одним платежом, когда он проходит через кодовую базу. Если вы хотите понять, как платежи работают на макроскопическом уровне, доступен более высокий уровня обзора [жизненного цикла платежа] (/docs/architecture/lifecycle-payment).
 
-Let's say you want to send a payment in Mina, assuming you've already created an account and have received funds.
-Your friend gives you her public key -- it's `KEFLx5TOqJNzd6buc+dW3HCjkL57NjnZIaplYJ50DO1uTfogKfwAAAAA`.
+Допустим, вы хотите отправить платеж в Mina (при условии, что вами ранее уже был создан счет и вы получили необходимые средства).
+Ваш друг даёт вам свой публичный ключ -- это `KEFLx5TOqJNzd6buc+dW3HCjkL57NjnZIaplYJ50DO1uTfogKfwAAAAA`.
 
-Then you invoke the following command:
+Затем вы вызываете следующую команду:
 
 ```bash
 $ mina client send-payment \
@@ -18,17 +18,17 @@ $ mina client send-payment \
     -privkey-path keys/my-wallet
 ```
 
-Where:
+Где:
 
-- `amount` is the amount of mina you are sending
-- `receiver` is the public key of the intended recipient
-- `fee` is the fee to be paid to the network to process the transaction
-- `privkey-path` is the filepath to the private key for your account
+- `amount` это сумма mina, которую вы посылаете
+- `receiver` это публичный ключ предполагаемого получателя
+- `fee` это комиссия, которая должна быть оплачена сети за обработку транзакции.
+- `privkey-path` это путь к файлу с закрытым ключом для вашего аккаунта.
 
-## Mina Client
+## Клиент Mina 
 
-The [client.ml](https://github.com/MinaProtocol/mina/tree/master/src/app/cli/src/client.ml) file defines the CLI command parser for the `mina client` subcommands.
-We use [Jane Street](https://github.com/janestreet)'s standard libraries often.
+Файл [client.ml](https://github.com/MinaProtocol/mina/tree/master/src/app/cli/src/client.ml) определяет парсер команд CLI для подкоманд `mina client`.
+Мы часто используем стандартные библиотеки [Jane Street](https://github.com/janestreet).
 Specifically [Core](https://opensource.janestreet.com/core/) (common datastructures) and [Async](https://opensource.janestreet.com/async/) (asynchronous programming using the composable `Deferred.t` type) are used very often.
 On top of most files you'll see some variant of `open Core` and `open Async`.
 Here in [client.ml](https://github.com/minaprotocol/mina/tree/master/src/app/cli/src/client.ml) we see that too. `Async` shadows the `Command` type and lets us declaratively express the details of each command.
