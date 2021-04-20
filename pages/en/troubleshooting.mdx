@@ -115,7 +115,7 @@ Max observed block length:       1
 
 Эта проблема была устранена в релизе `9652f8ee092ea77e29f5ab49fa0a295e36743e8b`, пожалуйста, убедитесь, что вы обновились. Во время инициализации daemon высота 1 - это нормально. Переход ноды к фазе catchup может занять какое-то время (от 20 минут до часа). 
 
-### Моя "максимальная наблюдаемая длина блока" равна 1, верная ли высота моего блока? 
+### Моя "максимальная наблюдаемая длина блока" равна 1, верна ли высота моего блока? 
 
 Эта проблема была устранена в релизе `9652f8ee092ea77e29f5ab49fa0a295e36743e8b`, пожалуйста, убедитесь, что вы обновились. После обновления убедитесь, что daemon запустился (занимает от 20 минут до часа), и ошибка исчезнет. 
 
@@ -125,25 +125,25 @@ Max observed block length:       1
 
 ![Синхронизация ноды](https://i.imgur.com/iWJTYTr.png)
 
-Во время запуска ноды, когда она еще находится в состоянии начальной загрузки/в фазе catchup, высота блока будет отображать 1 или число, которое составляет несколько сотен блоков от текущей лучшей длины блока (но намного больше 1). Во время catchup высота блока не будет постепенно обновляться, кроме случая, когда происходит создание новых блоков, и будет переключаться на правильную высоту после того, как фаза catchup будет завершена. Так что будьте терпеливы; этот процесс может занять несколько часов и зависит от используемого вами оборудования. 
+Во время запуска ноды, когда она еще находится в состоянии начальной загрузки/в фазе catchup, высота блока будет отображать 1 или число, которое составляет несколько сотен блоков от текущей лучшей длины блока (но намного больше 1). Во время catchup высота блока не будет постепенно обновляться, кроме случаев создания новых блоков, и переключится на правильную высоту после того, как фаза catchup завершится. Так что будьте терпеливы; этот процесс может занять несколько часов и зависит от используемого вами оборудования. 
 
-### I synced at height 1 / not at the current height of the network?
+### Я синхронизировался на высоте 1 / не на текущей высоте сети. 
 
-What matters is that your current blockchain length, as seen in `mina client status`, is equal to the current network height. If your node is reporting it is synced at the wrong height, it should eventually enter the catchup phase to get the node to the correct height. You may occasionally switch between catchup and synced if the network sees any short forks it tries to catch up to.
+Важно то, что ваша текущая длина блокчейна, как видно из `mina client status`, равна текущей высоте сети. Если ваша нода сообщает, что она синхронизировалась с неправильной высотой, она должна в конечном счете перейти в фазу catchup, чтобы занять правильную высоту. Вы можете время от времени переключаться между фазами catchup и synced, если в сети обнаруживаются небольшие форки, которые нода пытается "догнать". 
 
-### Why does my blockchain height jump to 1000+ and then get stuck?
+### Почему мой блокчейн подскакивает до 1000+, а затем застревает? 
 
-We only need the last `k` (290) blocks of the blockchain to produce blocks. So once bootstrap is completed, the root of the transition frontier (essentially your local store of blocks) should be the current maximum height minus `k` (290). The part of the syncing process that takes significant time is downloading those missing `k` blocks, which is the role of **catchup**. During catchup, you won't see your block height increase (other than new blocks produced on the network) until it jumps to the current height and is synced. This takes time, so leave it running!
+Для создания блоков нам нужны только последние `k` (290) блоки блокчейна. Таким образом, после того, как бустрэп завершился, корень границы перехода (по сути, ваше локальное хранилище блоков) должен равняться текущей максимальной высоте минус `k` (290). Часть процесса синхронизации, которая требует значительного времени, а именно загрузка отсутствующих `k` блоков, выполняется **catchup**. Во время catchup вы не увидите увеличение высоты вашего блока (кроме новых блоков, созданных в сети), пока он не перейдет на текущую высоту и не будет синхронизирован. На это требуется время, так что не выключайте оборудование! 
 
-### My sync status is offline?
+### Мой статус синхронизации офлайн. 
 
-This status indicates that you have not received any messages from peers for the last ~24 minutes. Ensure that you are using the latest peers.txt file. You can add new peers to a running node via this command:
+Этот статус указывает на то, что вы не получали сообщений от пиров в течение последних ~24 минут. Убедитесь, что вы используете последнюю версию файла peers.txt. Вы можете добавить новые пиры к работающей ноде с помощью этой команды: 
 
 ```
 cat peers.txt | xargs -I % mina advanced add-peers %
 ```
 
-## Networking
+## Работа в сети
 
 ### My hosting provider is warning me: "Abuse message: Netscan detected"
 
@@ -343,17 +343,17 @@ For choosing fees, you can look at historical blocks to determine prices that ha
 
 ### How can I disable the snark worker?
 
-Run `mina client set-snark-worker` to disable the snark worker. To enable again, pass your public key `mina client set-snark-worker -address <YOUR_PUBLIC_KEY>`.
+Запустите `mina client set-snark-worker`, чтобы отключить снарк-воркер. Чтобы его снова подключить, передайте свой открытый ключ `mina client set-snark-worker -address <YOUR_PUBLIC_KEY>`.
 
-### Can I run a snark worker and block producer on the same machine?
+### Могу ли я запустить снарк-воркера и блок-продюсера на одной машине? 
 
-Yes, you can, but you should stop the snark worker during block production so as not to compete for resources and miss producing a block. Snark workers also consume more resources in general. See the [snark stopper script](https://github.com/c29r3/mina-snark-stopper) to help in automating this.
+Да, но вы должны остановить работу снарк-воркера во время производства блоков, чтобы не конкурировать за ресурсы и не пропустить создание блока. Снарк-воркеры также в целом потребляют больше ресурсов. Смотрите [сценарий остановки snark](https://github.com/c29r3/mina-snark-stopper), чтобы оказать помощь в автоматизации.
 
-## Logging
+## Логгинг
 
-### I see weird messages/errors in the logs?
+### Я вижу в логах странные сообщения/ошибки.
 
-The logs are noisy and often contain "scary" looking messages such as failure to connect etc. As a general rule, if the message is not fatal and the node does not crash, it is likely nothing to be worried about. The below messages are all considered "normal":
+Логи могут быть броскими и часто содержат "пугающие" сообщения, такие как сбой подключения и другое. Как правило, если сообщение не является фатальным, и нода не завершает аварийную работу, то, вероятно, вам не о чем беспокоиться. Все сообщения ниже считаются "нормальными": 
 
 ```
 "RPC #841 failed: \"internal RPC error error: unknown stream_idx\""
@@ -366,24 +366,24 @@ The logs are noisy and often contain "scary" looking messages such as failure to
 }
 ```
 
-### How can I get my logs running as a service?
+### Как мне получить логи при запуске с помощью службы?
 
 `journalctl --user -u mina -n 1000 -f`
 
-### How do I get my logs running Docker?
+### Как мне получить логи при запуске Docker? 
 
 `docker logs --follow mina`
 
-### How do I get my logs running the daemon manually?
+### Как мне получить логи при запуске daemon вручную? 
 
 `tail -f ~/.mina-config/mina.log`
 
-### How many logs are kept / where are the logs located?
+### Сколько хранится логов / где находятся логи? 
 
-The `~/.mina-config` directory contains the Mina logs. This directory contains the following:
+Логи Mina находятся в директории `~/.mina-config`. Эта директория содержит следующее:
 
-- `mina.log` - This file contains the latest logs of the daemon. Each log file is limited to 10 MiB in size and rotates through 50 log files. Rotated log files are named `mina.log.x` from `mina.log.0` to `mina.log.50`.
-- `mina-best-tip.log` - This is used to write the best tip logs to make it easier to collect the required logs from nodes to determine the state for a hard fork. Each file is limited to 5 MiB and rotates through a maximum of 5 files from` mina-best-tip.log.0` to `mina-best-tip.log.5`.
-- `mina-prover.log` - This logs memory usage and batch size of the prover and is limited to 128 MiB and rotates via a single log file.
-- `mina-verifier.log` - This logs memory usage and batch size of the verifier and is limited to 128 MiB and rotates via a single log file.
-- `mina.version` - This file contains the Git SHA of the running daemon.
+- `mina.log` - Этот файл содержит последние логи работы daemon. Каждый лог имеет ограниченный размер 10 МБ и вращается через 50 логов. Вращающиеся логи называются `mina.log.x` от `mina.log.0` до `mina.log.50`.
+- `mina-best-tip.log` - используется для записи логов best tip, чтобы упростить сбор необходимых логов с нод для определения состояния хардфорка. Размер каждого файла имеет ограничение до 5 MiB и вращается не более чем через 5 файлов от ` mina-best-tip.log.0` до `mina-best-tip.log.5`.
+- `mina-prover.log` - регистрирует использование памяти и размер партии прувера; его размер имеет ограничение в 128 MiB, и он вращается с помощью одного лог-файла. 
+- `mina-verifier.log` - регистрирует использование памяти и размер партии верификатора, ограничен до 128 MiB и вращается через один лог-файл. 
+- `mina.version` - Этот файл содержит Git SHA работающего daemon. 
