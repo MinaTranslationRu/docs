@@ -17,11 +17,11 @@ export default Page({ title: "Troubleshooting" });
 
 ### Сбой моей ноды происходит каждые несколько минут. 
 
-Если краш ноды происходит быстро и часто, скорее всего, существует проблема с конфигурацией, связанная с некорректными разрешениями для закрытого ключа, невозможностью обнаружить пиры из-за неправильной передачи файла peers.txt, неправильным введением пароля или определенных символов в пароле. Последние несколько строк логов должны содержать дополнительную информацию о проблеме. 
+Если краш ноды происходит быстро и часто, скорее всего, возникла проблема с конфигурацией, связанная с некорректными разрешениями для закрытого ключа, невозможностью обнаружить пиры из-за неправильной передачи файла peers.txt, неправильным введением пароля или определенных символов в пароле. Последние несколько строк логов должны содержать дополнительную информацию о проблеме. 
 
 ### Я закрыл свой SSH-терминал, и произошел сбой ноды. 
 
-Если вы запустите daemon mina на переднем плане, как только вы отключитесь от него, он также отключится (с помощью сигнала SIGINT). Чтобы запустить процесс в фоновом режиме для того, чтобы вы смогли отключиться, используйте любую опцию: 
+Если вы запустили daemon mina на переднем плане, то как только вы отключитесь от него, он также отключится (с сигналом SIGINT). Чтобы запустить процесс в фоновом режиме для того, чтобы вы смогли отключиться, используйте любую опцию: 
 
 - Запустите daemon с `-background`. 
 - Запуститесь, используя службу systemd (смотрите [документацию](/docs/using-mina/connecting#ubuntu-1804--debian-9-1)).
@@ -45,18 +45,18 @@ chmod 600 ~/keys/my-wallet
 
 ### В моем пароле есть специальные символы, и выдает ошибку. 
 
-Вам необходимо заключить пароль в кавычки, например, `"MY_PASSWORD"`, и/или не использовать специальные символы, такие как `$` в пароле, используя символ `\`. 
+Вам необходимо заключить пароль в кавычки, например, `"MY_PASSWORD"`, и/или замените специальные символы в пароле, такие как `$`, символом `\`. 
 
 ### Выдает ошибку разрешений при запуске команды docker. 
 
-Добавьте текущего пользователя в группу docker, как указано в [этой статье](https://docs.docker.com/engine/install/linux-postinstall/). Вы можете добавить к команде префикс `sudo`, но это не рекомендуется. 
+Добавьте текущего пользователя в группу docker, как указано в [этой статье](https://docs.docker.com/engine/install/linux-postinstall/). Вы можете добавить к команде префикс `sudo`, но этого не рекомендуется делать. 
 
 ### Я вижу monitor.ml.Error "Timed out getting connection from process" на macOS. 
 
 Если вы запускаете Mina на macOS и видите следующую ошибку тайм-аута `monitor.ml.Error "Timed out getting connection from process"`, вам необходимо добавить свой hostname в `/etc/hosts`, выполнив следующую команду : 
 
 - $ `hostname`, чтобы получить hostname
--Откройте файл `/etc/hosts` и добавьте маппинг: 
+- Откройте файл `/etc/hosts` и добавьте маппинг: 
 
 ```
 ##
@@ -72,60 +72,60 @@ This is necessary because sometimes macOS doesn't resolve your hostname to your 
 
 ### Какое оборудование мне нужно? 
 
-Смотрите требования для работы в текущей сети [здесь](https://minaprotocol.com/docs/getting-started). При использовании некоторых VPS-провайдеров более низкого уровня может возникнуть проблема при создании блоков в течение времени слота. Если вы продолжаете сталкиваться с проблемой пропущенных блоков, вы можете попробовать использовать более мощное оборудование. 
+Смотрите требования для работы в текущей сети [здесь](https://minaprotocol.com/docs/getting-started). При использовании некоторых VPS-провайдеров более низкого уровня может возникнуть проблема при создании блоков во время слота. Если вы продолжаете сталкиваться с проблемой пропущенных блоков, вы можете попробовать использовать более мощное оборудование. 
 
 ### Я бы хотел, чтобы служба mina запускалась в момент загрузки. 
 
 Если вы используете `systemd` для управления daemon Mina, он не будет автоматически перезагружаться при перезагрузке машины. Вы можете запустить службу вручную с помощью `systemctl --user enable mina` или запустить `systemctl --user enable mina`, чтобы служба автоматически запускалась при загрузке. 
 
-### What should I add for CODA_PRIVKEY_PASS?
+### Что мне необходимо добавить для CODA_PRIVKEY_PASS?
 
-When you generated a keypair, you created a password. Use the password you created for the value of `CODA_PRIVKEY_PASS`.
+Когда вы сгенерировали keypair, вы создали пароль. Используйте пароль, который вы создали, для значения `CODA_PRIVKEY_PASS`.
 
-### I get an error about ~/.mina-config/daemon.json missing?
+### Я получаю сообщение c ошибкой об отсутствии ~/.mina-config/daemon.json.
 
-This is an optional file to pass [configuration options](https://minaprotocol.com/docs/node-operator) to the daemon (rather than passing via the command line). The daemon looks for it by default, which results in an error if you do not include it. Just ignore this error (unless you are trying to include it) as it is not fatal, and the daemon will start as per normal.
+Этот файл необязательно использовать при передаче [параметров конфигурации](https://minaprotocol.com/docs/node-operator) daemon (вместо передачи с помощью командной строки). Daemon ищет его по умолчанию, что приводит к ошибке, если вы его не включите. Просто проигнорируйте эту ошибку (если вы не пытаетесь его включить), поскольку она не фатальна, и daemon запустится в нормальном режиме. 
 
-### I see messages about prover/verifier being killed periodically
+### Я вижу сообщения о том, что доказывающий/проверяющий периодически убиваются.  
 
-This is normal, and these processes are currently periodically killed and restarted. Ignore these messages unless they result in a fatal error/crash.
+Это нормальный процесс, и в настоящее время они периодически завершаются и перезапускаются. Игнорируйте эти сообщения, если они не приводят к фатальной ошибке/сбою. 
 
-### I crashed with "Fatal error: out of memory"?
+### Произошел сбой, появилось сообщение: "Fatal error: out of memory". 
 
-This is a common issue - see this [issue](https://github.com/MinaProtocol/mina/issues/6851) on GitHub and add any relevant information with logs and restart your node.
+Это распространенная проблема - читайте об этой [проблеме](https://github.com/MinaProtocol/mina/issues/6851) на GitHub, добавьте всю необходимую информацию в логи и перезапустите ноду. 
+ 
+### Могу ли я создать свой пароль с помощью переменной среды? 
 
-### Can I provide my password using an environment variable?
+Да. Задайте в качестве пароля переменную среды `CODA_PRIVKEY_PASS`.
 
-Yes. Set the `CODA_PRIVKEY_PASS` environment variable to be your password.
+### Пытаюсь совершить установку на Ubuntu 20.04 / Debian 10, и появляется ошибка зависимости.  
 
-### I am trying to install on Ubuntu 20.04 / Debian 10 and get dependency errors?
+Смотрите это [руководство в Discord](https://discordapp.com/channels/484437221055922177/583400552487059546/822269019687354418), и вы сможете вручную решить проблему зависимостей. В качестве аналога используйте поддерживаемую ОС (Ubuntu 18.04/Debian 9) или Docker. 
 
-See this [guide on our Discord](https://discordapp.com/channels/484437221055922177/583400552487059546/822269019687354418) to manually resolve the required dependencies. Alternatively, use a supported OS (Ubuntu 18.04/Debian 9) or use Docker.
+## Синхронизация ноды
 
-## Syncing a node
+### Я застрял на высоте блока 1 и максимальной наблюдаемой длине блока 1. 
 
-### I am stuck at block height of 1 and a max observed block length of 1
-
-The output of `mina client status` outputs similar to the following:
+На выходе `mina client status` должно быть следующее:
 
 ```
 Block height:                    1
 Max observed block length:       1
 ```
 
-This issue was fixed by the release `9652f8ee092ea77e29f5ab49fa0a295e36743e8b`, please ensure you have upgraded. It is normal to see a height of 1 while the daemon initializes. It could take several minutes (20 mins to an hour) before the node progress to the catchup phase.
+Эта проблема была устранена в релизе `9652f8ee092ea77e29f5ab49fa0a295e36743e8b`, пожалуйста, убедитесь, что вы обновились. Во время инициализации daemon высота 1 - это нормально. Переход ноды к фазе catchup может занять какое-то время (от 20 минут до часа). 
 
-### My "Max observed block length" is 1 but my block height is correct?
+### Моя "максимальная наблюдаемая длина блока" равна 1, верная ли высота моего блока? 
 
-This issue was fixed by the release `9652f8ee092ea77e29f5ab49fa0a295e36743e8b`, please ensure you have upgraded. After upgrading make sure you let the daemon run (20 mins to an hour), and the error should resolve itself.
+Эта проблема была устранена в релизе `9652f8ee092ea77e29f5ab49fa0a295e36743e8b`, пожалуйста, убедитесь, что вы обновились. После обновления убедитесь, что daemon запустился (занимает от 20 минут до часа), и ошибка исчезнет. 
 
-### My node is stuck in catchup / the block height does not update
+### Моя нода застряла в фазе catchup / высота блока не обновляется. 
 
-When the node is synced, **Block height** should be equal to **Max observed block length**, as seen in the output of `mina client status` and should match the current height of the network, as shown in the screenshot below:
+Когда нода синхронизирована, **высота блока** должна быть равна **максимальной наблюдаемой длине блока**, как показано в выходных данных `mina client status`, и должна соответствовать текущей высоте сети, как показано на снимке ниже: 
 
-![Syncing a node](https://i.imgur.com/iWJTYTr.png)
+![Синхронизация ноды](https://i.imgur.com/iWJTYTr.png)
 
-When starting the node, and the node is in a bootstrap/catchup state, the block height will display 1 or a number that is a few hundred blocks from the current best block length (but much greater than 1). During catchup, the block height will not incrementally update, other than when new blocks are produced and will jump to the correct height when catchup is complete. So be patient; this process can take several hours to complete and does vary depending on the hardware used.
+Во время запуска ноды, когда она еще находится в состоянии начальной загрузки/в фазе catchup, высота блока будет отображать 1 или число, которое составляет несколько сотен блоков от текущей лучшей длины блока (но намного больше 1). Во время catchup высота блока не будет постепенно обновляться, кроме случая, когда происходит создание новых блоков, и будет переключаться на правильную высоту после того, как фаза catchup будет завершена. Так что будьте терпеливы; этот процесс может занять несколько часов и зависит от используемого вами оборудования. 
 
 ### I synced at height 1 / not at the current height of the network?
 
