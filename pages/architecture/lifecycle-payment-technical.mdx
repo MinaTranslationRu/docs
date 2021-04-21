@@ -38,24 +38,25 @@ $ mina client send-payment \
 
 ## Платеж
 
-In [payment.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/mina_base/payment.mli), you'll see a couple important things. (1) we break down payments into a [payment payload](#payment-payload) (the part that needs to be [signed](#signature)) and the rest. and (2) you see the type defined in what will seem to be a strange manner, but is a common pattern in our codebase.
+В [payment.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/mina_base/payment.mli) вы увидите пару важных вещей. (1) мы разбиваем платежи на [платежную нагрузку](#payment-payload) (часть, которая должна быть [подписана](#signature)) и остальное. И (2) вы видите тип, который, хоть и определяется в странной манере, но является общим шаблоном в нашей кодовой базе.
 
-For more see:
+См. более подробную информацию:
 
-- [Parameterized records](/docs/developers/style-guide/#parameterized-records)
+- [Параметризованные отчеты](/docs/developers/style-guide/#parameterized-records)
 - [Ppx deriving](/docs/developers/style-guide/#ppx_deriving)
 - [Stable.V1](/docs/developers/style-guide/#stable-v1)
-- [Property based tests](/docs/developers/style-guide/#quickcheck-gen)
+- [Property based тесты](/docs/developers/style-guide/#quickcheck-gen)
 - [Typesafe Invariants](/docs/developers/style-guide/#typesafe-invariants)
-- [Unit Tests](/docs/developers/style-guide/#unit-tests)
+- [Unit Тесты](/docs/developers/style-guide/#unit-tests)
 
-Let's dig into the payment payload:
+Давайте разберемся с платежной нагрузкой:
 
-## Payment payload
+## Платежная нагрузка
 
-Check out [payment_payload.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/mina_base/payment_payload.mli). Recall that a payload is the part of the payment the sender will sign with her private key. We see this is built up out of the receiver [public key](#public-key), [amount](#currency), [fee](#currency), and a [nonce](#account-nonce). Again the payload is SNARKable so it has a `type var`, and other important Snarkable functions (in a future RFC we will put this in a custom [ppx_deriving](#ppx-deriving).
+Ознакомьтесь с разделом [payment_payload.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/mina_base/payment_payload.mli). Напомним, что платежная нагрузка является частью платежа, который отправитель подпишет своим приватным ключом. Мы видим, что нагрузка строится из [публичного ключа](#public-key) получателя, [суммы](#currency), [комиссии](#currency), и [однократно используемого числа](#account-nonce). Опять же, полезная нагрузка содержит SNARK, поэтому она имеет `type var`, и другие важные функции со SNARK (в будущем RFC мы поместим это в пользовательскую [ppx_deriving](#ppx-deriving).
 
-## Signatures
+
+## Подписи
 
 (TODO: @ihm can you correct any details I mess up here)
 
