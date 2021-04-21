@@ -51,22 +51,22 @@ sudo apt install -y ~/Downloads/snapp-credit-check-ubuntu18.04.deb
 
 ### WSL
 
-It is possible to get the app running WSL2 but you will need to set up X11 forwarding to see app running on your local machine. See this [guide](https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2) to set up X11 forwarding on your system.
-If you already have X11 forwarding set up on your Windows machine, you can use the [Ubuntu 20.04 version](https://storage.googleapis.com/mina-snapp-credit-app-packages/snapp-credit-check-ubuntu20.04.deb) to get started.
-Run the following commands in your WSL2 terminal to install:
+Можно запустить приложение WSL2, но вам нужно будет настроить пересылку X11, чтобы посмотреть, как приложение работает на вашем локальном компьютере. Смотрите это [руководство](https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2), чтобы настроить пересылку X11 в вашей системе.
+Если на вашем компьютере уже настроена пересылка X11 на Windows, вы можете использовать [версию Ubuntu 20.04](https://storage.googleapis.com/mina-snapp-credit-app-packages/snapp-credit-check-ubuntu20.04.deb), чтобы начать работу. 
+Для установки выполните следующие команды в терминале WSL2: 
 
 ```
 sudo apt update
 sudo apt install -y /path/to/snapp-credit-check-ubuntu20.04.deb
 ```
 
-## Usage
+## Использование
 
-To get started using the Mina SNAPP Credit app, you will need an existing Credit Karma account. Both the USA and Canadian versions of the website are supported.
+Чтобы начать использование приложения Mina SNAPP Credit, вам понадобится актуальный аккаунт Credit Karma. Версия сайта поддерживается как в США, так и в Канаде. 
 
-Let's create a SNARK proof to prove we have a credit score above 700 according to Credit Karma.
+Давайте создадим доказательство SNARK, чтобы доказать, что наш кредитный рейтинг выше 700 согласно Credit Karma. 
 
-### Youtube Instructions
+### Инструкции для Youtube 
 
 <iframe
   id="youtube-iframe"
@@ -78,9 +78,9 @@ Let's create a SNARK proof to prove we have a credit score above 700 according t
   allowFullScreen
 ></iframe>
 
-### Written Instructions
+### Письменные инструкции 
 
-1. Start by opening up the Mina app and entering your ETH public key, your credit karma credentials, output directory, and specified domain of credit karma.
+1. Начните, открыв приложение Mina, введите открытый ключ ETH, данные для ввхода в аккаунт credit karma, директорию вывода и указанный домен credit karma. 
 
 <img
   alt="Mina App Info Filled"
@@ -88,9 +88,9 @@ Let's create a SNARK proof to prove we have a credit score above 700 according t
   width="45%"
 />
 
-2. Press `Generate SNAPP Proof`
+2. Нажмите `Generate SNAPP Proof`
 
-3. Wait for the Mina app to verify your Credit Karma credentials
+3. Подождите, пока приложение Mina подтвердит ваши учетные данные credit karma. 
 
 <img
   alt="Mina App Logging In"
@@ -98,8 +98,8 @@ Let's create a SNARK proof to prove we have a credit score above 700 according t
   width="45%"
 />
 
-4. Once your credentials pass, creating a SNAPP proof is started. This process can take a bit of time as computing a SNARK is a computationally intensive task. Creating a SNARK can take
-   between 30 seconds to a couple of minutes depending on your hardware.
+4. После того, как ваши учетные данные подтверждены, начнется создание доказательства SNAPP. Этот процесс может занять некоторое время, поскольку вычисление SNARK является вычислительно-ресурсоемкой задачей. Создание SNARK может занять
+    от 30 секунд до нескольких минут в зависимости от вашего оборудования. 
 
 <img
   alt="Mina App SNAPP proof"
@@ -107,8 +107,8 @@ Let's create a SNARK proof to prove we have a credit score above 700 according t
   width="45%"
 />
 
-If everything goes well, then it's a success! We have generated a SNARK proof that proves we have a Credit Karma account that has a credit score greater than 700. We can now submit this proof
-to Teller to validate an unsecured loan request.
+Если все идет хорошо, значит мы добились успеха! Мы создали SNARK-подтверждение, которое доказывает, что у нас есть аккаунт Credit Karma с кредитным рейтингом выше 700. Теперь мы можем отправить это доказательство 
+Teller для подтверждения заявки на получение необеспеченной ссуды. 
 
 <img
   alt="Mina App SNAPP success"
