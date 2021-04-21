@@ -3,7 +3,7 @@ export default Page({ title: "Troubleshooting" });
 
 # Поиск проблем 
 
-Вот несколько распространенных проблем, с которыми вы можете столкнуться при установке daemon Mina. Если вы не можете найти свою проблему здесь, обратитесь за помощью в [Discord](https://bit.ly/MinaDiscord) или в [Github](https://github.com/MinaProtocol/mina/issues/new).
+Здесь собраны распространенные проблемы, с которыми вы можете столкнуться при установке daemon Mina. Если вы не можете найти свою проблему здесь, обратитесь за помощью в [Discord](https://bit.ly/MinaDiscord) или в [Github](https://github.com/MinaProtocol/mina/issues/new).
 
 - [Общее](#general)
 - [Синхронизация ноды](#syncing-a-node)
@@ -15,11 +15,11 @@ export default Page({ title: "Troubleshooting" });
 
 ## Общее
 
-### Сбой моей ноды происходит каждые несколько минут. 
+### Сбой моей ноды происходит каждые несколько минут 
 
 Если краш ноды происходит быстро и часто, скорее всего, возникла проблема с конфигурацией, связанная с некорректными разрешениями для закрытого ключа, невозможностью обнаружить пиры из-за неправильной передачи файла peers.txt, неправильным введением пароля или определенных символов в пароле. Последние несколько строк логов должны содержать дополнительную информацию о проблеме. 
 
-### Я закрыл свой SSH-терминал, и произошел сбой ноды. 
+### Я закрыл свой SSH-терминал, и произошел сбой ноды 
 
 Если вы запустили daemon mina на переднем плане, то как только вы отключитесь от него, он также отключится (с сигналом SIGINT). Чтобы запустить процесс в фоновом режиме для того, чтобы вы смогли отключиться, используйте любую опцию: 
 
@@ -43,15 +43,15 @@ chmod 600 ~/keys/my-wallet
 
 Нет. Поддерживается только x86-64, но не ARM.
 
-### В моем пароле есть специальные символы, и выдает ошибку. 
+### В моем пароле есть специальные символы, и выдает ошибку  
 
 Вам необходимо заключить пароль в кавычки, например, `"MY_PASSWORD"`, и/или замените специальные символы в пароле, такие как `$`, символом `\`. 
 
-### Выдает ошибку разрешений при запуске команды docker. 
+### Выдает ошибку разрешений при запуске команды docker  
 
 Добавьте текущего пользователя в группу docker, как указано в [этой статье](https://docs.docker.com/engine/install/linux-postinstall/). Вы можете добавить к команде префикс `sudo`, но этого не рекомендуется делать. 
 
-### Я вижу monitor.ml.Error "Timed out getting connection from process" на macOS. 
+### Я вижу monitor.ml.Error "Timed out getting connection from process" на macOS 
 
 Если вы запускаете Mina на macOS и видите следующую ошибку тайм-аута `monitor.ml.Error "Timed out getting connection from process"`, вам необходимо добавить свой hostname в `/etc/hosts`, выполнив следующую команду : 
 
@@ -74,7 +74,7 @@ This is necessary because sometimes macOS doesn't resolve your hostname to your 
 
 Смотрите требования для работы в текущей сети [здесь](https://minaprotocol.com/docs/getting-started). При использовании некоторых VPS-провайдеров более низкого уровня может возникнуть проблема при создании блоков во время слота. Если вы продолжаете сталкиваться с проблемой пропущенных блоков, вы можете попробовать использовать более мощное оборудование. 
 
-### Я бы хотел, чтобы служба mina запускалась в момент загрузки. 
+### Я бы хотел, чтобы служба mina запускалась в момент загрузки  
 
 Если вы используете `systemd` для управления daemon Mina, он не будет автоматически перезагружаться при перезагрузке машины. Вы можете запустить службу вручную с помощью `systemctl --user enable mina` или запустить `systemctl --user enable mina`, чтобы служба автоматически запускалась при загрузке. 
 
@@ -82,15 +82,15 @@ This is necessary because sometimes macOS doesn't resolve your hostname to your 
 
 Когда вы сгенерировали keypair, вы создали пароль. Используйте пароль, который вы создали, для значения `CODA_PRIVKEY_PASS`.
 
-### Я получаю сообщение c ошибкой об отсутствии ~/.mina-config/daemon.json.
+### Я получаю сообщение c ошибкой об отсутствии ~/.mina-config/daemon.json 
 
 Этот файл необязательно использовать при передаче [параметров конфигурации](https://minaprotocol.com/docs/node-operator) daemon (вместо передачи с помощью командной строки). Daemon ищет его по умолчанию, что приводит к ошибке, если вы его не включите. Просто проигнорируйте эту ошибку (если вы не пытаетесь его включить), поскольку она не фатальна, и daemon запустится в нормальном режиме. 
 
-### Я вижу сообщения о том, что прувер/верификатор периодически убиваются.  
+### Я вижу сообщения о том, что прувер/верификатор периодически убиваются   
 
 Это нормальный процесс, и в настоящее время они периодически завершаются и перезапускаются. Игнорируйте эти сообщения, если они не ведут к фатальной ошибке/сбою. 
 
-### Произошел сбой, появилось сообщение: "Fatal error: out of memory". 
+### Произошел сбой, появилось сообщение: "Fatal error: out of memory"  
 
 Это распространенная проблема - читайте об этой [проблеме](https://github.com/MinaProtocol/mina/issues/6851) на GitHub, добавьте всю необходимую информацию в логи и перезапустите ноду. 
  
@@ -98,13 +98,13 @@ This is necessary because sometimes macOS doesn't resolve your hostname to your 
 
 Да. Задайте в качестве пароля переменную среды `CODA_PRIVKEY_PASS`.
 
-### Пытаюсь совершить установку на Ubuntu 20.04 / Debian 10, и появляется ошибка зависимости.  
+### Пытаюсь совершить установку на Ubuntu 20.04 / Debian 10, и появляется ошибка зависимости  
 
 Смотрите это [руководство в Discord](https://discordapp.com/channels/484437221055922177/583400552487059546/822269019687354418), и вы сможете вручную решить проблему зависимостей. В качестве аналога используйте поддерживаемую ОС (Ubuntu 18.04/Debian 9) или Docker. 
 
 ## Синхронизация ноды
 
-### Я застрял на высоте блока 1 и максимальной наблюдаемой длине блока 1. 
+### Я застрял на высоте блока 1 и максимальной наблюдаемой длине блока 1  
 
 На выходе `mina client status` должно быть следующее:
 
@@ -119,7 +119,7 @@ Max observed block length:       1
 
 Эта проблема была устранена в релизе `9652f8ee092ea77e29f5ab49fa0a295e36743e8b`, пожалуйста, убедитесь, что вы обновились. После обновления убедитесь, что daemon запустился (занимает от 20 минут до часа), и ошибка исчезнет. 
 
-### Моя нода застряла в фазе catchup / высота блока не обновляется. 
+### Моя нода застряла в фазе catchup / высота блока не обновляется 
 
 Когда нода синхронизирована, **высота блока** должна быть равна **максимальной наблюдаемой длине блока**, как показано в выходных данных `mina client status`, и должна соответствовать текущей высоте сети, как показано на снимке ниже: 
 
@@ -127,7 +127,7 @@ Max observed block length:       1
 
 Во время запуска ноды, когда она еще находится в состоянии начальной загрузки/в фазе catchup, высота блока будет отображать 1 или число, которое составляет несколько сотен блоков от текущей лучшей длины блока (но намного больше 1). Во время catchup высота блока не будет постепенно обновляться, кроме случаев создания новых блоков, и переключится на правильную высоту после того, как фаза catchup завершится. Так что будьте терпеливы; этот процесс может занять несколько часов и зависит от используемого вами оборудования. 
 
-### Я синхронизировался на высоте 1 / не на текущей высоте сети. 
+### Я синхронизировался на высоте 1 / не на текущей высоте сети  
 
 Важно то, что ваша текущая длина блокчейна, как видно из `mina client status`, равна текущей высоте сети. Если ваша нода сообщает, что она синхронизировалась с неправильной высотой, она должна в конечном счете перейти в фазу catchup, чтобы занять правильную высоту. Вы можете время от времени переключаться между фазами catchup и synced, если в сети обнаруживаются небольшие форки, которые нода пытается "догнать". 
 
@@ -135,7 +135,7 @@ Max observed block length:       1
 
 Для создания блоков нам нужны только последние `k` (290) блоки блокчейна. Таким образом, после того, как бустрэп завершился, корень границы перехода (по сути, ваше локальное хранилище блоков) должен равняться текущей максимальной высоте минус `k` (290). Часть процесса синхронизации, которая требует значительного времени, а именно загрузка отсутствующих `k` блоков, выполняется **catchup**. Во время catchup вы не увидите увеличение высоты вашего блока (кроме новых блоков, созданных в сети), пока он не перейдет на текущую высоту и не будет синхронизирован. На это требуется время, так что не выключайте оборудование! 
 
-### Мой статус синхронизации офлайн. 
+### Мой статус синхронизации офлайн  
 
 Этот статус указывает на то, что вы не получали сообщений от пиров в течение последних ~24 минут. Убедитесь, что вы используете последнюю версию файла peers.txt. Вы можете добавить новые пиры к работающей ноде с помощью этой команды: 
 
@@ -145,14 +145,13 @@ cat peers.txt | xargs -I % mina advanced add-peers %
 
 ## Работа в сети
 
-### Мой хостинг-провайдер предупреждает меня: "Abuse message: Netscan detected"
+### Мой хостинг-провайдер присылает предупреждение: "Abuse message: Netscan detected"
 
-Существует определенное поведение нашего сетевого p2p-модуля, которое вызывает появление этого предупреждения на некоторых хостинг-провайдерах (в частности, мы слышали, что это происходит с Hetzner). Чтобы смягчить его поведение, настройте брандмауэр, чтобы разрешить трафик с ssh, http, https и запретить исходящий трафик на все частные IP-адреса. 
+Существует определенное поведение нашего сетевого p2p-модуля, которое вызывает появление этого предупреждения на некоторых хостинг-провайдерах (в частности, мы слышали, что это происходит с Hetzner). Чтобы смягчить его поведение, настройте файервол, разрешив трафик с ssh, http, https и запретив исходящий трафик на все частные IP-адреса. 
 
-Here is an example of this using the [ufw](https://help.ubuntu.com/community/UFW#UFW_-_Uncomplicated_Firewall) firewall tool. Thanks Ducca for sharing these rules and confirming they fix the issues on Hetzner. 
-Приводим пример использования брандмауэра, используя [ufw](https://help.ubuntu.com/community/UFW#UFW_-_Uncomplicated_Firewall) Благодарим Ducca за то, что поделился этими правилами и подтвердил, что они устраняют проблемы на Hetzner. 
+Приведем пример использования файервола с использованием утилиты [ufw](https://help.ubuntu.com/community/UFW#UFW_-_Uncomplicated_Firewall). Благодарим Ducca за эти правила и проверку, подтверждающую, что благодаря им проблемы на Hetzner устраняются. 
 
-Allow SSH, HTTP, HTTPS porst:
+Разрешите порты SSH, HTTP, HTTPS:
 
 ```
 ufw allow 22
@@ -161,7 +160,7 @@ ufw allow 443
 ufw enable
 ```
 
-Block outgoing private connection:
+Запретите исходящее частное соединение: 
 
 ```
 ufw deny out from any to 10.0.0.0/8
@@ -172,103 +171,102 @@ ufw deny out from any to 198.18.0.0/15
 ufw deny out from any to 169.254.0.0/16
 ```
 
-See [#7053](https://github.com/MinaProtocol/mina/issues/7053) for more
+Смотрите [#7053](https://github.com/MinaProtocol/mina/issues/7053), чтобы узнать больше информации
 
-### What ports need to be open?
+### Какие порты необходимо открыть? 
 
-The only port required to be open for the daemon to communicate with peers is TCP port `8302`.
+Единственный порт, который нужно открыть для daemon, чтобы поддерживать связь с пирами, - это TCP-порт `8302`. 
 
-The client port `8301` should **never** be exposed to the internet. There may be outdated references to other ports that were once used before but are no longer required.
+Клиентский порт `8301` **никогда** не должен находиться в Интернет-доступе. Могут быть устаревшие ссылки на другие порты, которые когда-либо использовались раньше, но больше не требуются. 
 
-### Node fails with "Failed to find any peers, crashing as this is not a seed node"?
+### Нода не работает, появилось сообщение "Failed to find any peers, crashing as this is not a seed node"
 
-First, ensure that you have downloaded the latest peers file from the email received - the URL does not change, but the list of peers is updated very frequently.
+Во-первых, убедитесь, что вы загрузили последний файл с пирами из полученного электронного письма - URL-адрес не меняется, но список пиров обновляется очень часто. 
 
-Next, depending on the method you use to start the node, ensure that you are passing the correct path to this file. For example, if using `systemd`, there must be a `peers.txt` file in your home directory.
+Далее, в зависимости от метода, который вы используете для запуска ноды, убедитесь, что вы передаете правильный путь к этому файлу. Например, при использовании `systemd` в вашем домашнем каталоге должен быть файл `peers.txt`. 
 
-This error should have been resolved by a recent update, so ensure you are on the latest release and have the latest peers file.
+Эта ошибка должна была быть устранена с помощью недавнего обновления, поэтому убедитесь, что вы используете последний релиз, и у вас есть последний файл с пирами. 
 
-### I get an error couldn't determine our IP from the internet?
+### Я получаю сообщение об ошибке о том, что мой IP-адрес не может быть определен в Интернете
 
-If you see `couldn't determine our IP from the internet, use -external-ip` flag, then the daemon failed to determine its own IP from [these service providers](https://github.com/MinaProtocol/mina/blob/056d0203722ddfec1c7ad216846434648cd7af5e/src/app/cli/src/find_ip.ml#L7-L11). Your firewall may be blocking HTTP/S requests, or you have a misconfigured network connection.
+Если вы видите флаг `couldn't determine our IP from the internet, use -external-ip`, значит daemon не смог определить свой собственный IP-адрес с помощью [этих провайдеров](https://github.com/MinaProtocol/mina/blob/056d0203722ddfec1c7ad216846434648cd7af5e/src/app/cli/src/find_ip.ml#L7-L11). Ваш фаервол может блокировать запросы HTTP/S, или у вас неправильно настроено сетевое соединение. 
 
-To bypass this, pass in the flag `-external-ip <your-ip-address>` when starting the Mina daemon. To get your external IP address, run `curl ifconfig.me`.
+Чтобы обойти это, передайте флаг `-external-ip <your-ip-address>` при запуске daemon Mina. Чтобы получить свой внешний IP-адрес, запустите `curl ifconfig.me`. 
 
-### Do I need to configure port forwarding manually?
+### Нужно ли мне вручную настраивать переадресацию портов? 
 
-The Mina node does its best to configure itself to be able to connect to the outside world without you needing to do any extra work. However, this may fail, depending on your router and network setup. In this case, you may have to manually forward the external-port.
+Нода Mina делает выполняет все необходимые настройки, чтобы иметь возможность подключаться к внешнему миру без необходимости выполнять дополнительную работу. Однако это зависит от вашего маршрутизатора и настроек сети и может не сработать. В этом случае вам, возможно, придется вручную перенаправить внешний порт. 
 
-A common cause of this is routers not supporting UPnP, a protocol that allows the node to configure the port forwarding automatically. If you experience this type of problem, find your router model and search for `<model> port forwarding` and follow the instructions to forward the ports from your router to your device running the Mina node. You'll need to open the TCP port `8302` by default.
+Распространенной причиной возникающей проблемы является то, что маршрутизаторы не поддерживают UPnP - протокол, который позволяет ноде автоматически настраивать переадресацию портов. Если у вас возникла проблема такого типа, найдите модель своего маршрутизатора, выполните поиск по запросу `<model> port forwarding` и следуйте инструкциям, как перенаправить порты с маршрутизатора на устройство, на котором запущена нода Mina. По умолчанию вам нужно открыть TCP-порт `8302`. 
 
-Note: When running Mina in the cloud, you should instead configure security groups for your cloud provider.
+Примечание: При запуске Mina в облаке вам следует вместо этого настроить группы безопасности для своего облачного провайдера. 
 
-### Do I need to allow "Accept incoming connections"
-
-If you see one or more warnings like the below, then choose "Allow":
+### Нужно ли разрешать "Accept incoming connections"?
+ 
+Выберите "Разрешить", если вы видите одно или несколько предупреждений, похожих на следующее: 
 
 ```
 Do you want the application "mina" to accept incoming network connections?
 ```
 
-## Accounts and Transactions
+## Акаунты и транзакции 
 
-### What fee should I use to send a transaction / my transaction is stuck as pending?
+### Какую комиссию я должен использовать для отправки транзакции / моя транзакция зависла в ожидании? 
 
-Transactions that are included in blocks are prioritized by their transaction fees. If many transactions are pending, then the highest fee transactions will be included first. So, increasing your fees is the best way to ensure that your transaction is included. To view the transaction pool on a running node, you can use the following command (you will need to install `jq,` which is used to format the output of the following command, e.g., `sudo apt install jq`):
+Транзакции включаются в блоки в приоритетном порядке в зависимости от своих комиссий. Если будет осуществляться множество транзакций, то в первую очередь будут включены транзакции с самой высокой комиссией. Таким образом, увеличение комиссии - лучший способ убедиться в том, что ваша транзакция будет включена. Чтобы просмотреть пул транзакций на работающей ноде, вы можете использовать следующую команду (вам нужно будет установить `jq,`, используемый для форматирования вывода следующей команды, например, `sudo apt install jq`):
 
 ```
 mina advanced pooled-user-commands | jq . | grep fee | sort | uniq -c | sort -n
       1     "fee": "0.031",
       5     "fee": "0.1",
 ```
+Если в пуле много транзакций, возможно, вам придется увеличить комиссию. Подробное описание комиссий за транзакции смотрите [здесь](https://minaexplorer.com/mempool). 
 
-If there are many transactions in the pool, you may need to increase your fee. For a visual overview of transaction fees, see [here](https://minaexplorer.com/mempool).
+Если ваша транзакция застряла из-за низкой комиссии, вам придется подождать, пока она будет включена в блок или будет исключена из пула транзакций, поскольку в настоящее время нет возможности отменить транзакцию из-за этой [распространенной проблемы](https://github.com/MinaProtocol/mina/issues/6605).
 
-If you have a stuck transaction due to a low fee, you will have to wait for it to be included in a block or to be evicted from the transaction pool as there is currently no way to cancel a transaction due to this [known issue](https://github.com/MinaProtocol/mina/issues/6605).
+### Сколько транзакций может быть включено в блок? 
 
-### How many transactions can be included in a block?
+В текущей сети 128, включая транзакцию с монетными базами, а также любые переводы комиссий для оплаты работы снарк-воркеров. 
 
-On the current network, this is 128, which also includes the coinbase transaction as well as any fee transfers to pay snark workers.
+### Могу ли я отменить транзакцию? 
 
-### Can I cancel a transaction?
+В данный момент нет из-за [этого бага](https://github.com/MinaProtocol/mina/issues/6605).
 
-Not currently due to [this bug](https://github.com/MinaProtocol/mina/issues/6605).
+### Я отправил транзакцию, но она не попала в блок  
 
-### I sent a transaction, but it was never included in a block?
+Найдите тут [свой ответ](#what-fee-should-i-use-to-send-a-transaction--my-transaction-is-stuck-as-pending). Скорее всего, транзакция попала в ожидающие, а затем была исключена из пула транзакций. Попробуйте отправить еще раз. 
 
-See [this answer](#what-fee-should-i-use-to-send-a-transaction--my-transaction-is-stuck-as-pending). The transaction was likely stuck as pending and then eventually evicted from the transaction pool. Try sending again.
+### Почему монетная база равна 0 / в блок не включены транзакции?
 
-### Why is the coinbase 0 / there are no transactions included in a block?
+При определенных обстоятельствах нельзя приобрести работу снарка, или ее стоимость слишком высокая. В этом случае включение транзакции с базой монет может быть невозможным, и поэтому монеты за блок не начисляются. 
 
-In certain circumstances, there is no snark work available to be purchased or is too expensive to be purchased. In this case, it may not be possible to include a coinbase transaction, and so there is no coinbase awarded for the block.
+Если транзакции не были включены, комиссии за транзакции, вероятно всего, не покрыли стоимость работы снарка, необходимую для компенсации, включая транзакции. 
 
-If transactions are not being included, the transaction fees likely do not cover the cost of the snark work required to be purchased to offset, including the transactions.
+### Имеет ли значение порядок отправки транзакций? 
 
-### Does the order of sending transactions matter?
+Да, обработка транзакций просиходит согласно единоразовому номеру (nonce), связанному с транзакцией. Таким образом, если вы отправляете транзакцию, и она зависла, например, если вы указали низкую комиссию, все следующие транзакции также будут заблокированы, независимо от комиссий, которые вы выставите для следующих транзакций. К сожалению, в настоящее время нет возможности отменить транзакцию из-за распространенной проблемы, поэтому вам нужно дождаться включения транзакции или исключения ее из пула транзакций. 
 
-Yes, transactions are processed in order according to the nonce associated with the transaction. So, if you send a transaction that is stuck, with, for example, a low fee, all following transactions will also be stuck regardless of the fees used in the later transactions. Unfortunately, there is no way to currently cancel a transaction due to a known issue, so you have to wait for either the transaction to be included or to be evicted from the transaction pool.
+### Почему мой аккаунт "заблокирован"? 
 
-### Why does my account say "locked"?
+Если вывод `mina accounts list` показывает, что ваш аккаунт заблокирован, это означает, что вам необходимо разблокировать его с помощью пароля для своего закрытого ключа, необходимого для отправки транзакций. Чтобы разблокировать аккаунт, просто используйте команду `mina accounts unlock --public-key`. 
 
-If the output of `mina accounts list` shows your account is locked, this means that you need to unlock it using your private key password in order to use it to send transactions. To unlock, simply use the `mina accounts unlock --public-key` command.
+Блок-продюсеру **не** требуется разблокировать свой аккаунт для создания блоков. 
 
-A block producer does **not** need the account to be unlocked to produce blocks.
+### Я запросил средства из крана, а они так и не пришли
 
-### I requested funds from the faucet, and they never arrived?
+Проверьте статус крана [здесь](https://status.minaprotocol.com/), чтобы узнать о возможных проблемах с краном. 
 
-Check the status of the faucet [here](https://status.minaprotocol.com/) to see if there are any know issues with the faucet.
+Вы также можете проверить этот [эксплорер](https://minaexplorer.com/wallet/B62qpVjcU3bxjWdVGiXd7tUGNag3cgjSNWmYuZTpU5Eg8MHPqnHfVeL) и посмотреть все ожидающие транзакции от крана, и есть ли в списке ваши недавние транзакции. 
 
-You can also check this [explorer](https://minaexplorer.com/wallet/B62qpVjcU3bxjWdVGiXd7tUGNag3cgjSNWmYuZTpU5Eg8MHPqnHfVeL) to see all pending transactions from the faucet to see if yours is listed or if there have been any recent faucet transactions.
+Если вы только что запустили свою ноду и не синхронизировались, любой баланс, отправленный из крана, не будет отображаться до тех пор, пока нода не будет синхронизирована. 
 
-If you have just started your node and are not synced, any balance sent from the faucet will not be displayed until the node is synced.
+### Что такое временно заблокированные аккаунты / почему некоторые аккаунты имеют ограничение по времени, а другие - нет? 
 
-### What are time-locked accounts / why are some accounts timed and others untimed?
+Смотрите документацию [тут](https://minaprotocol.com/docs/architecture/timelock).
 
-See the docs [here](https://minaprotocol.com/docs/architecture/timelock).
+### Могу ли я отправить платеж, если еще не синхронизировался? 
 
-### Can I send a payment before I am synced?
-
-Yes, but only if you have funds already in the ledger. If you requested funds from, e.g., the faucet or another community member, you will need to wait until you are synced so that you have a balance you can use to send.
+Да, но только если у вас уже есть средства в реестре. Если вы запросили средства, например, у крана или другого участника сообщества, вам нужно будет дождаться синхронизации, чтобы получить баланс, который можно будет использовать для отправки. 
 
 ### Error: Specified sender is not in the ledger or sent a transaction in transaction pool when sending a transaction
 
