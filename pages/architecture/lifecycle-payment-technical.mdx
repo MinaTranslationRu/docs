@@ -60,15 +60,16 @@ $ mina client send-payment \
 
 (TODO: @ihm can you correct any details I mess up here)
 
-We use [Schnorr signatures](https://en.wikipedia.org/wiki/Schnorr_signature). A [Schnorr signature](https://en.wikipedia.org/wiki/Schnorr_signature) is an element in a [group](https://en.wikipedia.org/wiki/Group_(mathematics). Our group is a point on an [elliptic curve](https://en.wikipedia.org/wiki/Elliptic_curve). So what is a signature? Open up [signature lib's checked.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/checked.ml) and scroll to `module Signature` within `module type S`. It's a non-zero point on a curve, aka a pair of two `curve_scalar` values. To sign we give a [private key](#private-key) and a message, we can verify a signature on a message with a [public key](#public-key).
+Мы используем [подписи Шнорра](https://en.wikipedia.org/wiki/Schnorr_signature). [Подпись Шнорра](https://en.wikipedia.org/wiki/Schnorr_signature) является элементом в [группе](https://en.wikipedia.org/wiki/Group_(mathematics). Наша группа - это точка на [эллиптической кривой](https://en.wikipedia.org/wiki/Elliptic_curve). Так что же такое подпись? Откройте [библиотеки подписи checked.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/checked.ml) и прокрутите до `module Signature` внутри `module type S`. Это ненулевая точка на кривой, также известная как пара двух значений `curve_scalar`. Для подписи мы даем [закрытый ключ](#private-key) и сообщение. Проверить подпись в сообщении можно с помощью [открытого ключа](#public-key).
 
-This is the first time we see heavily functored code, so see [functors](/docs/developers/style-guide/#functors) if you're confused. This is also the first time we see custom SNARK circuit logic, see [custom SNARK circuit logic](/docs/developers/style-guide/#snark-checked) for more.
 
-## Private key
+Это первый раз, когда мы видим тяжело функторированный код, поэтому смотрите [функторы](/docs/developers/style-guide/#functors), если запутаетесь. Это также первый раз, когда мы видим пользовательскую схему SNARK. Для более подробной информации зайдите в раздел [пользовательская схема SNARK"](/docs/developers/style-guide/#snark-checked). 
 
-In [private_key.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/private_key.ml) we see a private key is a `Tick.Inner_curve.Scalar.t` or a scalar on an elliptic curve. Let's break it down more precisely: Because we rely on [recursive zkSNARKs](https://eprint.iacr.org/2014/595) we actually have two elliptic curves called `Tick` and `Tock`. Most of our logic happens within `Tick` (TODO: @ihm expand on this). [Schnorr signatures](#signature) demand we use scalars for our private key.
+## Приватный ключ
 
-## Public key
+В разделе [private_key.ml] (https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/private_key.ml) мы видим закрытый ключ `Tick.Inner_curve.Scalar.t` или скаляр на эллиптической кривой. Давайте разберем его точнее: Так как мы полагаемся на [рекурсивные zkSNARK](https://eprint.iacr.org/2014/595), то на самом деле у нас есть две эллиптические кривые `Tick` и `Tock`. Большая часть нашей логики происходит внутри `Tick` (TODO: @ihm expand on this). [Подписи Шнорра](#signature) требуют, чтобы мы использовали скаляры для нашего приватного ключа. 
+
+## Открытый ключ
 
 The public key corresponding to a [private key](#private-key) `p` is just $one^p$ in other words $one*one*one ...{p times}... one$. We can see this in [public_key.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/public_key.ml). Remember group elements are non-zero curve points which is why we also `include Non_zero_curve_point`
 
