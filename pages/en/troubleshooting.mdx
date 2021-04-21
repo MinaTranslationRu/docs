@@ -296,51 +296,51 @@ mina advanced pooled-user-commands | jq . | grep fee | sort | uniq -c | sort -n
 
 Стек, относящийся к вашему открытому ключу, определяется в начале эпохи заранее. Он рассматривается с задержкой, поэтому получение средств, вознаграждений за блоки, делегирование других средств и получений вознаграждений снарк-воркеров **не** не увеличивает ваши шансы на выигрыш блока в эту эпоху, поскольку эти средства не будут учитываться при размещении в реестре стейкинга на протяжении как минимум другой полной эпохи (~2 недели). 
 
-### Why was my block orphaned / why did I not get a block reward?
+### Почему мой блок не принят (сиротский) / почему я не получил вознаграждение за блок? 
 
-There can be more than one block producer per slot due to the way block producers are selected. So if two (or more) blocks are produced for the same slot, it will cause a short fork, and only one will be chosen - the winner in this instance is random based on the VRF output for each block producer. If you consistently see orphaned blocks, then you may be producing blocks slowly, and so other block producers may not see your block before building atop the current longest chain.
+В каждом слоте может быть более одного блок-продюсера из-за способа выбора блок-продюсеров. Таким образом, если два (или более) блока создаются для одного и того же слота, произойдет небольшой форк, и будет выбран только один блок - в этом случае победитель определится случайным образом на основе выходных данных VRF для каждого блок-продюсера. Если вы постоянно видите сиротские блоки, то, возможно, вы медленно производите блоки, и поэтому другие блок-продюсеры могут не видеть ваш блок до тех пор, пока не создадут самую длинную текущую цепь.
 
-It is also possible to produce a block in catchup, and this block will also be quickly orphaned as it is not building on the correct height.
+Также блок можно создать в фазе catchup, но этот блок также станет сиротским, поскольку он строится на неправильной высоте. 
 
-### I didn't produce a block / I missed a slot?
+### Я не создал блок / пропустил слот  
 
-There are a few reasons why you could miss a slot / not successfully produce a block, for example, the node restarting and being in bootstrap at the time of producing a slot.
+Существует несколько причин, когда вы можете пропустить слот / не создать блок, например, во время перезапуска ноды и  во время бустреппинга в момент создания слота. 
 
-Also, you must produce a block within the slot time (3 mins). If you are on less powerful hardware or the daemon is competing for resources, it may not produce the block in time. In this instance, you should find in your logs:
+Также вы должны создать блок за отведенное время (3 минуты). Если вы используете менее мощное оборудование, или daemon конкурирует за ресурсы, он может не создать блок вовремя. В этом случае вы должны найти в своих логах: 
 
 `Internally generated block $state_hash cannot be rebroadcast because it's not a valid time to do so ($timing)`
 
-It is not recommended to run a snark worker on the same machine at the same time you are producing a block as the snark worker is resource-intensive and may lead to the block not being produced in time. You can disable the snark worker during block production by, for example, using the [snark stopper script](https://github.com/c29r3/mina-snark-stopper).
+Не рекомендуется запускать snark worker на одной машине в то же самое время, когда вы создаете блок, так как snark worker требует больших ресурсов, и это может привести к тому, что блок не будет произведен вовремя. Вы можете отключить snark worker во время производства блока, к примеру, используя [скрипт остановки snark](https://github.com/c29r3/mina-snark-stopper). 
 
-### Why is the block rate so low / how often should there be a block?
+### Почему частота блоков такая низкая / как часто должен создаваться блок? 
 
-A slot on the current network is every 3 mins, though not all slots should have a block produced, so on average, we would expect a block every 4 mins. However, not all the stake is online and active in producing blocks, and so not all slots will have a block, and sometimes there can be long delays between blocks. As more of the stake is online and staking, this situation improves.
+Слот в текущей сети длится каждые 3 минуты, хотя не во всех слотах может производиться блок, поэтому в среднем блок создается каждые 4 минуты. Однако не все стеки находятся онлайн и активны, чтобы создавать блоки, поэтому не все слоты будут иметь блок, и иногда между блоками могут быть большие задержки. По мере размещения стеков онлайн и осуществления стейкинга, ситуация меняется к лучшему. 
 
-### Why does O(1) Labs win most of the blocks?
+### Почему O (1) Labs выигрывает большинство блоков? Почему O(1) Labs выигрывает большинство блоков? 
 
-To keep the network stable, O(1) Labs has 30% of the stake, so has a much greater probability of winning a slot and producing a block. Users who were given a balance of 66,000 mina have about a 0.1% chance of winning any particular slot, so should expect a block every couple of days, but luck plays a major factor in how often you will win a block.
+Чтобы поддерживать стабильную сеть, O(1) Labs получает 30% от стека, поэтому имеет гораздо большую вероятность выиграть слот и произвести блок. Пользователи, которым был предоставлен баланс на сумму 66000 mina, имеют примерно 0,1% шанса выиграть какой-либо конкретный слот, поэтому возможность выиграть блок существует каждые несколько дней. При этом на то, как часто вы будете выигрывать блок, во многом зависит от удачи. 
 
-### How do I know if I won a block or a transaction went through?
+### Как мне узнать, выиграл ли я блок, или прошла ли транзакция? 
 
-The easiest way is to check a [block explorer](https://minaexplorer.com/). You can also get this information for recent blocks via the [GraphQL API](https://minaprotocol.com/docs/developers/graphql-api).
+Самый простой способ - проверить [блок-эксплорер](https://minaexplorer.com/). Вы также можете получить эту информацию для последних блоков через [GraphQL API](https://minaprotocol.com/docs/developers/graphql-api). 
 
-### Why do I have a message of "No blocks won this this epoch"?
+### Почему у меня появляется сообщение "No blocks won this this epoch"?
 
-See [this answer](#how-can-I-increase-my-chance-of-winning-a-block).
+Смотрите [ответ тут](#how-can-I-increase-my-chance-of-winning-a-block).
 
 ## Snark worker
 
-### My snark work is not getting bought / what fee should I use for a snark worker?
+### Мою снарк-работу не покупают / какую плату я должен устанавливать для снарк-воркера? 
 
-If you are running a snark worker and not seeing any work being included in blocks, then likely others are producing cheaper snark work. Multiple snark workers are all competing for the same snark work, with only the lowest fee for each being included in the snark pool to be bought by block producers.
+Если вы запускаете snark worker и видите, что работу не включаеют в блоки, то, скорее всего, другие производят более дешевую снарк-работу. Несколько снарк-воркеров соревнуются за включение одной и той же снарк-работы, причем блок-продюсеры покупают только те работы, каждая из которых имеет самую низкую плату. 
 
-Sometimes high fees will be included in blocks, and this is a function of how snark workers select which work to complete and which work is required to be purchased by the block producer.
+Иногда в блоки включают высокие комиссии, зависящие от того, как снарк-воркеры выбирают, какую работу выполнить, а какую работу должен приобрести блок-продюсер. 
 
-By default, the work selection for a snark worker is random. You can change this by adding the `-work-selection seq` flag to the `mina daemon` command, which will work on jobs in the order required to be included from the scan state and will likely result in your snarks being included without a potentially lengthy delay.
+По умолчанию снарк-воркера выбирается случайным образом. Вы можете изменить это, добавив флаг `-work-selection seq` к команде `mina daemon`, которая будет работать с работами в том порядке, который требуется для их включения из scan state, и, вероятно, приведет к тому, что ваши снарки будут включены без потенциально длительной задержка. 
 
-For choosing fees, you can look at historical blocks to determine prices that have been bought, or look at the table listed [here](https://minaexplorer.com/snark-challenge).
+Чтобы выбрать комиссию, вы можете посмотреть исторические блоки и узнать цену на приобретение или посмотреть таблицу [здесь](https://minaexplorer.com/snark-challenge). 
 
-### How can I disable the snark worker?
+### Как отключить snark worker? 
 
 Запустите `mina client set-snark-worker`, чтобы отключить снарк-воркер. Чтобы его снова подключить, передайте свой открытый ключ `mina client set-snark-worker -address <YOUR_PUBLIC_KEY>`.
 
