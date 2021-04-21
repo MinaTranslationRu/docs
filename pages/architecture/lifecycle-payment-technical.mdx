@@ -71,26 +71,26 @@ $ mina client send-payment \
 
 ## Открытый ключ
 
-The public key corresponding to a [private key](#private-key) `p` is just $one^p$ in other words $one*one*one ...{p times}... one$. We can see this in [public_key.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/public_key.ml). Remember group elements are non-zero curve points which is why we also `include Non_zero_curve_point`
+Открытый ключ, соответствующий [закрытому ключу] (#private-key) `p` - это просто $one^p$, или, другими словами, $one*one*one ....{p times}... one$. Мы можем увидеть это в [public_key.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/public_key.ml). Помните, что элементы группы являются ненулевыми точками кривой, поэтому мы также `include Non_zero_curve_point`.
 
-Public keys can also be compressed -- see [public_key.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/public_key.mli). A point on an elliptic curve can unambiguously be represented by a single scalar field element and a boolean. This is the representation we use into the [payment payload](#payment-payload) because it's more efficient inside of SNARK circuits.
+Открытые ключи также можно сжимать -- см. [public_key.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/signature_lib/public_key.mli). Точка на эллиптической кривой может быть однозначно представлена одним элементом скалярного поля и boolean. Это представление мы используем в [платежной нагрузке](#payment-payload), так как оно более эффективно внутри схем SNARK.
 
-## Currency
+## Валюта
 
-In [currency.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/currency/currency.mli), we define [nominal types](https://en.wikipedia.org/wiki/Nominal_type_system) for fee, amount, and balance that handles overflow and underflow properly. Everything is backed by 64bit unsigned integers for now. Notice, that we again include SNARK circuit operations under the [Checked](#snark-checked) submodules within each of the types.
+В [currency.mli](https://github.com/minaprotocol/mina/tree/master/src/lib/currency/currency.mli) мы определяем [номинальные типы](https://en.wikipedia.org/wiki/Nominal_type_system) комиссии, сумму и баланс, которые корректно обрабатывают overflow и underflow. На данный момент все поддерживается 64-битными беззнаковыми числами. Обратите внимание, что мы снова включаем операции схемы SNARK с [проверкой](#snark-checked) подмодулей внутри каждого из типов.
 
-## Account
+## Аккаунт
 
-Payments are applied successfully only if certain properties hold of the account of the sender (and the receiver's balance doesn't overflow).
+Платежи проводятся успешно только в том случае, если счет отправителя обладает определенными свойствами (и при этом баланс получателя не переполняется).
 
-Checkout [account.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/mina_base/account.ml), an account is a record with a [public key](#public-key) (the owner of the account), a [balance](#currency), a [nonce](#account-nonce), and a [receipt chain hash](#receipt-chain-hash).
+Согласно[account.ml](https://github.com/minaprotocol/mina/tree/master/src/lib/mina_base/account.ml), аккаунт - это запись с [публичным ключом](#public-key) (владельца учетной записи), [балансом](#currency), [однократно используемым числом nonce](#account-nonce), и [хэшем цепи поступлений](#receipt-chainh-hash).
 
-A payment is valid if:
+Платеж действителен, если:
 
-1. The signature is valid w.r.t. the public key of the sender
-2. The sender has enough balance to pay out the fee and the amount
-3. The reciever has enough room for the amount s.t. there won't be an overflow
-4. The [account nonce](#account-nonce) matches the nonce inside the payment.
+1. Подпись соответствует w.r.t. открытого ключа отправителя.
+2. Отправитель имеет достаточно средств, чтобы произвести выплату комиссионного вознаграждения и суммы.
+3. У получателя достаточно места для суммы s.t. переполнения не будет.
+4. Показатель [nonce аккаунта](#account-nonce) совпадает с показателем nonce внутри платежа.
 
 When we apply a payment we also cons it onto the [receipt chain](#receipt-chain-hash), and increment the account nonce.
 
