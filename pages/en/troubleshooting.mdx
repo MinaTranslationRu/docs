@@ -270,31 +270,31 @@ mina advanced pooled-user-commands | jq . | grep fee | sort | uniq -c | sort -n
 
 ### Error: Specified sender is not in the ledger or sent a transaction in transaction pool when sending a transaction
 
-See [this answer](#can-I-send-a-payment-before-I-am-synced), you will need to wait until you are synced if you do not have an existing balance in the ledger.
+Смотрите [ответ тут](#can-I-send-a-payment-before-I-am-synced), вам необходимо ждать синхронизации, если у вас нет существующего баланса в реестре. 
 
-### I am running a block producer, but I don't see anything in mina accounts list?
+### Я запустил блок-продюсера, но ничего не вижу в списке аккаунтов mina 
 
-If you started the daemon passing the `block-producer-key` flag, then you still need to import the account to the daemon in order to send a transaction. To do so, use the `mina accounts import -priv-key` command, passing in the location of the private key file.
+Если вы запустили daemon, передав флаг `block-producer-key`, вам все равно нужно импортировать учетную запись в daemon, чтобы отправить транзакцию. Для этого используйте команду `mina accounts import -priv-key`, передав расположение файла закрытого ключа. 
 
-## Block producer
+## Блок-продюсер
 
-### How do I run a block producer?
+### Как запустить блок-продюсера? 
 
-The methods to start a node [in the documentation](/docs/using-mina/connecting) will run a block producer by default.
+Способы запуска ноды доступны [в документации](/docs/using-mina/connecting). С их помощью вы сможете запустить блок-продюсера по умолчанию.
 
-### How do I know if I am running a block producer
+### Как я узнаю, запущен ли мой блок-продюсер?
 
-To check the status of your block producer, run `mina client status` and look for the lines **Block producers running**. You should see a value of 1 and also your public key.
+Чтобы проверить статус вашего блок-продюсера, запустите `mina client status` и найдите строки **Block producers running**. Вы должны увидеть значение 1, а также ваш открытый ключ. 
 
-![Running a block producer](https://i.imgur.com/IsXZcXN.png)
+![Запуск блок-продюсера](https://i.imgur.com/IsXZcXN.png)
 
-The line **Next block will be produced in** lets you know the next time you have won a slot to produce a block. If you have not won any further blocks in the epoch, a message "None this epoch..." will be displayed and will only update once a new epoch starts.
+Строка **Next block will be produced in** позволяет узнать, когда вы в следующий раз выиграете слот для создания блока. Если вы не выиграли блоки в эпоху, будет отображаться сообщение "None this epoch..." – с началом новой эпохи сообщение обновляется. 
 
-### How can I increase my chance of winning a block?
+### Как мне увеличить свои шансы на выигрыш блока? 
 
-The chance of winning a block is determined by a Verifiable Random Function (VRF), with the chance of winning a block being proportional to your stake. The VRF will always return the same result no matter how many times it is run, so there is no way of improving your chance of winning a block. Other than your staking balance, it is down to luck.
+Вероятность выигрыша блока определяется проверяемой случайной функцией (VRF), при этом шанс выигрыша блока пропорционален вашему стеку. VRF всегда будет возвращать один и тот же результат, независимо от того, сколько раз она запускается, поэтому не существует способа повысить свои шансы на выигрыш блока. Все зависит от суммы вашего стека и удачи. 
 
-The stake associated with your public key is determined in advance at the start of an epoch. There is a delay in it being considered, so receiving funds, block rewards, delegating other funds, and snark worker rewards will **not** improve your chance of winning a block in this epoch as these funds will not be considered in the staking ledger for at least another full epoch (~2 weeks).
+Стек, относящийся к вашему открытому ключу, определяется в начале эпохи заранее. Он рассматривается с задержкой, поэтому получение средств, вознаграждений за блоки, делегирование других средств и получений вознаграждений снарк-воркеров **не** не увеличивает ваши шансы на выигрыш блока в эту эпоху, поскольку эти средства не будут учитываться при размещении в реестре стейкинга на протяжении как минимум другой полной эпохи (~2 недели). 
 
 ### Why was my block orphaned / why did I not get a block reward?
 
